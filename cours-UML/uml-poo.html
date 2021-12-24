@@ -437,6 +437,43 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge, pre.rouge .w {
+  color: #444444;
+}
+pre.rouge .cp {
+  color: #CC00A3;
+}
+pre.rouge .cs {
+  color: #CC00A3;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cpf, pre.rouge .c1 {
+  color: #FF0000;
+}
+pre.rouge .kc {
+  color: #C34E00;
+}
+pre.rouge .kd {
+  color: #0000FF;
+}
+pre.rouge .kr {
+  color: #007575;
+}
+pre.rouge .k, pre.rouge .kn, pre.rouge .kp, pre.rouge .kt, pre.rouge .kv {
+  color: #0000FF;
+}
+pre.rouge .s, pre.rouge .sb, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .si, pre.rouge .sx, pre.rouge .sr, pre.rouge .s1, pre.rouge .ss {
+  color: #009C00;
+}
+pre.rouge .sa {
+  color: #0000FF;
+}
+pre.rouge .nb, pre.rouge .bp {
+  color: #C34E00;
+}
+</style>
 </head>
 <body class="article">
 <div id="header">
@@ -962,25 +999,25 @@ Elle peut rajouter ses propres propriétés.</p>
 <h4 id="_définition_dune_classe">4.1.1. Définition d&#8217;une classe</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-python" data-lang="python">class MyClass:                      <b class="conum">(1)</b>
-    val = None                      <b class="conum">(2)</b>
+<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>                      <b class="conum">(1)</b>
+    <span class="n">val</span> <span class="o">=</span> <span class="bp">None</span>                      <b class="conum">(2)</b>
 
-    def __init__(self, arg1, arg2): <b class="conum">(3)</b>
-        self._val1 = arg1           <b class="conum">(4)</b>
-        self._val2 = arg2
-        self._update_val()          <b class="conum">(5)</b>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span> <b class="conum">(3)</b>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_val1</span> <span class="o">=</span> <span class="n">arg1</span>           <b class="conum">(4)</b>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_val2</span> <span class="o">=</span> <span class="n">arg2</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_update_val</span><span class="p">()</span>          <b class="conum">(5)</b>
 
-    def _update_val(self):          <b class="conum">(6)</b>
-        self.val = self._val1 + self._val2
+    <span class="k">def</span> <span class="nf">_update_val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>          <b class="conum">(6)</b>
+        <span class="bp">self</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_val1</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">_val2</span>
 
-    def display_val(self):          <b class="conum">(7)</b>
-        print(f'My value is {self.val}')
+    <span class="k">def</span> <span class="nf">display_val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>          <b class="conum">(7)</b>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'My value is </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">val</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
 
 
-# Create an instance of MyClass
-the_instance = MyClass(1, 2)        <b class="conum">(8)</b>
-# 'send a message' to this instance
-the_instance.display_val()          <b class="conum">(9)</b></code></pre>
+<span class="c1"># Create an instance of MyClass
+</span><span class="n">the_instance</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>        <b class="conum">(8)</b>
+<span class="c1"># 'send a message' to this instance
+</span><span class="n">the_instance</span><span class="p">.</span><span class="n">display_val</span><span class="p">()</span>          <b class="conum">(9)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1033,44 +1070,44 @@ Cette méthode doit être considérée comme <em>privée</em> puisque son nom co
 <h4 id="_héritage">4.1.2. Héritage</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-python" data-lang="python">from datetime import datetime
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 
-class Auteur:
-    def __init__(self, nom, prenom):
-        self.nom = nom
-        self.prenom = prenom
+<span class="k">class</span> <span class="nc">Auteur</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">prenom</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">nom</span> <span class="o">=</span> <span class="n">nom</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">prenom</span> <span class="o">=</span> <span class="n">prenom</span>
 
 
-class Oeuvre:
-    def __init__(self, auteur, titre, date_creation):
-        self.auteur = auteur
-        self.titre = titre
-        self.date_creation = date_creation
+<span class="k">class</span> <span class="nc">Oeuvre</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auteur</span><span class="p">,</span> <span class="n">titre</span><span class="p">,</span> <span class="n">date_creation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">auteur</span> <span class="o">=</span> <span class="n">auteur</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">date_creation</span> <span class="o">=</span> <span class="n">date_creation</span>
 
-    def describe(self):
-        print(f'Auteur: {self.auteur.prenom} {self.auteur.nom}')
-        print(f'Titre: {self.titre}')
+    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Auteur: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">auteur</span><span class="p">.</span><span class="n">prenom</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">auteur</span><span class="p">.</span><span class="n">nom</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Titre: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">titre</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
 
-    def age(self):
-        return datetime.now().year - self.date_creation
-
-
-class Livre(Oeuvre):                                            <b class="conum">(1)</b>
-    def __init__(self, auteur, titre, annee_creation, nb_mots): <b class="conum">(2)</b>
-        super().__init__(auteur, titre, annee_creation)         <b class="conum">(3)</b>
-        self.nb_mots = nb_mots
-
-    def describe(self):
-        super().describe()
-        print(f'Nombre de mots: {self.nb_mots}')
+    <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">year</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">date_creation</span>
 
 
-jules = Auteur('Verne', 'Jules')
-vingtk_lieues = Livre(jules, 'Vingt mille lieues sous la mer', 1869, 142172)
-vingtk_lieues.describe()
-age = vingtk_lieues.age()                                       <b class="conum">(4)</b>
-print(f'{vingtk_lieues.titre} a été écrit il y a {age} ans.')</code></pre>
+<span class="k">class</span> <span class="nc">Livre</span><span class="p">(</span><span class="n">Oeuvre</span><span class="p">):</span>                                            <b class="conum">(1)</b>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auteur</span><span class="p">,</span> <span class="n">titre</span><span class="p">,</span> <span class="n">annee_creation</span><span class="p">,</span> <span class="n">nb_mots</span><span class="p">):</span> <b class="conum">(2)</b>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">auteur</span><span class="p">,</span> <span class="n">titre</span><span class="p">,</span> <span class="n">annee_creation</span><span class="p">)</span>         <b class="conum">(3)</b>
+        <span class="bp">self</span><span class="p">.</span><span class="n">nb_mots</span> <span class="o">=</span> <span class="n">nb_mots</span>
+
+    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">describe</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Nombre de mots: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">nb_mots</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+
+<span class="n">jules</span> <span class="o">=</span> <span class="n">Auteur</span><span class="p">(</span><span class="s">'Verne'</span><span class="p">,</span> <span class="s">'Jules'</span><span class="p">)</span>
+<span class="n">vingtk_lieues</span> <span class="o">=</span> <span class="n">Livre</span><span class="p">(</span><span class="n">jules</span><span class="p">,</span> <span class="s">'Vingt mille lieues sous la mer'</span><span class="p">,</span> <span class="mi">1869</span><span class="p">,</span> <span class="mi">142172</span><span class="p">)</span>
+<span class="n">vingtk_lieues</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">vingtk_lieues</span><span class="p">.</span><span class="n">age</span><span class="p">()</span>                                       <b class="conum">(4)</b>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">vingtk_lieues</span><span class="p">.</span><span class="n">titre</span><span class="si">}</span><span class="s"> a été écrit il y a </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s"> ans.'</span><span class="p">)</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1110,30 +1147,30 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 <h4 id="_définition_dune_classe_2">4.2.1. Définition d&#8217;une classe</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">class MyClass {
-   int val;                                          <b class="conum">(1)</b>
-   int val1;
-   int val2;
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+   <span class="kt">int</span> <span class="n">val</span><span class="o">;</span>                                          <b class="conum">(1)</b>
+   <span class="kt">int</span> <span class="n">val1</span><span class="o">;</span>
+   <span class="kt">int</span> <span class="n">val2</span><span class="o">;</span>
 
-   public MyClass(int arg1, int arg2) {              <b class="conum">(2)</b>
-      val1 = arg1;
-      val2 = arg2;
-      update_val();
-   }
+   <span class="kd">public</span> <span class="nf">MyClass</span><span class="o">(</span><span class="kt">int</span> <span class="n">arg1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">arg2</span><span class="o">)</span> <span class="o">{</span>              <b class="conum">(2)</b>
+      <span class="n">val1</span> <span class="o">=</span> <span class="n">arg1</span><span class="o">;</span>
+      <span class="n">val2</span> <span class="o">=</span> <span class="n">arg2</span><span class="o">;</span>
+      <span class="n">update_val</span><span class="o">();</span>
+   <span class="o">}</span>
 
-   public void update_val() {                        <b class="conum">(3)</b>
-      val = val1 + val2;
-   }
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update_val</span><span class="o">()</span> <span class="o">{</span>                        <b class="conum">(3)</b>
+      <span class="n">val</span> <span class="o">=</span> <span class="n">val1</span> <span class="o">+</span> <span class="n">val2</span><span class="o">;</span>
+   <span class="o">}</span>
 
-   public void display_val() {
-      System.out.println("My value is " + val);
-   }
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">display_val</span><span class="o">()</span> <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"My value is "</span> <span class="o">+</span> <span class="n">val</span><span class="o">);</span>
+   <span class="o">}</span>
 
-   public static void main(String args[])  {         <b class="conum">(4)</b>
-      MyClass the_instance = new MyClass(1, 2);      <b class="conum">(5)</b>
-      the_instance.display_val();                    <b class="conum">(6)</b>
-   }
-}</code></pre>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span>  <span class="o">{</span>         <b class="conum">(4)</b>
+      <span class="nc">MyClass</span> <span class="n">the_instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>      <b class="conum">(5)</b>
+      <span class="n">the_instance</span><span class="o">.</span><span class="na">display_val</span><span class="o">();</span>                    <b class="conum">(6)</b>
+   <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1173,60 +1210,60 @@ C&#8217;est elle qui sera automatiquement appelée au démarrage du programme.</
 <h4 id="_héritage_2">4.2.2. Héritage</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">class Test {
-   public static void main(String args[])  {
-      Auteur jules = new Auteur("Verne", "Jules");
-      Oeuvre vingtk_lieues = new Livre(jules,                     <b class="conum">(5)</b>
-                                       "Vingt mille lieues sous la mer", 1869, 142172);
-      vingtk_lieues.describe();
-      int age = vingtk_lieues.age();                              <b class="conum">(4)</b>
-      System.out.println(vingtk_lieues.titre_ + " a été écrit il y a " + age + " ans.");
-   }
-}
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span>  <span class="o">{</span>
+      <span class="nc">Auteur</span> <span class="n">jules</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Auteur</span><span class="o">(</span><span class="s">"Verne"</span><span class="o">,</span> <span class="s">"Jules"</span><span class="o">);</span>
+      <span class="nc">Oeuvre</span> <span class="n">vingtk_lieues</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Livre</span><span class="o">(</span><span class="n">jules</span><span class="o">,</span>                     <b class="conum">(5)</b>
+                                       <span class="s">"Vingt mille lieues sous la mer"</span><span class="o">,</span> <span class="mi">1869</span><span class="o">,</span> <span class="mi">142172</span><span class="o">);</span>
+      <span class="n">vingtk_lieues</span><span class="o">.</span><span class="na">describe</span><span class="o">();</span>
+      <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">vingtk_lieues</span><span class="o">.</span><span class="na">age</span><span class="o">();</span>                              <b class="conum">(4)</b>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">vingtk_lieues</span><span class="o">.</span><span class="na">titre_</span> <span class="o">+</span> <span class="s">" a été écrit il y a "</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">" ans."</span><span class="o">);</span>
+   <span class="o">}</span>
+<span class="o">}</span>
 
-class Auteur {
-   String nom_;
-   String prenom_;
-   public Auteur(String nom, String prenom) {
-      nom_ = nom;
-      prenom_ = prenom;
-   }
-}
+<span class="kd">class</span> <span class="nc">Auteur</span> <span class="o">{</span>
+   <span class="nc">String</span> <span class="n">nom_</span><span class="o">;</span>
+   <span class="nc">String</span> <span class="n">prenom_</span><span class="o">;</span>
+   <span class="kd">public</span> <span class="nf">Auteur</span><span class="o">(</span><span class="nc">String</span> <span class="n">nom</span><span class="o">,</span> <span class="nc">String</span> <span class="n">prenom</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">nom_</span> <span class="o">=</span> <span class="n">nom</span><span class="o">;</span>
+      <span class="n">prenom_</span> <span class="o">=</span> <span class="n">prenom</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
 
-class Oeuvre {
-   Auteur auteur_;
-   String titre_;
-   int annee_creation_;
+<span class="kd">class</span> <span class="nc">Oeuvre</span> <span class="o">{</span>
+   <span class="nc">Auteur</span> <span class="n">auteur_</span><span class="o">;</span>
+   <span class="nc">String</span> <span class="n">titre_</span><span class="o">;</span>
+   <span class="kt">int</span> <span class="n">annee_creation_</span><span class="o">;</span>
 
-   public Oeuvre(Auteur auteur, String titre, int annee_creation) {
-      auteur_ = auteur;
-      titre_ = titre;
-      annee_creation_ = annee_creation;
-   }
+   <span class="kd">public</span> <span class="nf">Oeuvre</span><span class="o">(</span><span class="nc">Auteur</span> <span class="n">auteur</span><span class="o">,</span> <span class="nc">String</span> <span class="n">titre</span><span class="o">,</span> <span class="kt">int</span> <span class="n">annee_creation</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">auteur_</span> <span class="o">=</span> <span class="n">auteur</span><span class="o">;</span>
+      <span class="n">titre_</span> <span class="o">=</span> <span class="n">titre</span><span class="o">;</span>
+      <span class="n">annee_creation_</span> <span class="o">=</span> <span class="n">annee_creation</span><span class="o">;</span>
+   <span class="o">}</span>
 
-   public void describe() {
-      System.out.println("Auteur: " + auteur_.prenom_ + " " + auteur_.nom_);
-      System.out.println("Titre: " + titre_);
-   }
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">describe</span><span class="o">()</span> <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Auteur: "</span> <span class="o">+</span> <span class="n">auteur_</span><span class="o">.</span><span class="na">prenom_</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">auteur_</span><span class="o">.</span><span class="na">nom_</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Titre: "</span> <span class="o">+</span> <span class="n">titre_</span><span class="o">);</span>
+   <span class="o">}</span>
 
-   public int age() {
-      return 2021 - annee_creation_;
-   }
-}
+   <span class="kd">public</span> <span class="kt">int</span> <span class="nf">age</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="mi">2021</span> <span class="o">-</span> <span class="n">annee_creation_</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
 
-class Livre extends Oeuvre {                                      <b class="conum">(1)</b>
-   int nb_mots_;
+<span class="kd">class</span> <span class="nc">Livre</span> <span class="kd">extends</span> <span class="nc">Oeuvre</span> <span class="o">{</span>                                      <b class="conum">(1)</b>
+   <span class="kt">int</span> <span class="n">nb_mots_</span><span class="o">;</span>
 
-   public Livre(Auteur auteur, String titre, int annee_creation, int nb_mots) {
-       super(auteur, titre, annee_creation);                      <b class="conum">(2)</b>
-       nb_mots_ = nb_mots;
-   }
+   <span class="kd">public</span> <span class="nf">Livre</span><span class="o">(</span><span class="nc">Auteur</span> <span class="n">auteur</span><span class="o">,</span> <span class="nc">String</span> <span class="n">titre</span><span class="o">,</span> <span class="kt">int</span> <span class="n">annee_creation</span><span class="o">,</span> <span class="kt">int</span> <span class="n">nb_mots</span><span class="o">)</span> <span class="o">{</span>
+       <span class="kd">super</span><span class="o">(</span><span class="n">auteur</span><span class="o">,</span> <span class="n">titre</span><span class="o">,</span> <span class="n">annee_creation</span><span class="o">);</span>                      <b class="conum">(2)</b>
+       <span class="n">nb_mots_</span> <span class="o">=</span> <span class="n">nb_mots</span><span class="o">;</span>
+   <span class="o">}</span>
 
-   public void describe() {
-      super.describe();                                           <b class="conum">(3)</b>
-      System.out.println("Nombre de mots: " + nb_mots_);
-   }
-}</code></pre>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">describe</span><span class="o">()</span> <span class="o">{</span>
+      <span class="kd">super</span><span class="o">.</span><span class="na">describe</span><span class="o">();</span>                                           <b class="conum">(3)</b>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Nombre de mots: "</span> <span class="o">+</span> <span class="n">nb_mots_</span><span class="o">);</span>
+   <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1267,37 +1304,37 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 <h4 id="_définition_dune_classe_3">4.3.1. Définition d&#8217;une classe</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+<pre class="rouge highlight"><code data-lang="cpp"><span class="cp">#include &lt;iostream&gt;
+</span>
+<span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+<span class="nl">private:</span>                                             <b class="conum">(1)</b>
+	<span class="kt">int</span> <span class="n">val_</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">val1_</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">val2_</span><span class="p">;</span>
 
-class MyClass {
-private:                                             <b class="conum">(1)</b>
-	int val_;
-	int val1_;
-	int val2_;
+<span class="nl">public:</span>
+	<span class="n">MyClass</span><span class="p">(</span><span class="kt">int</span> <span class="n">arg1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">arg2</span><span class="p">)</span>                       <b class="conum">(2)</b>
+		<span class="o">:</span> <span class="n">val1_</span><span class="p">(</span><span class="n">arg1</span><span class="p">)</span>
+		<span class="p">,</span> <span class="n">val2_</span><span class="p">(</span><span class="n">arg2</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="n">update_val</span><span class="p">();</span>
+	<span class="p">}</span>
 
-public:
-	MyClass(int arg1, int arg2)                       <b class="conum">(2)</b>
-		: val1_(arg1)
-		, val2_(arg2)
-	{
-		update_val();
-	}
+	<span class="kt">void</span> <span class="n">update_val</span><span class="p">()</span> <span class="p">{</span>
+	   <span class="n">val_</span> <span class="o">=</span> <span class="n">val1_</span> <span class="o">+</span> <span class="n">val2_</span><span class="p">;</span>
+	<span class="p">}</span>
 
-	void update_val() {
-	   val_ = val1_ + val2_;
-	}
+	<span class="kt">void</span> <span class="n">display_val</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>                        <b class="conum">(3)</b>
+	   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"My value is "</span> <span class="o">&lt;&lt;</span> <span class="n">val_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">};</span>
 
-	void display_val() const {                        <b class="conum">(3)</b>
-	   std::cout &lt;&lt; "My value is " &lt;&lt; val_ &lt;&lt; std::endl;
-	}
-};
-
-int main() {
-	MyClass* the_instance = new MyClass(1, 2);        <b class="conum">(4)</b>
-	the_instance-&gt;display_val();                      <b class="conum">(5)</b>
-	delete the_instance;                              <b class="conum">(6)</b>
-	return 0;
-}</code></pre>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">MyClass</span><span class="o">*</span> <span class="n">the_instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>        <b class="conum">(4)</b>
+	<span class="n">the_instance</span><span class="o">-&gt;</span><span class="n">display_val</span><span class="p">();</span>                      <b class="conum">(5)</b>
+	<span class="k">delete</span> <span class="n">the_instance</span><span class="p">;</span>                              <b class="conum">(6)</b>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1338,75 +1375,75 @@ Un constructeur peut comporter une liste d&#8217;initialisation.</p>
 <h4 id="_héritage_3">4.3.2. Héritage</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+<pre class="rouge highlight"><code data-lang="cpp"><span class="cp">#include &lt;iostream&gt;
 #include &lt;string&gt;
+</span>
+<span class="k">class</span> <span class="nc">Auteur</span> <span class="p">{</span>
+<span class="nl">private:</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">nom_</span><span class="p">;</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">prenom_</span><span class="p">;</span>
 
-class Auteur {
-private:
-   std::string nom_;
-   std::string prenom_;
+<span class="nl">public:</span>
+   <span class="n">Auteur</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">nom</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">prenom</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">nom_</span><span class="p">(</span><span class="n">nom</span><span class="p">)</span>
+      <span class="p">,</span> <span class="n">prenom_</span><span class="p">(</span><span class="n">prenom</span><span class="p">)</span>
+   <span class="p">{}</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">nom</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span><span class="k">return</span> <span class="n">nom_</span><span class="p">;}</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">prenom</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span><span class="k">return</span> <span class="n">prenom_</span><span class="p">;}</span>
+<span class="p">};</span>
 
-public:
-   Auteur(std::string nom, std::string prenom)
-      : nom_(nom)
-      , prenom_(prenom)
-   {}
-   std::string nom() const {return nom_;}
-   std::string prenom() const {return prenom_;}
-};
+<span class="k">class</span> <span class="nc">Oeuvre</span> <span class="p">{</span>
 
-class Oeuvre {
+<span class="nl">private:</span>
+   <span class="n">Auteur</span><span class="o">*</span> <span class="n">auteur_</span><span class="p">;</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">titre_</span><span class="p">;</span>
+   <span class="kt">int</span> <span class="n">annee_creation_</span><span class="p">;</span>
 
-private:
-   Auteur* auteur_;
-   std::string titre_;
-   int annee_creation_;
+<span class="nl">public:</span>
+   <span class="n">Oeuvre</span><span class="p">(</span><span class="n">Auteur</span><span class="o">*</span> <span class="n">auteur</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">titre</span><span class="p">,</span> <span class="kt">int</span> <span class="n">annee_creation</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">auteur_</span><span class="p">(</span><span class="n">auteur</span><span class="p">)</span>
+      <span class="p">,</span> <span class="n">titre_</span><span class="p">(</span><span class="n">titre</span><span class="p">)</span>
+      <span class="p">,</span> <span class="n">annee_creation_</span><span class="p">(</span><span class="n">annee_creation</span><span class="p">)</span>
+   <span class="p">{}</span>
 
-public:
-   Oeuvre(Auteur* auteur, std::string titre, int annee_creation)
-      : auteur_(auteur)
-      , titre_(titre)
-      , annee_creation_(annee_creation)
-   {}
+   <span class="k">virtual</span> <span class="kt">void</span> <span class="n">describe</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>                     <b class="conum">(5)</b>
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Auteur: "</span> <span class="o">&lt;&lt;</span> <span class="n">auteur_</span><span class="o">-&gt;</span><span class="n">prenom</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span> <span class="o">&lt;&lt;</span> <span class="n">auteur_</span><span class="o">-&gt;</span><span class="n">nom</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Titre: "</span> <span class="o">&lt;&lt;</span> <span class="n">titre_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+   <span class="p">}</span>
 
-   virtual void describe() const {                     <b class="conum">(5)</b>
-      std::cout &lt;&lt; "Auteur: " &lt;&lt; auteur_-&gt;prenom() &lt;&lt; " " &lt;&lt; auteur_-&gt;nom() &lt;&lt; std::endl;
-      std::cout &lt;&lt; "Titre: " &lt;&lt; titre_ &lt;&lt; std::endl;
-   }
-
-   int age() const {
-      return 2021 - annee_creation_;
-   }
-   std::string titre() const {
-      return titre_;
-   }
-};
+   <span class="kt">int</span> <span class="n">age</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">2021</span> <span class="o">-</span> <span class="n">annee_creation_</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">titre</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">titre_</span><span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">};</span>
 
 
-class Livre : public Oeuvre {                          <b class="conum">(1)</b>
-private:
-   int nb_mots_;
-public:
-   Livre(Auteur* auteur, std::string titre, int annee_creation, int nb_mots)
-      : Oeuvre(auteur, titre, annee_creation)          <b class="conum">(2)</b>
-      , nb_mots_(nb_mots)
-   {}
+<span class="k">class</span> <span class="nc">Livre</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Oeuvre</span> <span class="p">{</span>                          <b class="conum">(1)</b>
+<span class="nl">private:</span>
+   <span class="kt">int</span> <span class="n">nb_mots_</span><span class="p">;</span>
+<span class="nl">public:</span>
+   <span class="n">Livre</span><span class="p">(</span><span class="n">Auteur</span><span class="o">*</span> <span class="n">auteur</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">titre</span><span class="p">,</span> <span class="kt">int</span> <span class="n">annee_creation</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nb_mots</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">Oeuvre</span><span class="p">(</span><span class="n">auteur</span><span class="p">,</span> <span class="n">titre</span><span class="p">,</span> <span class="n">annee_creation</span><span class="p">)</span>          <b class="conum">(2)</b>
+      <span class="p">,</span> <span class="n">nb_mots_</span><span class="p">(</span><span class="n">nb_mots</span><span class="p">)</span>
+   <span class="p">{}</span>
 
-   void describe() const {
-      Oeuvre::describe();                              <b class="conum">(3)</b>
-      std::cout &lt;&lt; "Nombre de mots: " &lt;&lt; nb_mots_ &lt;&lt; std::endl;
-   }
-};
+   <span class="kt">void</span> <span class="n">describe</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+      <span class="n">Oeuvre</span><span class="o">::</span><span class="n">describe</span><span class="p">();</span>                              <b class="conum">(3)</b>
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Nombre de mots: "</span> <span class="o">&lt;&lt;</span> <span class="n">nb_mots_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">};</span>
 
-int main() {
-   Auteur* jules = new Auteur("Verne", "Jules");
-   Oeuvre* vingtk_lieues = new Livre(jules,            <b class="conum">(7)</b>
-                                     "Vingt mille lieues sous la mer", 1869, 142172);
-   vingtk_lieues-&gt;describe();                          <b class="conum">(6)</b>
-   int age = vingtk_lieues-&gt;age();                     <b class="conum">(4)</b>
-   std::cout &lt;&lt; vingtk_lieues-&gt;titre() &lt;&lt; " a été écrit il y a " &lt;&lt; age &lt;&lt; " ans." &lt;&lt; std::endl;
-   return 0;
-}</code></pre>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="n">Auteur</span><span class="o">*</span> <span class="n">jules</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Auteur</span><span class="p">(</span><span class="s">"Verne"</span><span class="p">,</span> <span class="s">"Jules"</span><span class="p">);</span>
+   <span class="n">Oeuvre</span><span class="o">*</span> <span class="n">vingtk_lieues</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Livre</span><span class="p">(</span><span class="n">jules</span><span class="p">,</span>            <b class="conum">(7)</b>
+                                     <span class="s">"Vingt mille lieues sous la mer"</span><span class="p">,</span> <span class="mi">1869</span><span class="p">,</span> <span class="mi">142172</span><span class="p">);</span>
+   <span class="n">vingtk_lieues</span><span class="o">-&gt;</span><span class="n">describe</span><span class="p">();</span>                          <b class="conum">(6)</b>
+   <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">vingtk_lieues</span><span class="o">-&gt;</span><span class="n">age</span><span class="p">();</span>                     <b class="conum">(4)</b>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">vingtk_lieues</span><span class="o">-&gt;</span><span class="n">titre</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">" a été écrit il y a "</span> <span class="o">&lt;&lt;</span> <span class="n">age</span> <span class="o">&lt;&lt;</span> <span class="s">" ans."</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1591,7 +1628,7 @@ Si ce n&#8217;est pas le cas, un signal sonore et visuel est émis, et un messag
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-24 09:14:41 +0100
+Last updated 2021-12-24 11:40:14 +0100
 </div>
 </div>
 </body>
