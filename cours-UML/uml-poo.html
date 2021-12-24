@@ -477,6 +477,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_poo_en_c">4.3. POO en C++</a></li>
 </ul>
 </li>
+<li><a href="#_exemples_de_cas_dutilisation_la_bibliothèque">5. Exemples de cas d&#8217;utilisation : la bibliothèque</a>
+<ul class="sectlevel2">
+<li><a href="#_cas_dutilisation_identification_dun_utilisateur">5.1. Cas d&#8217;utilisation : identification d&#8217;un utilisateur</a></li>
+<li><a href="#_cas_dutilisation_scan_dun_document">5.2. Cas d&#8217;utilisation : scan d&#8217;un document</a></li>
+<li><a href="#_cas_dutilisation_emprunt_dun_document">5.3. Cas d&#8217;utilisation : emprunt d&#8217;un document</a></li>
+<li><a href="#_exigences_non_fonctionnelles_2">5.4. Exigences non fonctionnelles</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1062,7 +1070,7 @@ jules = Auteur('Verne', 'Jules')
 vingtk_lieues = Livre(jules, 'Vingt mille lieues sous la mer', 1869, 142172)
 vingtk_lieues.describe()
 age = vingtk_lieues.age()                                       <b class="conum">(4)</b>
-print(f'{vingtk_lieues.titre} a été écrit il y a {age} ans')</code></pre>
+print(f'{vingtk_lieues.titre} a été écrit il y a {age} ans.')</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1091,7 +1099,7 @@ Cette ligne est équivalente à <code>Oeuvre.__init__(auteur, titre, annee_creat
 <pre>Auteur: Jules Verne
 Titre: Vingt mille lieues sous la mer
 Nombre de mots: 142172
-Vingt mille lieues sous la mer a été écrit il y a 152 ans</pre>
+Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 </div>
 </div>
@@ -1444,10 +1452,146 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_exemples_de_cas_dutilisation_la_bibliothèque">5. Exemples de cas d&#8217;utilisation : la bibliothèque</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le système étudié est le logiciel de gestion des emprunts de documents dans une bibliothèque.</p>
+</div>
+<div class="sect2">
+<h3 id="_cas_dutilisation_identification_dun_utilisateur">5.1. Cas d&#8217;utilisation : identification d&#8217;un utilisateur</h3>
+<div class="sect3">
+<h4 id="_préconditions">5.1.1. Préconditions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Le bibliothécaire est identifié</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_identification_de_lutilisateur">5.1.2. Identification de l&#8217;utilisateur</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>L&#8217;utilisateur présente sa carte de bibliothèque au bibliothécaire.</p>
+</li>
+<li>
+<p>Le bibliothécaire scanne la carte à l&#8217;aide d&#8217;une douchette.</p>
+</li>
+<li>
+<p>Le logiciel présente au bibliothécaire les informations connues sur le porteur de la carte, et un signal sonore de type <em>validation</em> est émis.</p>
+</li>
+<li>
+<p>Ces informations sont : nom et prénom, adresse, liste des documents empruntés.</p>
+</li>
+<li>
+<p>La liste des documents comprend les informations suivantes pour chaque document : type (livre, CD, ou DVD), titre, date de retour maxi.</p>
+</li>
+<li>
+<p>Si la date de retour maxi est égale ou antérieure à la date du jour, le document apparaît avec un marquage spécifique de type <em>interdiction</em>.</p>
+</li>
+<li>
+<p>Si la date de retour maxi est postérieure à la date du jour de 7 jours ou moins, le document apparaît avec un marquage spécifique de type <em>attention</em>.</p>
+</li>
+<li>
+<p>Si, après le scan de la carte, plus de 30 secondes s&#8217;écoulent sans scan d&#8217;un document, les informations concernant le porteur de la carte sont effacées de l&#8217;écran et l&#8217;enregistrement de documents nécessite un nouveau scan de la carte.</p>
+</li>
+<li>
+<p>Avant ce délai de 30 secondes, le bibliothécaire peut appuyer sur la touche entrée : les informations sont effacées de l&#8217;écran, et l&#8217;utilisateur n&#8217;est plus considéré comme identifié.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cas_dutilisation_scan_dun_document">5.2. Cas d&#8217;utilisation : scan d&#8217;un document</h3>
+<div class="sect3">
+<h4 id="_préconditions_2">5.2.1. Préconditions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Le bibliothécaire est identifié</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_scan_dun_document">5.2.2. Scan d&#8217;un document</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Le bibliothécaire scanne le code barre du document à l&#8217;aide de la douchette.</p>
+</li>
+<li>
+<p>Le système vérifie que le code scanné correspond bien à un document en stock. Si ce n&#8217;est pas le cas, un signal sonore et visuel est émis, un message "Document inconnu" est affiché, et le cas se termine en erreur.</p>
+</li>
+<li>
+<p>Le système affiche les informations concernant ce document : type, auteur, titre, date de dernier emprunt.</p>
+</li>
+<li>
+<p>Le système vérifie que le document n&#8217;est pas marqué "emprunté". S&#8217;il l&#8217;est, un signal sonore et visuel est émis, un message "Document déjà emprunté" est affiché et le cas se termine en erreur.</p>
+</li>
+<li>
+<p>Le système vérifie que le document n&#8217;est pas marqué "réservé". S&#8217;il l&#8217;est, un signal sonore et visuel est émis, un message "Document réservé" est affiché et le cas se termine en erreur.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cas_dutilisation_emprunt_dun_document">5.3. Cas d&#8217;utilisation : emprunt d&#8217;un document</h3>
+<div class="sect3">
+<h4 id="_préconditions_3">5.3.1. Préconditions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Le bibliothécaire est identifié</p>
+</li>
+<li>
+<p>Un utilisateur est identifié depuis moins de 30 secondes</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ajout_de_documents_empruntés">5.3.2. Ajout de documents empruntés</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Scan d&#8217;un document</em> se termine sans erreur</p>
+</li>
+<li>
+<p>Le système vérifie que le nombre de documents de ce type déjà empruntés par l&#8217;utilisateur est strictement inférieur à la limite.
+Si ce n&#8217;est pas le cas, un signal sonore et visuel est émis, et un message "Trop de documents empruntés" est affiché.</p>
+</li>
+<li>
+<p>Si aucune erreur n&#8217;est détectée, le document est marqué "emprunté" avec une référence vers l&#8217;utilisateur.  D&#8217;autre part, le document est ajouté à la liste des documents empruntés par l&#8217;utilisateur, et l&#8217;affichage de cette liste est mis à jour.</p>
+</li>
+<li>
+<p>Si plus de 30 secondes s&#8217;écoulent depuis le scan d&#8217;un document, l&#8217;utilisateur n&#8217;est plus considéré comme identifié.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exigences_non_fonctionnelles_2">5.4. Exigences non fonctionnelles</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Tous les affichages du système seront étudiés pour être lisibles en niveaux de gris aussi bien qu&#8217;en couleur.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-21 17:48:05 +0100
+Last updated 2021-12-24 09:14:41 +0100
 </div>
 </div>
 </body>
