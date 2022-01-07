@@ -449,17 +449,54 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
-<li><a href="#_identification_des_acteurs">1. Identification des acteurs</a></li>
-<li><a href="#_contenus_de_cas_dutilisation">2. Contenus de cas d&#8217;utilisation</a></li>
-<li><a href="#_exemples_de_cas_dutilisation_la_bibliothèque">3. Exemples de cas d&#8217;utilisation : la bibliothèque</a></li>
-<li><a href="#_types_de_relation">4. Types de relation</a></li>
-<li><a href="#_établir_un_diagramme_de_classe">5. Établir un diagramme de classe</a></li>
+<li><a href="#_outils_de_modélisation_uml">1. Outils de modélisation UML</a></li>
+<li><a href="#_environnement_de_développement_python">2. Environnement de développement Python</a></li>
+<li><a href="#_identification_des_acteurs">3. Identification des acteurs</a></li>
+<li><a href="#_identification_des_acteurs_et_de_cas_simples">4. Identification des acteurs et de cas simples</a></li>
+<li><a href="#_contenus_de_cas_dutilisation">5. Contenus de cas d&#8217;utilisation</a></li>
+<li><a href="#_exemples_de_cas_dutilisation_la_bibliothèque">6. Exemples de cas d&#8217;utilisation : la bibliothèque</a></li>
+<li><a href="#_autres_cas_dutilisation_lascenseur">7. Autres cas d&#8217;utilisation : l&#8217;ascenseur</a></li>
+<li><a href="#_types_de_relation">8. Types de relation</a></li>
+<li><a href="#_établir_un_diagramme_de_classe">9. Établir un diagramme de classe</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_identification_des_acteurs">1. Identification des acteurs</h2>
+<h2 id="_outils_de_modélisation_uml">1. Outils de modélisation UML</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Il en existe beaucoup. Nous utiliserons <a href="https://online.visual-paradigm.com/drive/#infoart:proj=0&amp;documents" class="bare">https://online.visual-paradigm.com/drive/#infoart:proj=0&amp;documents</a> :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Il semble raisonnablement complet (même s&#8217;il ne semble pas possible de représenter un acteur par autre chose qu&#8217;un stick-man)</p>
+</li>
+<li>
+<p>Il permet de stocker des shémas en ligne</p>
+</li>
+<li>
+<p>Il permet d&#8217;exporter des images de ces shémas.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Créez-vous un compte sur cet outil, pour que nous puissions l&#8217;utiliser pendant les TD.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_environnement_de_développement_python">2. Environnement de développement Python</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Nous utiliserons une plateforme en ligne : <a href="https://replit.com/~" class="bare">https://replit.com/~</a>.
+Créez un compte, puis naviguez vers <em>Templates</em>, puis <em>Python</em> pour vous créer un environnement de développement pour ce TD.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_identification_des_acteurs">3. Identification des acteurs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://forms.gle/z5gwPvn2E6UDomQZ9" class="bare">https://forms.gle/z5gwPvn2E6UDomQZ9</a></p>
@@ -467,7 +504,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_contenus_de_cas_dutilisation">2. Contenus de cas d&#8217;utilisation</h2>
+<h2 id="_identification_des_acteurs_et_de_cas_simples">4. Identification des acteurs et de cas simples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le système considéré est une station service de distribution de carburant. Les clients se servent en carburant, et le pompiste rempli les cuves.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Le client se sert de la façon suivante : il prend un pistolet accroché à une pompe et appuie sur la gachette pour faire couler le carburant.  Qui est l&#8217;acteur dans ce cas d&#8217;utilisation ? Le client, le pistolet ou la pompe ?</p>
+</li>
+<li>
+<p>Pierre est pompiste.  De temps en temps, il vient à la station pour remplir le réservoir de sa voiture. Pour modéliser cette activité, faut-il un nouvel acteur ?</p>
+</li>
+<li>
+<p>Certains pompistes sont qualifiés pour effectuer des opérations que tous les pompistes ne peuvent pas faire, comme des opérations de maintenance. Ils sont donc réparateurs en plus d&#8217;être pompistes.  Comment modéliser cela ?</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_contenus_de_cas_dutilisation">5. Contenus de cas d&#8217;utilisation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://forms.gle/6Ti8UEjQKR2H6c7G9" class="bare">https://forms.gle/6Ti8UEjQKR2H6c7G9</a></p>
@@ -475,7 +533,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_exemples_de_cas_dutilisation_la_bibliothèque">3. Exemples de cas d&#8217;utilisation : la bibliothèque</h2>
+<h2 id="_exemples_de_cas_dutilisation_la_bibliothèque">6. Exemples de cas d&#8217;utilisation : la bibliothèque</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Le système étudié est le poste de travail muni du matériel et du logiciel de gestion des emprunts de documents dans une bibliothèque. Les utilisateurs possèdent une carte de la bibliothèque. Pour emprunter des documents, ils la présentent à un bibliothécaire avant que celui-ci scanne les documents.</p>
@@ -496,7 +554,41 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_types_de_relation">4. Types de relation</h2>
+<h2 id="_autres_cas_dutilisation_lascenseur">7. Autres cas d&#8217;utilisation : l&#8217;ascenseur</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Creez un diagramme de cas d&#8217;utilisation d&#8217;après les besoins suivants pour le système de contrôle d&#8217;un ascenseur :</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Le système de contrôle permet aux passagers d&#8217;appeler l&#8217;ascenseur ou de sélectionner l&#8217;étage de destination.</p>
+</li>
+<li>
+<p>Quand le passager pousse un bouton extérieur (pour appeler l&#8217;ascenseur), ou un bouton intérieur (pour choisir un étage), le système de contrôle allume ce bouton.</p>
+</li>
+<li>
+<p>Quand un passager appelle l&#8217;ascenseur ou choisit un étage, le système de contrôle ferme la porte de l&#8217;ascenseur, et déplace l&#8217;ascenseur vers le passager ou vers l&#8217;étage choisi.</p>
+</li>
+<li>
+<p>Quand l&#8217;ascenseur arrive à l&#8217;étage où il a été appelé, le système de contrôle ouvre la porte et éteint le bouton d&#8217;appel.</p>
+</li>
+<li>
+<p>Quand le passager sort de l&#8217;ascenseur, le système de contrôle éteint le bouton de l&#8217;étage.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Rédigez le cas d&#8217;utilisation "Choix d&#8217;étage"</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_types_de_relation">8. Types de relation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://forms.gle/mFMKuVzfLqxXtbmR8" class="bare">https://forms.gle/mFMKuVzfLqxXtbmR8</a></p>
@@ -504,7 +596,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_établir_un_diagramme_de_classe">5. Établir un diagramme de classe</h2>
+<h2 id="_établir_un_diagramme_de_classe">9. Établir un diagramme de classe</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Créez les classes et associations nécessaires à la modélisation du problème suivant :</p>
@@ -546,7 +638,7 @@ Il peut passer d&#8217;un état à l&#8217;autre.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-04 17:55:59 +0100
+Last updated 2022-01-07 08:22:54 +0100
 </div>
 </div>
 </body>
