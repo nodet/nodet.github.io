@@ -590,6 +590,26 @@ Un acteur peut être humain ou non.</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_spécialisation_dun_acteur">2.1.2. Spécialisation d&#8217;un acteur</h4>
+<div class="paragraph">
+<p>Lorsqu&#8217;un acteur <code>A</code> peut realiser tout ce qu&#8217;un autre acteur <code>B</code> peut faire, et ajoute d&#8217;autres rôles, on dit que <code>A</code> est une spécialisation de <code>B</code>.
+L&#8217;acteur <code>A</code> <em>est un</em> <code>B</code> puisqu&#8217;il peut faire tout ce que <code>B</code> peut faire.  Mais comme il possède également un ou plusieurs rôles propres (i.e. il intervient dans des cas d&#8217;utilisation qui ne concernent pas le <code>B</code>), c&#8217;est un acteur distinct.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="data:image/png;base64,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" alt="Généralisation des acteurs">
+</div>
+</div>
+<div class="ulist">
+<div class="title">Exemple</div>
+<ul>
+<li>
+<p>Le superviseur d&#8217;un employé peut remplacer l&#8217;employé dans tout ce que fait ce dernier. Donc le superviseur <em>est un</em> employé. Mais comme il peut aussi effectuer des tâches que l&#8217;employé ne peut pas effectuer, les deux acteurs ne sont pas confondus.  Donc le superviseur est une <em>spécialisation</em> de l&#8217;employé.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_exemple_de_cas_dutilisation">2.2. Exemple de cas d&#8217;utilisation</h3>
@@ -753,7 +773,7 @@ Ces contraintes ne se traduisent pas par des actions ou des évènements qui fer
 <div class="sect3">
 <h4 id="_relations_entre_cas_dutilisation">2.3.6. Relations entre cas d&#8217;utilisation</h4>
 <div class="paragraph">
-<p>Il peut exister des relations entre les différents cas d&#8217;utilisation.  Par exemple, un cas d&#8217;utilisation peut en utiliser un autre ("uses" ou "includes"). Un cas d&#8217;utilisation peut également étendre un autre cas ("extends").</p>
+<p>Il peut exister des relations entre les différents cas d&#8217;utilisation.  Par exemple, un cas d&#8217;utilisation peut en utiliser un autre ("use" ou "include"). Un cas d&#8217;utilisation peut également étendre un autre cas ("extend").</p>
 </div>
 <div class="ulist">
 <div class="title">Exemples</div>
@@ -1705,7 +1725,7 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-10 15:48:54 +0100
+Last updated 2022-01-11 16:00:34 +0100
 </div>
 </div>
 </body>
