@@ -1040,23 +1040,24 @@ On peut préciser le rôle joué par chaque classe dans l&#8217;association, par
 <h3 id="_multiplicités">3.7. Multiplicités</h3>
 <div class="paragraph">
 <p>Pour donner une indication sur le nombre d&#8217;objets qui prennent part à chaque sens de l&#8217;association, on utilise des <em>multiplicités</em>.
-Une multiplicité indique soit l&#8217;intervalle des valeurs possibles, soit l&#8217;unique valeur possible.
-Un nombre quelconque est représenté par une *.</p>
+Une multiplicité est déterminée en considérant, pour <em>un</em> instant donné et <em>une</em> instance de la première classe,  combien d&#8217;instances de la deuxième classe peuvent être impliquées dans la relation.
+Une multiplicité indique soit l&#8217;intervalle des valeurs possibles (noté <code>n..m</code>), soit l&#8217;unique valeur possible.
+Un nombre quelconque est représenté par une <code>*</code>.</p>
 </div>
 <div class="ulist">
 <div class="title">Exemples</div>
 <ul>
 <li>
-<p>Un utilisateur peut emprunter entre 0 et un nombre quelconque de livres.</p>
+<p>Un utilisateur peut emprunter entre 0 et un nombre quelconque de livres : <code>0..*</code>.</p>
 </li>
 <li>
-<p>Un livre peut être emprunté par 0 ou 1 utilisateur.</p>
+<p>Un livre peut être emprunté par 0 ou 1 utilisateur : <code>0..1</code>.</p>
 </li>
 <li>
-<p>Une bibliothèque possède entre 0 et un nombre quelconque de livres.</p>
+<p>Une bibliothèque possède entre 0 et un nombre quelconque de livres : <code>0..*</code>.</p>
 </li>
 <li>
-<p>Un livre est possédé par une et une seule bibliothèque</p>
+<p>Un livre est possédé par une et une seule bibliothèque : <code>1</code></p>
 </li>
 </ul>
 </div>
@@ -1728,7 +1729,7 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-12 06:48:06 +0100
+Last updated 2022-01-12 18:55:11 +0100
 </div>
 </div>
 </body>
