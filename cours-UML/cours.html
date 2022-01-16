@@ -518,6 +518,14 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_poo_en_c">4.3. POO en C++</a></li>
 </ul>
 </li>
+<li><a href="#_un_peu_plus_de_python">5. Un peu plus de Python&#8230;&#8203;</a>
+<ul class="sectlevel2">
+<li><a href="#_liste">5.1. Liste</a></li>
+<li><a href="#_structures_de_controle">5.2. Structures de controle</a></li>
+<li><a href="#_dictionnaires">5.3. Dictionnaires</a></li>
+<li><a href="#_tuples">5.4. Tuples</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1352,7 +1360,7 @@ Puisqu&#8217;on définit un constructeur pour <code>Livre</code>, il remplace ce
 </li>
 <li>
 <p>On peut appeler une méthode de la classe de base sans nécessairement spécifier le nom de cette classe grâce à <code>super()</code>.
-Cette ligne est équivalente à <code>Oeuvre.<em>init</em>(auteur, titre, annee_creation)</code>.</p>
+Cette ligne est équivalente à <code>Oeuvre.__init__(auteur, titre, annee_creation)</code>.</p>
 </li>
 <li>
 <p>On peut demander son âge à un <code>Livre</code>, puisque c&#8217;est une <code>Oeuvre</code>.</p>
@@ -1726,10 +1734,117 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_un_peu_plus_de_python">5. Un peu plus de Python&#8230;&#8203;</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_liste">5.1. Liste</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'&lt;aucune erreur&gt;'</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat de ce programme est:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;aucune erreur&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_structures_de_controle">5.2. Structures de controle</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+   <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+   <span class="k">if</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">'That would be a surprise!'</span><span class="p">)</span>
+   <span class="k">elif</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="n">pop</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">'This one looks good.'</span><span class="p">)</span>
+   <span class="k">else</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">'How on earth would we get there?!?'</span><span class="p">)</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat de ce programme est:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>This one looks good.
+2
+3
+5
+7</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dictionnaires">5.3. Dictionnaires</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">}</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="s">'b'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+   <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">, value: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s">'</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat de ce programme est:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Key: a, value: 1
+Key: b, value: 2</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tuples">5.4. Tuples</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">'a'</span> <span class="ow">and</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">s</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">t</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="s">'a'</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+   <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'(</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s">)'</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat de ce programme est:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(a, 1, True)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-12 18:55:11 +0100
+Last updated 2022-01-16 16:52:53 +0100
 </div>
 </div>
 </body>
