@@ -496,7 +496,8 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_diagramme_de_classe_contrat_de_travail">8. Diagramme de classe : contrat de travail</a></li>
 <li><a href="#_diagramme_de_classe_arbre_généalogique">9. Diagramme de classe : arbre généalogique</a></li>
 <li><a href="#_diagramme_de_classe_compagnie_aerienne">10. Diagramme de classe : compagnie aerienne</a></li>
-<li><a href="#_python_le_paysan_le_meunier_et_le_boulanger">11. Python : le paysan, le meunier et le boulanger</a></li>
+<li><a href="#_python_les_mangenombres">11. Python : les mangenombres</a></li>
+<li><a href="#_python_le_paysan_le_meunier_et_le_boulanger">12. Python : le paysan, le meunier et le boulanger</a></li>
 </ul>
 </div>
 </div>
@@ -784,7 +785,55 @@ Il peut passer d&#8217;un état à l&#8217;autre.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_python_le_paysan_le_meunier_et_le_boulanger">11. Python : le paysan, le meunier et le boulanger</h2>
+<h2 id="_python_les_mangenombres">11. Python : les mangenombres</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour obtenir les nombres premiers compris entre 2 et un certain entier N on va construire une liste chaînée d’objets appelés des <code>MangeNombres</code>, chacun comportant deux variables d’instance : un nombre premier <code>p</code> et une référence sur le <code>MangeNombres</code> suivant de la liste.</p>
+</div>
+<div class="paragraph">
+<p>Le comportement d’un <code>MangeNombres</code> se réduit à l’opération ”manger un nombre”, implémentée par une méthode <code>mange</code> acceptant un entier en paramètre. Le <code>MangeNombres</code> m<sub>p</sub> associé au nombre <code>p</code> mange les multiples de <code>p</code> : si on lui donne à manger un nombre <code>q</code> qui n’est pas multiple de <code>p</code>, m<sub>p</sub> le donne à manger à son MangeNombres suivant, s’il existe. Si m<sub>p</sub> n’a pas de suivant, il en crée un, associé à <code>q</code>, et le stocke comme <code>suivant</code>. La création d’un <code>MangeNombres</code> m<sub>p</sub> provoque l’affichage de <code>p</code>. Définissez la classe <code>MangeNombres</code> et écrivez un programme affichant les nombres premiers entre 2 et N.</p>
+</div>
+<div class="paragraph">
+<p>Pour effectuer cet exercice, il pourra vous être utile de savoir que :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>l&#8217;opérateur 'modulo' se note <code>%</code>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>&gt;&gt;&gt; print(5 % 2)
+1</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>On peut créer une variable (ou un membre) et lui donner une valeur spécifique qui représente 'pas de valeur':</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>&gt;&gt;&gt; var = None
+&gt;&gt;&gt; if var:
+...    print('var était initialisée')
+... else:
+...    print('var n\'était pas initialisée ou valait 0')
+...
+var n'était pas initialisée ou valait 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Si <code>var</code> n&#8217;avait pas été créée avec la première ligne, on aurait eu une erreur.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_python_le_paysan_le_meunier_et_le_boulanger">12. Python : le paysan, le meunier et le boulanger</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>On souhaite modéliser en Python un monde dans lequel vivent un paysan, un meunier et un boulanger.  Le paysan produit du blé, le meunier en fait de la farine, le boulanger fabrique du pain avec cette farine, et tout le monde mange de ce pain&#8230;&#8203;</p>
@@ -873,7 +922,7 @@ Il peut passer d&#8217;un état à l&#8217;autre.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-16 17:48:33 +0100
+Last updated 2022-01-17 18:14:56 +0100
 </div>
 </div>
 </body>

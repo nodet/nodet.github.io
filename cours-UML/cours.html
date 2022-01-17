@@ -507,7 +507,7 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_multiplicités">3.7. Multiplicités</a></li>
 <li><a href="#_agrégation_et_composition">3.8. Agrégation et composition</a></li>
 <li><a href="#_généralisation">3.9. Généralisation</a></li>
-<li><a href="#_relation_n_aires">3.10. Relation n-aires</a></li>
+<li><a href="#_relation_n_aire">3.10. Relation n-aire</a></li>
 <li><a href="#_classe_association">3.11. Classe-association</a></li>
 </ul>
 </li>
@@ -1161,7 +1161,7 @@ Elle peut rajouter ses propres propriétés.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_relation_n_aires">3.10. Relation n-aires</h3>
+<h3 id="_relation_n_aire">3.10. Relation n-aire</h3>
 <div class="paragraph">
 <p>Une relation peut metre en jeu plus de deux classes.</p>
 </div>
@@ -1744,16 +1744,32 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<pre class="rouge highlight"><code data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>                    <b class="conum">(1)</b>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>               <b class="conum">(2)</b>
 <span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="n">n</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>       <b class="conum">(3)</b>
+<span class="n">n</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>               <b class="conum">(4)</b>
 <span class="k">assert</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'&lt;aucune erreur&gt;'</span><span class="p">)</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Création d&#8217;une liste vide, définie par les crochets</p>
+</li>
+<li>
+<p>Ajout d&#8217;un élément à la fin de la liste</p>
+</li>
+<li>
+<p>On crée une liste non vide en séparant les éléments par des virgules</p>
+</li>
+<li>
+<p>Retrait d&#8217;un élément de la fin de la liste</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Le résultat de ce programme est:</p>
@@ -1772,18 +1788,34 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-   <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>                                      <b class="conum">(1)</b>
+   <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>                                         <b class="conum">(2)</b>
    <span class="k">if</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
       <span class="k">print</span><span class="p">(</span><span class="s">'That would be a surprise!'</span><span class="p">)</span>
    <span class="k">elif</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="n">pop</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
       <span class="k">print</span><span class="p">(</span><span class="s">'This one looks good.'</span><span class="p">)</span>
    <span class="k">else</span><span class="p">:</span>
       <span class="k">print</span><span class="p">(</span><span class="s">'How on earth would we get there?!?'</span><span class="p">)</span>
-<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>                                     <b class="conum">(3)</b>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>                                       <b class="conum">(4)</b>
 	<span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Comme partout ailleurs en Python, c&#8217;est l&#8217;indentation qui définit où commence et où termine un bloc de code, une définition de fonction ou de classe, etc.</p>
+</li>
+<li>
+<p>Équivalent à <code>n = n - 1</code></p>
+</li>
+<li>
+<p>On peut utiliser des variables pour construire des listes, ou toute autre structure de données</p>
+</li>
+<li>
+<p>Itération sur les éléments d&#8217;une liste</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Le résultat de ce programme est:</p>
@@ -1807,16 +1839,38 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="n">cle</span> <span class="o">=</span> <span class="s">'cle'</span>
 <span class="n">valeur</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
-   <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="n">cle</span><span class="p">:</span> <span class="n">valeur</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span>                                   <b class="conum">(1)</b>
+   <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>                              <b class="conum">(2)</b>
+   <span class="n">cle</span><span class="p">:</span> <span class="n">valeur</span>                          <b class="conum">(3)</b>
 <span class="p">}</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">cle</span> <span class="ow">in</span> <span class="n">d</span> <span class="ow">and</span> <span class="s">'cle'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>                     <b class="conum">(4)</b>
+<span class="k">assert</span><span class="p">(</span><span class="s">'cle'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>                      <b class="conum">(5)</b>
 <span class="k">assert</span><span class="p">(</span><span class="s">'c'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>            <b class="conum">(6)</b>
    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">, value: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s">'</span><span class="p">)</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Définition d&#8217;un dictionnaire (classe <code>dict</code>)&#8230;&#8203;</p>
+</li>
+<li>
+<p>La clé (ici, <code>'a'</code>) peut être n&#8217;importe quel type immutable (nombres, chaînes de caractères, tuples). La valeur peut être quelconque.</p>
+</li>
+<li>
+<p>On peut bien sûr utiliser des variables à la place de constantes pour construire un dict, comme pour toute structure de donnée en Python</p>
+</li>
+<li>
+<p>Accès à la valeur pour une clé donnée. Erreur si la clé n&#8217;existe pas dans le dictionnaire.</p>
+</li>
+<li>
+<p>Tests de la présence d&#8217;une clé dans un dictionnaire</p>
+</li>
+<li>
+<p>Itération sur les paires clé/valeur d&#8217;un dictionnaire</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Le résultat de ce programme est:</p>
@@ -1835,15 +1889,34 @@ Key: cle, value: 3</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">'a'</span> <span class="ow">and</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">s</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">t</span>
+<pre class="rouge highlight"><code data-lang="python"><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>                       <b class="conum">(1)</b>
+<span class="k">assert</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">'a'</span> <span class="ow">and</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>  <b class="conum">(2)</b>
+<span class="n">s</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">t</span>                           <b class="conum">(3)</b>
 <span class="k">assert</span><span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="s">'a'</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>                 <b class="conum">(4)</b>
 <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>                  <b class="conum">(5)</b>
    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'(</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s">)'</span><span class="p">)</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Construction d&#8217;un tuple, ici une paire.  Un tuple est immutable, peut contenir autant d&#8217;élément qu&#8217;on le souhaite, de types quelconques.</p>
+</li>
+<li>
+<p>Accès aux membres d&#8217;un tuple un par un</p>
+</li>
+<li>
+<p>Accès à tous les membres d&#8217;un tuple à la fois ('unpacking')</p>
+</li>
+<li>
+<p>Un triplet, au lieu d&#8217;une paire</p>
+</li>
+<li>
+<p>Itération sur les éléments de la liste (ici, un unique tuple) et 'unpacking' en même temps.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Le résultat de ce programme est:</p>
@@ -1859,7 +1932,7 @@ Key: cle, value: 3</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-17 10:01:26 +0100
+Last updated 2022-01-17 17:09:44 +0100
 </div>
 </div>
 </body>
