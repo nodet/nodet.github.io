@@ -1319,17 +1319,17 @@ Cette méthode doit être considérée comme <em>privée</em> puisque son nom co
 
 
 <span class="k">class</span> <span class="nc">Oeuvre</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auteur</span><span class="p">,</span> <span class="n">titre</span><span class="p">,</span> <span class="n">date_creation</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auteur</span><span class="p">,</span> <span class="n">titre</span><span class="p">,</span> <span class="n">annee_creation</span><span class="p">):</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">auteur</span> <span class="o">=</span> <span class="n">auteur</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">date_creation</span> <span class="o">=</span> <span class="n">date_creation</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">annee_creation</span> <span class="o">=</span> <span class="n">annee_creation</span>
 
     <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Auteur: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">auteur</span><span class="p">.</span><span class="n">prenom</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">auteur</span><span class="p">.</span><span class="n">nom</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Titre: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">titre</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">year</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">date_creation</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">year</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">annee_creation</span>
 
 
 <span class="k">class</span> <span class="nc">Livre</span><span class="p">(</span><span class="n">Oeuvre</span><span class="p">):</span>                                            <b class="conum">(1)</b>
