@@ -1739,6 +1739,9 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_liste">5.1. Liste</h3>
+<div class="paragraph">
+<p><a href="https://docs.python.org/3/tutorial/datastructures.html" class="bare">https://docs.python.org/3/tutorial/datastructures.html</a></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1763,10 +1766,13 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 <div class="sect2">
 <h3 id="_structures_de_controle">5.2. Structures de controle</h3>
+<div class="paragraph">
+<p><a href="https://docs.python.org/3/tutorial/controlflow.html" class="bare">https://docs.python.org/3/tutorial/controlflow.html</a></p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<pre class="rouge highlight"><code data-lang="python"><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
    <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
    <span class="k">if</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
       <span class="k">print</span><span class="p">(</span><span class="s">'That would be a surprise!'</span><span class="p">)</span>
@@ -1774,7 +1780,7 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
       <span class="k">print</span><span class="p">(</span><span class="s">'This one looks good.'</span><span class="p">)</span>
    <span class="k">else</span><span class="p">:</span>
       <span class="k">print</span><span class="p">(</span><span class="s">'How on earth would we get there?!?'</span><span class="p">)</span>
-<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
 	<span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></code></pre>
 </div>
@@ -1794,14 +1800,20 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 <div class="sect2">
 <h3 id="_dictionnaires">5.3. Dictionnaires</h3>
+<div class="paragraph">
+<p><a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries" class="bare">https://docs.python.org/3/tutorial/datastructures.html#dictionaries</a></p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+<pre class="rouge highlight"><code data-lang="python"><span class="n">cle</span> <span class="o">=</span> <span class="s">'cle'</span>
+<span class="n">valeur</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
    <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span>
+   <span class="n">cle</span><span class="p">:</span> <span class="n">valeur</span>
 <span class="p">}</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="s">'b'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">cle</span> <span class="ow">in</span> <span class="n">d</span> <span class="ow">and</span> <span class="s">'cle'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="s">'c'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">, value: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s">'</span><span class="p">)</span></code></pre>
 </div>
@@ -1812,12 +1824,15 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 <div class="listingblock">
 <div class="content">
 <pre>Key: a, value: 1
-Key: b, value: 2</pre>
+Key: cle, value: 3</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_tuples">5.4. Tuples</h3>
+<div class="paragraph">
+<p><a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences" class="bare">https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences</a></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -1844,7 +1859,7 @@ Key: b, value: 2</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-16 16:52:53 +0100
+Last updated 2022-01-17 10:01:26 +0100
 </div>
 </div>
 </body>
