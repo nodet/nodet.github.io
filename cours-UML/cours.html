@@ -1241,18 +1241,18 @@ En particulier, les notions de classes, objets, attributs, opérations et géné
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>                      <b class="conum">(1)</b>
-    <span class="n">val</span> <span class="o">=</span> <span class="bp">None</span>                      <b class="conum">(2)</b>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span> <b class="conum">(3)</b>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span> <b class="conum">(2)</b>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_val</span> <span class="o">=</span> <span class="bp">None</span>            <b class="conum">(3)</b>
         <span class="bp">self</span><span class="p">.</span><span class="n">_val1</span> <span class="o">=</span> <span class="n">arg1</span>           <b class="conum">(4)</b>
         <span class="bp">self</span><span class="p">.</span><span class="n">_val2</span> <span class="o">=</span> <span class="n">arg2</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">_update_val</span><span class="p">()</span>          <b class="conum">(5)</b>
 
     <span class="k">def</span> <span class="nf">_update_val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>          <b class="conum">(6)</b>
-        <span class="bp">self</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_val1</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">_val2</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_val</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_val1</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">_val2</span>
 
     <span class="k">def</span> <span class="nf">display_val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>          <b class="conum">(7)</b>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'My value is </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">val</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'My value is </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">_val</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
 
 <span class="n">the_instance</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>        <b class="conum">(8)</b>
 <span class="n">the_instance</span><span class="p">.</span><span class="n">display_val</span><span class="p">()</span>          <b class="conum">(9)</b></code></pre>
@@ -1265,13 +1265,13 @@ En particulier, les notions de classes, objets, attributs, opérations et géné
 Comme toujours en Python, la fin de la définition est marquée par le retour à l&#8217;indentation d&#8217;origine.</p>
 </li>
 <li>
-<p>Toutes les instances de cette classe ont un attribut <code>val</code>.</p>
-</li>
-<li>
 <p>Définition d&#8217;un constructeur pour cette classe.<br>
 Un constructeur, en Python, est une méthode appelée <code>__init__</code>.<br>
 Elle sera appelée lors de la création d&#8217;une instance de cette classe.<br>
 Elle recevra les arguments passés lors de cette instanciation.</p>
+</li>
+<li>
+<p>Toutes les instances de cette classe ont un attribut <code>_val</code>.</p>
 </li>
 <li>
 <p>Définition d&#8217;attributs supplémentaires.<br>
