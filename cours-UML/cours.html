@@ -559,7 +559,7 @@ Mais il permettra d&#8217;être familier des concepts utilisés par ces derniers
 <div class="paragraph">
 <p>L&#8217;étude fonctionnelle d&#8217;un système a pour but de présenter les fonctions que doit remplir ce système.
 Elle doit le faire de façon suffisamment détaillée pour permettre ensuite la modélisation de ce système, et enfin son implémentation dans un langage informatique.
-Elle utilise en entrée les éléments fournis par le client, et fournis en sortie différents textes et diagrammes qui forment une description précise et complète du système, vu de l&#8217;extérieur à travers les intéractions qu&#8217;il a avec son environnement.</p>
+Elle utilise en entrée les éléments fournis par le client, et fournit en sortie différents textes et diagrammes qui forment une description précise et complète du système, vu de l&#8217;extérieur à travers les intéractions qu&#8217;il a avec son environnement.</p>
 </div>
 <div class="paragraph">
 <p>Très souvent, les éléments fournis en entrée sont complètement insuffisants pour l&#8217;établissement d&#8217;une étude fonctionnelle.
@@ -652,28 +652,25 @@ L&#8217;acteur <code>A</code> <em>est un</em> <code>B</code> puisqu&#8217;il peu
 <div class="ulist">
 <ul>
 <li>
-<p>Un ticket de parking est introduit dans le lecteur</p>
+<p>Le lecteur signale l&#8217;insertion d&#8217;un ticket de parking</p>
 </li>
 <li>
-<p>Calculer le montant à payer</p>
+<p>L&#8217;écran affiche le montant à payer</p>
 </li>
 <li>
-<p>Afficher le montant sur l&#8217;écran</p>
+<p>Le terminal CB reçoit le montant à payer</p>
 </li>
 <li>
-<p>Demander le paiement de ce montant au terminal CB</p>
+<p>Le terminal CB signale que le paiement a été effectué</p>
 </li>
 <li>
-<p>Attendre la réponse du terminal CB</p>
+<p>Un message est envoyé au serveur en indiquant que le ticket a été payé</p>
 </li>
 <li>
-<p>Envoyer un message au serveur en indiquant que le ticket a été payé</p>
+<p>Le lecteur reçoit la commande d&#8217;iprimer la date, l&#8217;heure et le montant payé sur le ticket</p>
 </li>
 <li>
-<p>Imprimer la date, l&#8217;heure et le montant payé sur le ticket</p>
-</li>
-<li>
-<p>Afficher un message et renvoyer le ticket</p>
+<p>L&#8217;écran affiche un message et le ticket est renvoyé</p>
 </li>
 </ul>
 </div>
@@ -681,7 +678,7 @@ L&#8217;acteur <code>A</code> <em>est un</em> <code>B</code> puisqu&#8217;il peu
 <div class="ulist">
 <ul>
 <li>
-<p>Si l&#8217;utilisateur demande l&#8217;annulation du paiement, afficher un message et renvoyer le ticket</p>
+<p>Si le lecteur CB envoie un message indiquant l&#8217;annulation du paiement, afficher un message et renvoyer le ticket</p>
 </li>
 </ul>
 </div>
@@ -725,7 +722,7 @@ Par exemple, <em>le porteur de carte de retrait ne fait pas d&#8217;erreur sur s
 <p>En plus du scénario nominal, un cas d&#8217;usage peut contenir des enchaînements alternatifs.
 Le choix d&#8217;un enchainement alternatif est fait par l&#8217;acteur principal.
 En effet, le choix fait par un acteur secondaire devrait soit être transparent pour l&#8217;acteur principal, soit entrainer une erreur.
-Nous ne sommes donc pas dans le cas d&#8217;un enchaînement alternatif.</p>
+Nous ne serions donc pas dans le cas d&#8217;un enchaînement alternatif.</p>
 </div>
 <div class="ulist">
 <div class="title">Exemples</div>
@@ -755,7 +752,7 @@ Par exemple, le cas d&#8217;utilisation <em>le client paye ses articles avant de
 Ces pré-conditions font partie du cas d&#8217;utilisation, et doivent donc être incluse dans ce dernier.</p>
 </div>
 <div class="paragraph">
-<p>D&#8217;autre part,  un cas d&#8217;utilisation peut inclure des assertions qui doivent être vraies lorsque le cas d&#8217;utilisation se déroule sans erreur.
+<p>D&#8217;autre part,  un cas d&#8217;utilisation peut inclure des assertions qui doivent être vraies lorsque le cas d&#8217;utilisation se déroule sans erreur, nommées post-conditions.
 Par exemple, <em>le cash disponible dans le distributeur est égal à ce qu&#8217;il était au début du cas d&#8217;utilisation, moins ce que le client a demandé</em>.</p>
 </div>
 </div>
@@ -861,7 +858,7 @@ Les éléments suivants peuvent y être représentés :</p>
 <div class="sect2">
 <h3 id="_diagramme_de_séquence">2.5. Diagramme de séquence</h3>
 <div class="paragraph">
-<p>Un diagramme de séquence montre actions réalisées ou les messages échangés entre différents acteurs lors de la réalisation d&#8217;un cas d&#8217;utilisation (ou d&#8217;un scénario d&#8217;un cas d&#8217;utilisation).</p>
+<p>Un diagramme de séquence montre les actions réalisées ou les messages échangés entre différents acteurs lors de la réalisation d&#8217;un cas d&#8217;utilisation (ou d&#8217;un scénario d&#8217;un cas d&#8217;utilisation).</p>
 </div>
 <div class="paragraph">
 <p>Chaque acteur est représenté par une ligne verticale.
@@ -874,12 +871,12 @@ Le temps défile du haut vers le bas, et les messages sont donc ordonnés dans l
 <div class="ulist">
 <ul>
 <li>
-<p>Synchrones : les messages synchrones sont envoyés, reçus par leur destinataire, et reviennent avec une réponse en une seule action.
+<p>Synchrones : les messages synchrones sont envoyés, sont reçus par leur destinataire, et reviennent avec une réponse en une seule action.
 L&#8217;emetteur ne peut rien faire d&#8217;autre en attendant la réponse.
 Ils sont représentés avec une flèche pleine.</p>
 </li>
 <li>
-<p>Asynchrones : l&#8217;envoi du message et sa réception par le destinataire, sont décorrellés.
+<p>Asynchrones : l&#8217;envoi du message et sa réception par le destinataire sont décorrellés.
 Le second peut avoir lieu significativement après le premier.
 L&#8217;emetteur peut continuer ses traitements sans attendre de réponse du destinataire.
 S&#8217;il doit y avoir une réponse, elle sera sous la forme d&#8217;un nouveau message qui sera émis par le destinataire du premier message.</p>
@@ -943,7 +940,7 @@ Ce processus récursif peut être répété jusqu&#8217;à obtenir des systèmes
 Les éléments manipulés dans le système (e.g. les livres d&#8217;une bibliothèque) sont également représentés par une classe.
 Une classe définit un modèle, un patron, à partir duquel on pourra construire des instances, appelées objets. Un objet ne peut pas changer de classe.
 Ainsi, chaque objet est construit à partir d&#8217;une et une seule classe.
-Et une classe peut être instanciée plusieurs fois pour construire autant d&#8217;objets.
+Réciproquement, une classe peut être instanciée plusieurs fois pour construire autant d&#8217;objets.
 Par exemple, si on gère le stock d&#8217;un vendeur de voitures d&#8217;occasion, il y aura probablement autant d&#8217;instances de la classe <code>Voiture</code> que de véhicules à gérer.</p>
 </div>
 <div class="paragraph">
@@ -954,9 +951,9 @@ C&#8217;est même assez courant pour représenter, par exemple, l&#8217;IHM de l
 <div class="sect2">
 <h3 id="_attributs">3.3. Attributs</h3>
 <div class="paragraph">
-<p>Un attribut est une propriété d&#8217;une classe qui associe une variable à chacun des objets instanciés à partir de cette classe.
+<p>Un attribut est une propriété d&#8217;une classe qui associe une information à chacun des objets instanciés à partir de cette classe.
 Un attribut peut avoir un type spécifié.
-Le type d&#8217;un attribut, s&#8217;il est spécifié, doit être <em>simple</em>: entier, chaîne de caractère, date, etc.</p>
+Le type d&#8217;un attribut, s&#8217;il est spécifié, doit être <em>simple</em>: entier, chaîne de caractère, date, etc. Ce ne sera donc pas, par exemple, une référence à un autre instance : les liens entre objets ne sont pas des attributs, mais des associations (voir ci-après).</p>
 </div>
 <div class="ulist">
 <div class="title">Exemples</div>
@@ -1901,7 +1898,7 @@ Key: cle, value: 3</pre>
 <div class="colist arabic">
 <ol>
 <li>
-<p>Construction d&#8217;un tuple, ici une paire.  Un tuple est immutable, peut contenir autant d&#8217;élément qu&#8217;on le souhaite, de types quelconques.</p>
+<p>Construction d&#8217;un tuple, ici une paire.  Un tuple est immutable, et peut contenir autant d&#8217;élément qu&#8217;on le souhaite, de types quelconques.</p>
 </li>
 <li>
 <p>Accès aux membres d&#8217;un tuple un par un</p>
@@ -1931,7 +1928,7 @@ Key: cle, value: 3</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-12-12 22:06:51 +0100
+Last updated 2022-12-30 14:35:20 +0100
 </div>
 </div>
 </body>
