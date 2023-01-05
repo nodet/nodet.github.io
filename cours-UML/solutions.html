@@ -480,7 +480,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">Janvier 2023 - b6fbf62</span>
+<span id="revdate">Janvier 2023 - dfa7e94</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -679,12 +679,6 @@ Donc il n&#8217;y a pas de nouveau rôle.</p>
 <li>
 <p>Si le code scanné ne correspond pas à un document en stock, un signal sonore et visuel est émis, un message "Document inconnu" est affiché.</p>
 </li>
-<li>
-<p>Si le document est marqué "emprunté", un signal sonore et visuel est émis, un message "Document déjà emprunté" est affiché.</p>
-</li>
-<li>
-<p>Si le document est marqué "réservé", un signal sonore et visuel est émis, un message "Document réservé" est affiché.</p>
-</li>
 </ul>
 </div>
 <h4 id="_post_conditions" class="discrete">Post-conditions</h4>
@@ -706,7 +700,7 @@ Donc il n&#8217;y a pas de nouveau rôle.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Un utilisateur est identifié depuis moins de 30 secondes</p>
+<p>Un utilisateur est identifié</p>
 </li>
 </ul>
 </div>
@@ -725,7 +719,13 @@ Donc il n&#8217;y a pas de nouveau rôle.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Si le nombre de documents déjà empruntés par l&#8217;utilisateur est supérieur ou égal à la limite, un signal sonore et visuel est émis, et un message "Trop de document empruntés" est affiché. Le document n&#8217;est pas ajouté à la liste des documents empruntés, et n&#8217;est pas marqué emprunté dans la base de données.</p>
+<p>Si le document est marqué "emprunté", un signal sonore et visuel est émis, un message "Document déjà emprunté" est affiché.</p>
+</li>
+<li>
+<p>Si le document est marqué "réservé" et que l&#8217;utilisateur n&#8217;est pas celui pour lequel le document est réservé, un signal sonore et visuel est émis, un message "Document réservé" est affiché.</p>
+</li>
+<li>
+<p>Si le nombre de documents déjà empruntés par l&#8217;utilisateur est supérieur ou égal à la limite, un signal sonore et visuel est émis, et un message "Trop de document empruntés" est affiché.</p>
 </li>
 </ul>
 </div>
@@ -1139,7 +1139,7 @@ Transport(8.2 -- 4.6)
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-04 18:54:09 +0100
+Last updated 2023-01-05 14:03:17 +0100
 </div>
 </div>
 </body>
