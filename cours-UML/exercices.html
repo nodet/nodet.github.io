@@ -480,7 +480,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">Janvier 2023  - 057177b</span>
+<span id="revdate">Janvier 2023  - 6e7f7aa</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -498,6 +498,7 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_python_les_mangenombres">11. Python : les Mangenombres</a></li>
 <li><a href="#_python_vehicles">12. Python : Vehicles</a></li>
 <li><a href="#_python_a_budget_app">13. Python : A budget app</a></li>
+<li><a href="#_python_un_robot_très_simple">14. Python : un robot très simple</a></li>
 </ul>
 </div>
 </div>
@@ -920,10 +921,93 @@ var n'était pas initialisée ou valait 0</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_python_un_robot_très_simple">14. Python : un robot très simple</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un robot se déplace sur un plateau à cases carrées.  Les cases ont des coordonnées x et y (entiers) qui peuvent éventuellement être négatives. Écrire une classe Robot possédant les caractéristiques suivantes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Le constructeur accepte deux arguments qui sont les coordonnées de départ</p>
+</li>
+<li>
+<p>Le robot possède une orientation ('Nord', 'Sud', 'Est', ou 'Ouest').</p>
+</li>
+<li>
+<p>Lors de sa création, un robot est toujours tourné vers le nord.</p>
+</li>
+<li>
+<p>Une méthode 'droite()' permet au robot d&#8217;effectuer un quart de tour sur lui-même vers la droite.</p>
+</li>
+<li>
+<p>Une méthode <code>avance()</code> permet d&#8217;avancer le robot d&#8217;une case dans la direction courante du robot.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Écrire également une nouvelle classe de robot amélioré, le <code>RobotNG</code>. Cette classe aura les mêmes caractéristiques que le robot de base, et saura en plus:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Effectuer un <code>demitour()</code></p>
+</li>
+<li>
+<p>Courir de 5 cases dans sa direction courante.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Tester la classe avec ce programme.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Robot</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">...</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span><span class="p">].</span><span class="n">__repr__</span><span class="p">()</span>
+
+    <span class="p">...</span>
+
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">RobotNG</span><span class="p">...:</span>
+    <span class="p">...</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">RobotNG</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">demitour</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">courir</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-07 10:01:46 +0100
+Last updated 2023-01-11 08:20:18 +0100
 </div>
 </div>
 </body>
