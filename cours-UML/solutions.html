@@ -480,7 +480,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">Janvier 2023  - 33e58dc</span>
+<span id="revdate">Janvier 2023  - a193658</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -514,7 +514,70 @@ pre.rouge .nb, pre.rouge .bp {
 <h2 id="_identification_des_acteurs">1. Identification des acteurs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://forms.gle/z5gwPvn2E6UDomQZ9" class="bare">https://forms.gle/z5gwPvn2E6UDomQZ9</a></p>
+<p>Le système étudié est le programme qui permet aux personnels de la bibliothèque universitaire d&#8217;enregistrer l&#8217;emprunt de documents par les étudiants.  Ce programme tourne sur un ordinateur muni d&#8217;une douchette pour scanner les documents, d&#8217;un écran, et d&#8217;une carte réseau pour communiquer avec les systèmes informatiques distants.</p>
+</div>
+<div class="paragraph">
+<p>Indiquez, pour chaque entité, s&#8217;il s&#8217;agit ou non d&#8217;un acteur dans la description du cas d&#8217;utilisation "Emprunt d&#8217;un document".</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Le bibliothécaire qui enregistre l&#8217;emprunt</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Oui, c&#8217;est un acteur : c&#8217;est lui qui utilise le système pour obtenir un but, enregistrer l&#8217;emprunt du document par l&#8217;étudiant.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>L&#8217;étudiant qui emprunte le document</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Ce n&#8217;est pas un acteur car il n&#8217;utilise pas (directement) le système.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>L&#8217;ordinateur qui fait tourner le programme</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Non, l&#8217;ordinateur qui fait tourner le programme n&#8217;est pas un acteur. L&#8217;ordinateur est necessaire pour que le programme s&#8217;execute, comme du courant electrique est nécessaire.  Mais le programme n&#8217;échange pas de message avec l&#8217;ordinateur.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>La douchette branchée à l&#8217;ordinateur pour lire les codes-barre</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Oui, la douchette est un acteur, car le programme va recevoir d&#8217;elle les informations concernant les code-barres des documents.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="5">
+<li>
+<p>La base de donnée distante qui stocke les documents empruntés par les étudiants</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Oui, la BdD distante est un acteur : le programme va échanger des messages avec elle pour stocker et retrouver des informations.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="6">
+<li>
+<p>Le système informatique administratif de l&#8217;université</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Oui, pour la même raison. Par exemple, pour vérifier le numéro d&#8217;un étudiant.</p>
 </div>
 </div>
 </div>
@@ -1239,7 +1302,7 @@ Transport(8.2 -- 4.6)
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-11 08:22:12 +0100
+Last updated 2023-01-13 08:17:45 +0100
 </div>
 </div>
 </body>
