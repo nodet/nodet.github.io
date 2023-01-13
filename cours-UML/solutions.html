@@ -480,7 +480,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">Janvier 2023  - 0cbb4d6</span>
+<span id="revdate">Janvier 2023  - 1285b1d</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -970,7 +970,79 @@ Donc il n&#8217;y a pas de nouveau rôle.</p>
 <h2 id="_types_de_relation">7. Types de relation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://forms.gle/mFMKuVzfLqxXtbmR8" class="bare">https://forms.gle/mFMKuVzfLqxXtbmR8</a></p>
+<p>Pour chaque exemple ci-dessous, indiquez si la relation présentée est une généralisation, une agrégation ou une association.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Un pays a une capitale</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Déterminons le type de cette relation entre la classe Pays et la classe Ville.
+Ce n&#8217;est pas une généralisation, car un pays n&#8217;est pas une ville, et on ne peut pas dire non plus qu&#8217;une ville <em>est un</em> pays.</p>
+</div>
+<div class="paragraph">
+<p>Ce n&#8217;est pas une composition car la ville peut exister sans le pays.
+Par exemple, si le pays est annexé et disparait, et que donc il n&#8217;a plus de capitale, la ville est&#8201;&#8212;&#8201;souhaitons-le&#8201;&#8212;&#8201;toujours là.</p>
+</div>
+<div class="paragraph">
+<p>Enfin, la relation <em>a pour capitale</em> ne sera pas non plus une aggrégation.
+En effet, le fait qu&#8217;une ville fasse partie intégrante d&#8217;un pays est vrai pour toutes les villes, pas seulement la capitale.
+On aurait donc une aggrégation entre Pays et Ville pour indiquer à quel pays appartient une ville, et une association simple pour désigner sa capitale.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Une transaction boursière est un achat ou une vente</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Les mots <em>est un</em> suggèrent très fortement une relation de type <em>généralisation</em>.
+Et c&#8217;est bien de cela qu&#8217;il s&#8217;agit.</p>
+</div>
+<div class="paragraph">
+<p>En effet, il n&#8217;est pas possible de transformer une transaction boursière, qui est nécessairement soit un achat, soit une vente, et ne peut passer d&#8217;un état à un autre.
+D&#8217;autre part, il existe bien des éléments communs aux achats et aux ventes (la date, l&#8217;identité de l&#8217;acheteur ou du vendeur, etc.) qui seront donc portés par une classe commune Transaction.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Les fichiers contiennent des enregistrements</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Un enregistrement n&#8217;est pas un type de fichier, comme une ligne n&#8217;est pas un type de table dans une base de donnée, et une fiche n&#8217;est pas un type de classeur dans votre collection de cours.</p>
+</div>
+<div class="paragraph">
+<p>Comme la ligne d&#8217;une table, et contrairement à une fiche de cours, un enregistrement n&#8217;a pas d&#8217;existence propre : si on enlève un enregistrement d&#8217;un fichier, ou une ligne d&#8217;une base de donnée, ceux-ci disparaissent tout simplement.
+Il s&#8217;agit donc d&#8217;une relation d'<em>aggrégation</em> : l&#8217;enregistrement est constitutif du fichier, et n&#8217;existe pas en dehors du fichier.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>Une personne utilise un langage de programmation dans un projet</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Un langage de programmation n'<em>est</em> pas un projet, et vice-versa. Donc il ne s&#8217;agit pas d&#8217;une généralisation.
+De même, un langage de programmation et un projet ne sont pas inclus l&#8217;un dans l&#8217;autre, donc il n&#8217;y a pas d&#8217;aggrégation, et encore moins de composition.
+Il s&#8217;agit donc simplement d&#8217;une <em>association</em>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="5">
+<li>
+<p>Les modems et les claviers sont des périphériques d&#8217;entrées/sorties</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Les modems et les claviers sont des objets qui font tous les deux partie de la classe des périphériques d&#8217;entrées/sorties. Ce sont deux sous-types de cette classe, et un objet d&#8217;un type ne peut pas être changé en un objet de l&#8217;autre type.
+Nous avons donc ici une <em>généralisation</em>.</p>
 </div>
 </div>
 </div>
@@ -1365,7 +1437,7 @@ Transport(8.2 -- 4.6)
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-13 08:34:56 +0100
+Last updated 2023-01-13 09:25:52 +0100
 </div>
 </div>
 </body>
