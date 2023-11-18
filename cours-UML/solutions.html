@@ -480,7 +480,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">Novembre 2023  - ff0e801</span>
+<span id="revdate">Novembre 2023  - 4499aa0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -502,10 +502,11 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_diagramme_de_classe_contrat_de_travail">8. Diagramme de classe : contrat de travail</a></li>
 <li><a href="#_diagramme_de_classe_arbre_généalogique">9. Diagramme de classe : arbre généalogique</a></li>
 <li><a href="#_diagramme_de_classe_compagnie_aérienne">10. Diagramme de classe : compagnie aérienne</a></li>
-<li><a href="#_python_les_mangenombres">11. Python : les Mangenombres</a></li>
-<li><a href="#_python_vehicles">12. Python : Vehicles</a></li>
-<li><a href="#_python_a_budget_app">13. Python : A budget app</a></li>
-<li><a href="#_python_un_robot_très_simple">14. Python : un robot très simple</a></li>
+<li><a href="#_python_vehicles">11. Python : Vehicles</a></li>
+<li><a href="#_python_un_robot_très_simple">12. Python : un robot très simple</a></li>
+<li><a href="#_python_que_fait_ce_programme">13. Python : que fait ce programme ?</a></li>
+<li><a href="#_python_les_mangenombres">14. Python : les Mangenombres</a></li>
+<li><a href="#_python_a_budget_app">15. Python : A budget app</a></li>
 </ul>
 </div>
 </div>
@@ -1102,7 +1103,269 @@ Nous avons donc ici une <em>généralisation</em>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_python_les_mangenombres">11. Python : les Mangenombres</h2>
+<h2 id="_python_vehicles">11. Python : Vehicles</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Vehicle</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
+
+  <span class="k">def</span> <span class="nf">fare</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">capacity</span> <span class="o">*</span> <span class="mi">100</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">fare</span><span class="p">()</span><span class="si">}</span><span class="s">"</span>
+
+
+<span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Bus</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">fare</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">fare</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span>
+
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">Car</span><span class="p">(</span><span class="s">"VW Touran"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">Bus</span><span class="p">(</span><span class="s">"School Volvo"</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat de ce programme est:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>VW Touran: 500
+School Volvo: 5500.0</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_python_un_robot_très_simple">12. Python : un robot très simple</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Robot</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Nord'</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span><span class="p">].</span><span class="n">__repr__</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">delta_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Est'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Ouest'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">delta_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Sud'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">vitesse</span><span class="p">():</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">avance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="p">.</span><span class="n">delta_x</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="p">.</span><span class="n">delta_y</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">droite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">old_direction</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Est'</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Est'</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Sud'</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Sud'</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Ouest'</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Ouest'</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Nord'</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">old_direction</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span><span class="p">)</span>
+
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">RobotNG</span><span class="p">(</span><span class="n">Robot</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">demitour</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">courir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">RobotNG</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">demitour</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">courir</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat de ce programme est:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[2, 5, 'Nord']
+[4, 5, 'Est']
+[3, 5, 'Ouest']
+[0, -5, 'Sud']</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_python_que_fait_ce_programme">13. Python : que fait ce programme ?</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Personne</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">stock</span> <span class="o">=</span> <span class="p">{</span><span class="s">'pain'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'ble'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'farine'</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">mange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="s">'pain'</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"J'ai faim !"</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="s">'pain'</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"J'ai bien mangé."</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">souhaite_obtenir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="s">'pain'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">donne_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">personne</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="bp">self</span> <span class="o">!=</span> <span class="n">personne</span><span class="p">)</span>
+        <span class="n">list_of_pairs</span> <span class="o">=</span> <span class="n">personne</span><span class="p">.</span><span class="n">souhaite_obtenir</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">list_of_pairs</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="n">p</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">q</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">-=</span> <span class="n">q</span>
+                <span class="n">personne</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+=</span> <span class="n">q</span>
+
+    <span class="k">def</span> <span class="nf">transforme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ingredient</span><span class="p">,</span> <span class="n">produit</span><span class="p">):</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="n">ingredient</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">q</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="n">ingredient</span><span class="p">]</span> <span class="o">-=</span> <span class="n">q</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="n">produit</span><span class="p">]</span> <span class="o">+=</span> <span class="n">q</span>
+
+<span class="k">class</span> <span class="nc">Paysan</span><span class="p">(</span><span class="n">Personne</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">produit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">stock</span><span class="p">[</span><span class="s">'ble'</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">3</span>
+
+<span class="k">class</span> <span class="nc">Meunier</span><span class="p">(</span><span class="n">Personne</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">produit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">transforme</span><span class="p">(</span><span class="s">'ble'</span><span class="p">,</span> <span class="s">'farine'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">souhaite_obtenir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="s">'pain'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">'ble'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+
+<span class="k">class</span> <span class="nc">Boulanger</span><span class="p">(</span><span class="n">Personne</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">produit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">transforme</span><span class="p">(</span><span class="s">'farine'</span><span class="p">,</span> <span class="s">'pain'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">souhaite_obtenir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="s">'farine'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+
+<span class="n">personnes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Paysan</span><span class="p">(),</span> <span class="n">Meunier</span><span class="p">(),</span> <span class="n">Boulanger</span><span class="p">()]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">personnes</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">mange</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">personnes</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">produit</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">personnes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">p_prime</span> <span class="ow">in</span> <span class="n">personnes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">p_prime</span><span class="p">:</span>
+                <span class="n">p</span><span class="p">.</span><span class="n">donne_a</span><span class="p">(</span><span class="n">p_prime</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">personnes</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">stock</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La réponse à cet exercice, i.e. le résultat de ce programme, est donc:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="code"><pre>J'ai bien mangé.
+J'ai bien mangé.
+J'ai bien mangé.
+
+J'ai faim !
+J'ai faim !
+J'ai faim !
+
+J'ai faim !
+J'ai faim !
+J'ai faim !
+
+J'ai bien mangé.
+J'ai bien mangé.
+J'ai bien mangé.
+
+{'pain': 1, 'ble': 0, 'farine': 0}
+{'pain': 1, 'ble': 3, 'farine': 0}
+{'pain': 1, 'ble': 0, 'farine': 3}
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_python_les_mangenombres">14. Python : les Mangenombres</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -1182,55 +1445,7 @@ et (2) s&#8217;assurer que ses multiples seront mangés</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_python_vehicles">12. Python : Vehicles</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Vehicle</span><span class="p">:</span>
-
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
-    <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-    <span class="bp">self</span><span class="p">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
-
-  <span class="k">def</span> <span class="nf">fare</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">capacity</span> <span class="o">*</span> <span class="mi">100</span>
-
-  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">fare</span><span class="p">()</span><span class="si">}</span><span class="s">"</span>
-
-
-<span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
-
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-    <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-
-
-<span class="k">class</span> <span class="nc">Bus</span><span class="p">(</span><span class="n">Vehicle</span><span class="p">):</span>
-
-  <span class="k">def</span> <span class="nf">fare</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">fare</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span>
-
-
-<span class="n">v</span> <span class="o">=</span> <span class="n">Car</span><span class="p">(</span><span class="s">"VW Touran"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-
-<span class="n">v</span> <span class="o">=</span> <span class="n">Bus</span><span class="p">(</span><span class="s">"School Volvo"</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Le résultat de ce programme est:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>VW Touran: 500
-School Volvo: 5500.0</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_python_a_budget_app">13. Python : A budget app</h2>
+<h2 id="_python_a_budget_app">15. Python : A budget app</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -1360,109 +1575,10 @@ Transport(8.2 -- 4.6)
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_python_un_robot_très_simple">14. Python : un robot très simple</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Robot</span><span class="p">:</span>
-    
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Nord'</span>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span><span class="p">].</span><span class="n">__repr__</span><span class="p">()</span>
-    
-    <span class="k">def</span> <span class="nf">delta_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Est'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Ouest'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">0</span>
-
-    <span class="k">def</span> <span class="nf">delta_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Sud'</span><span class="p">:</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">0</span>
-
-    <span class="k">def</span> <span class="nf">vitesse</span><span class="p">():</span>
-        <span class="k">return</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">avance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="p">.</span><span class="n">delta_x</span><span class="p">()</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="p">.</span><span class="n">delta_y</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">droite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">old_direction</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">:</span>
-            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Est'</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Est'</span><span class="p">:</span>
-            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Sud'</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Sud'</span><span class="p">:</span>
-            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Ouest'</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Ouest'</span><span class="p">:</span>
-            <span class="bp">self</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s">'Nord'</span>
-        <span class="k">assert</span><span class="p">(</span><span class="n">old_direction</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">direction</span><span class="p">)</span>
-
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">)</span>
-<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
-<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
-<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
-<span class="n">r</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
-<span class="n">r</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
-
-
-<span class="k">class</span> <span class="nc">RobotNG</span><span class="p">(</span><span class="n">Robot</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="nf">demitour</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">droite</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">courir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-            <span class="bp">self</span><span class="p">.</span><span class="n">avance</span><span class="p">()</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">RobotNG</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s">'Nord'</span><span class="p">)</span>
-<span class="n">r</span><span class="p">.</span><span class="n">demitour</span><span class="p">()</span>
-<span class="n">r</span><span class="p">.</span><span class="n">courir</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span><span class="p">.</span><span class="n">y</span> <span class="o">==</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Le résultat de ce programme est:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>[2, 5, 'Nord']
-[4, 5, 'Est']
-[3, 5, 'Ouest']
-[0, -5, 'Sud']</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-13 09:51:02 +0100
+Last updated 2023-11-18 12:20:31 +0100
 </div>
 </div>
 </body>
