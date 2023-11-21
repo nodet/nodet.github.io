@@ -480,49 +480,50 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">Novembre 2023  - 99f16c4</span>
+<span id="revdate">Novembre 2023  - db20db4</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
-<li><a href="#_introduction">1. Introduction</a></li>
-<li><a href="#_étude_fonctionnelle">2. Étude fonctionnelle</a>
+<li><a href="#_pré_requis">1. Pré-requis</a></li>
+<li><a href="#_introduction">2. Introduction</a></li>
+<li><a href="#_étude_fonctionnelle">3. Étude fonctionnelle</a>
 <ul class="sectlevel2">
-<li><a href="#_acteur">2.1. Acteur</a></li>
-<li><a href="#_exemple_de_cas_dutilisation">2.2. Exemple de cas d&#8217;utilisation</a></li>
-<li><a href="#_cas_dutilisation">2.3. Cas d&#8217;utilisation</a></li>
-<li><a href="#_diagramme_dactivité">2.4. Diagramme d&#8217;activité</a></li>
-<li><a href="#_diagramme_de_séquence">2.5. Diagramme de séquence</a></li>
+<li><a href="#_acteur">3.1. Acteur</a></li>
+<li><a href="#_exemple_de_cas_dutilisation">3.2. Exemple de cas d&#8217;utilisation</a></li>
+<li><a href="#_cas_dutilisation">3.3. Cas d&#8217;utilisation</a></li>
+<li><a href="#_diagramme_dactivité">3.4. Diagramme d&#8217;activité</a></li>
+<li><a href="#_diagramme_de_séquence">3.5. Diagramme de séquence</a></li>
 </ul>
 </li>
-<li><a href="#_modélisation_statique">3. Modélisation statique</a>
+<li><a href="#_modélisation_statique">4. Modélisation statique</a>
 <ul class="sectlevel2">
-<li><a href="#_décomposition">3.1. Décomposition</a></li>
-<li><a href="#_classes_et_objets">3.2. Classes et objets</a></li>
-<li><a href="#_attributs">3.3. Attributs</a></li>
-<li><a href="#_opérations">3.4. Opérations</a></li>
-<li><a href="#_représentation_dune_classe">3.5. Représentation d&#8217;une classe</a></li>
-<li><a href="#_associations">3.6. Associations</a></li>
-<li><a href="#_multiplicités">3.7. Multiplicités</a></li>
-<li><a href="#_agrégation_et_composition">3.8. Agrégation et composition</a></li>
-<li><a href="#_généralisation">3.9. Généralisation</a></li>
-<li><a href="#_relation_n_aire">3.10. Relation n-aire</a></li>
-<li><a href="#_classe_association">3.11. Classe-association</a></li>
+<li><a href="#_décomposition">4.1. Décomposition</a></li>
+<li><a href="#_classes_et_objets">4.2. Classes et objets</a></li>
+<li><a href="#_attributs">4.3. Attributs</a></li>
+<li><a href="#_opérations">4.4. Opérations</a></li>
+<li><a href="#_représentation_dune_classe">4.5. Représentation d&#8217;une classe</a></li>
+<li><a href="#_associations">4.6. Associations</a></li>
+<li><a href="#_multiplicités">4.7. Multiplicités</a></li>
+<li><a href="#_agrégation_et_composition">4.8. Agrégation et composition</a></li>
+<li><a href="#_généralisation">4.9. Généralisation</a></li>
+<li><a href="#_relation_n_aire">4.10. Relation n-aire</a></li>
+<li><a href="#_classe_association">4.11. Classe-association</a></li>
 </ul>
 </li>
-<li><a href="#_programmation_orientée_objet">4. Programmation Orientée Objet</a>
+<li><a href="#_programmation_orientée_objet">5. Programmation Orientée Objet</a>
 <ul class="sectlevel2">
-<li><a href="#_poo_en_python">4.1. POO en Python</a></li>
-<li><a href="#_poo_en_java">4.2. POO en Java</a></li>
-<li><a href="#_poo_en_c">4.3. POO en C++</a></li>
+<li><a href="#_poo_en_python">5.1. POO en Python</a></li>
+<li><a href="#_poo_en_java">5.2. POO en Java</a></li>
+<li><a href="#_poo_en_c">5.3. POO en C++</a></li>
 </ul>
 </li>
-<li><a href="#_un_peu_plus_de_python">5. Un peu plus de Python&#8230;&#8203;</a>
+<li><a href="#_un_peu_plus_de_python">6. Un peu plus de Python&#8230;&#8203;</a>
 <ul class="sectlevel2">
-<li><a href="#_liste">5.1. Liste</a></li>
-<li><a href="#_structures_de_controle">5.2. Structures de controle</a></li>
-<li><a href="#_dictionnaires">5.3. Dictionnaires</a></li>
-<li><a href="#_tuples">5.4. Tuples</a></li>
+<li><a href="#_liste">6.1. Liste</a></li>
+<li><a href="#_structures_de_controle">6.2. Structures de controle</a></li>
+<li><a href="#_dictionnaires">6.3. Dictionnaires</a></li>
+<li><a href="#_tuples">6.4. Tuples</a></li>
 </ul>
 </li>
 </ul>
@@ -541,7 +542,15 @@ Il utilise UML 2.5 pour la première, et donne des exemples en Python, Java et C
 </div>
 </div>
 <div class="sect1">
-<h2 id="_introduction">1. Introduction</h2>
+<h2 id="_pré_requis">1. Pré-requis</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour étudier ce cours, vous devriez connaître quelques bases de la programmation : notions de variables (locales et globales), les structures de contôles, et les fonctions.  Par exemples, les chapitres 1 et 4 de <a href="https://www.rocq.inria.fr/secret/Anne.Canteaut/COURS_C/" class="bare">https://www.rocq.inria.fr/secret/Anne.Canteaut/COURS_C/</a>. Mais n&#8217;importe quel autre langage fera l&#8217;affaire&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction">2. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Le but de ce cours est d&#8217;offrir une introduction aux notions utilisées dans la modélisation de programme et la programmation orientée objet.
@@ -554,7 +563,7 @@ Mais il permettra d&#8217;être familier des concepts utilisés par ces derniers
 </div>
 </div>
 <div class="sect1">
-<h2 id="_étude_fonctionnelle">2. Étude fonctionnelle</h2>
+<h2 id="_étude_fonctionnelle">3. Étude fonctionnelle</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>L&#8217;étude fonctionnelle d&#8217;un système a pour but de présenter les fonctions que doit remplir ce système.
@@ -572,7 +581,7 @@ Il doit faire préciser les différents cas d&#8217;erreurs, les performances at
 Ces derniers peuvent être regroupés dans des diagrammes de cas, et complétés de diagrammes d&#8217;activité ou de séquence.</p>
 </div>
 <div class="sect2">
-<h3 id="_acteur">2.1. Acteur</h3>
+<h3 id="_acteur">3.1. Acteur</h3>
 <div class="paragraph">
 <p>Un acteur représente un rôle spécifique joué par une entité qui interagit directement avec le système considéré.
 Il ne fait donc pas partie du système.
@@ -590,7 +599,7 @@ Un acteur peut être humain ou non.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_représentation">2.1.1. Représentation</h4>
+<h4 id="_représentation">3.1.1. Représentation</h4>
 <div class="paragraph">
 <p>Les acteurs humains sont généralement représentés par un <em>stick man</em>, tandis que les acteurs non-humains sont représentés par un rectangle muni d&#8217;un tag <em>&lt;&lt;actor&gt;&gt;</em>.</p>
 </div>
@@ -601,7 +610,7 @@ Un acteur peut être humain ou non.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_spécialisation_dun_acteur">2.1.2. Spécialisation d&#8217;un acteur</h4>
+<h4 id="_spécialisation_dun_acteur">3.1.2. Spécialisation d&#8217;un acteur</h4>
 <div class="paragraph">
 <p>Lorsqu&#8217;un acteur <code>A</code> peut realiser tout ce qu&#8217;un autre acteur <code>B</code> peut faire, et ajoute d&#8217;autres rôles, on dit que <code>A</code> est une spécialisation de <code>B</code>.
 L&#8217;acteur <code>A</code> <em>est un</em> <code>B</code> puisqu&#8217;il peut faire tout ce que <code>B</code> peut faire.  Mais comme il possède également un ou plusieurs rôles propres (i.e. il intervient dans des cas d&#8217;utilisation qui ne concernent pas le <code>B</code>), c&#8217;est un acteur distinct.</p>
@@ -622,7 +631,7 @@ L&#8217;acteur <code>A</code> <em>est un</em> <code>B</code> puisqu&#8217;il peu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_exemple_de_cas_dutilisation">2.2. Exemple de cas d&#8217;utilisation</h3>
+<h3 id="_exemple_de_cas_dutilisation">3.2. Exemple de cas d&#8217;utilisation</h3>
 <div class="sidebarblock">
 <div class="content">
 <h5 id="_système_considéré" class="discrete">Système considéré</h5>
@@ -700,7 +709,7 @@ L&#8217;acteur <code>A</code> <em>est un</em> <code>B</code> puisqu&#8217;il peu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cas_dutilisation">2.3. Cas d&#8217;utilisation</h3>
+<h3 id="_cas_dutilisation">3.3. Cas d&#8217;utilisation</h3>
 <div class="paragraph">
 <p>Un cas d&#8217;utilisation décrit une séquence d&#8217;évènements pendant laquelle un acteur, qualifié alors d&#8217;acteur principal, intéragit avec le système pour obtenir un résultat qui l&#8217;intéresse.
 Chaque cas d&#8217;utilisation décrit le comportement attendu du système lors de cette interaction.</p>
@@ -710,14 +719,14 @@ Chaque cas d&#8217;utilisation décrit le comportement attendu du système lors 
 Le système est considéré comme une boite noire, et c&#8217;est seulement par les interactions avec les acteurs que son comportement est décrit.</p>
 </div>
 <div class="sect3">
-<h4 id="_scénario_nominal_2">2.3.1. Scénario nominal</h4>
+<h4 id="_scénario_nominal_2">3.3.1. Scénario nominal</h4>
 <div class="paragraph">
 <p>Un cas d&#8217;utilisation comprend un et un seul scénario, dit <em>nominal</em>, qui décrit le déroulement attendu pour ce cas, sans erreur.
 Par exemple, <em>le porteur de carte de retrait ne fait pas d&#8217;erreur sur son code, demande un montant qui n&#8217;est pas supérieur à la limite, prend un ticket, et retire sa carte et l&#8217;argent</em>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_enchaînements_alternatifs">2.3.2. Enchaînements alternatifs</h4>
+<h4 id="_enchaînements_alternatifs">3.3.2. Enchaînements alternatifs</h4>
 <div class="paragraph">
 <p>En plus du scénario nominal, un cas d&#8217;usage peut contenir des enchaînements alternatifs.
 Le choix d&#8217;un enchainement alternatif est fait par l&#8217;acteur principal.
@@ -737,7 +746,7 @@ Nous ne serions donc pas dans le cas d&#8217;un enchaînement alternatif.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_enchaînements_derreur">2.3.3. Enchaînements d&#8217;erreur</h4>
+<h4 id="_enchaînements_derreur">3.3.3. Enchaînements d&#8217;erreur</h4>
 <div class="paragraph">
 <p>Un cas d&#8217;usage contiendra souvent un ou plusieurs enchaînements d&#8217;erreur décrivant la réaction du système aux erreurs possibles.
 Par définition, les enchaînements d&#8217;erreur se finissent sur une situation dans laquelle l&#8217;acteur principal n&#8217;obtient pas ce qu&#8217;il cherchait.
@@ -745,7 +754,7 @@ Dans le cas contraire, il s&#8217;agit d&#8217;un scénario alternatif.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_préconditions_post_conditions">2.3.4. Préconditions, post-conditions</h4>
+<h4 id="_préconditions_post_conditions">3.3.4. Préconditions, post-conditions</h4>
 <div class="paragraph">
 <p>Un cas d&#8217;utilisation peut n&#8217;être valide que sous certaines conditions particulières.
 Par exemple, le cas d&#8217;utilisation <em>le client paye ses articles avant de sortir du magasin</em> peut nécessiter que <em>la caisse est ouverte</em>.
@@ -757,7 +766,7 @@ Par exemple, <em>le cash disponible dans le distributeur est égal à ce qu&#821
 </div>
 </div>
 <div class="sect3">
-<h4 id="_exigences_non_fonctionnelles">2.3.5. Exigences non-fonctionnelles</h4>
+<h4 id="_exigences_non_fonctionnelles">3.3.5. Exigences non-fonctionnelles</h4>
 <div class="paragraph">
 <p>Un cas d&#8217;utilisation peut aussi lister des contraintes qui doivent être respectées par le système.
 Ces contraintes ne se traduisent pas par des actions ou des évènements qui feraient partie d&#8217;un scénario, mais par des éléments techniques à prendre en compte pendant l&#8217;étude du système pour garantir que ce dernier satisfera le donneur d&#8217;ordre.</p>
@@ -778,7 +787,7 @@ Ces contraintes ne se traduisent pas par des actions ou des évènements qui fer
 </div>
 </div>
 <div class="sect3">
-<h4 id="_relations_entre_cas_dutilisation">2.3.6. Relations entre cas d&#8217;utilisation</h4>
+<h4 id="_relations_entre_cas_dutilisation">3.3.6. Relations entre cas d&#8217;utilisation</h4>
 <div class="paragraph">
 <p>Il peut exister des relations entre les différents cas d&#8217;utilisation.  Par exemple, un cas d&#8217;utilisation peut en utiliser un autre ("use" ou "include"). Un cas d&#8217;utilisation peut également étendre un autre cas ("extend").</p>
 </div>
@@ -795,7 +804,7 @@ Ces contraintes ne se traduisent pas par des actions ou des évènements qui fer
 </div>
 </div>
 <div class="sect3">
-<h4 id="_diagrammes_de_cas">2.3.7. Diagrammes de cas</h4>
+<h4 id="_diagrammes_de_cas">3.3.7. Diagrammes de cas</h4>
 <div class="paragraph">
 <p>Les cas d&#8217;utilisations peuvent être groupés dans un ou plusieurs diagrammes qui permettent de représenter les acteurs participant à chaque cas.</p>
 </div>
@@ -807,7 +816,7 @@ Ces contraintes ne se traduisent pas par des actions ou des évènements qui fer
 </div>
 </div>
 <div class="sect2">
-<h3 id="_diagramme_dactivité">2.4. Diagramme d&#8217;activité</h3>
+<h3 id="_diagramme_dactivité">3.4. Diagramme d&#8217;activité</h3>
 <div class="paragraph">
 <p>Un diagramme d&#8217;activité est (avec le diagramme de séquence, voir plus loin) une des représentation graphique possible pour les actions décrites dans un cas d&#8217;utilisation.</p>
 </div>
@@ -856,7 +865,7 @@ Les éléments suivants peuvent y être représentés :</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_diagramme_de_séquence">2.5. Diagramme de séquence</h3>
+<h3 id="_diagramme_de_séquence">3.5. Diagramme de séquence</h3>
 <div class="paragraph">
 <p>Un diagramme de séquence montre les actions réalisées ou les messages échangés entre différents acteurs lors de la réalisation d&#8217;un cas d&#8217;utilisation (ou d&#8217;un scénario d&#8217;un cas d&#8217;utilisation).</p>
 </div>
@@ -916,7 +925,7 @@ Il doit alors attendre la réponse avant de pouvoir servir le client.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_modélisation_statique">3. Modélisation statique</h2>
+<h2 id="_modélisation_statique">4. Modélisation statique</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>La modélisation statique consiste à transformer les besoins exprimés lors de l&#8217;étude fonctionnelle en entités, attributs et relations, qui seront ensuite implémentées dans un langage de programmation.</p>
@@ -926,7 +935,7 @@ Il doit alors attendre la réponse avant de pouvoir servir le client.</p>
 Il peut maintenant utiliser ces spécifications pour définir l&#8217;organisation interne du système.</p>
 </div>
 <div class="sect2">
-<h3 id="_décomposition">3.1. Décomposition</h3>
+<h3 id="_décomposition">4.1. Décomposition</h3>
 <div class="paragraph">
 <p>Lorsque le système étudié est complexe, il sera décomposé en sous-systèmes.
 Chaque sous-système fera l&#8217;objet d&#8217;une étude séparée, dans laquelle le sous-système étudié est considéré dans son ensemble, et dans laquelle les autres sous-systèmes seront des acteurs intéragissant avec le sous-système étudié.
@@ -934,7 +943,7 @@ Ce processus récursif peut être répété jusqu&#8217;à obtenir des systèmes
 </div>
 </div>
 <div class="sect2">
-<h3 id="_classes_et_objets">3.2. Classes et objets</h3>
+<h3 id="_classes_et_objets">4.2. Classes et objets</h3>
 <div class="paragraph">
 <p>Chaque type d&#8217;acteur est représenté par une classe.
 Les éléments manipulés dans le système (e.g. les livres d&#8217;une bibliothèque) sont également représentés par une classe.
@@ -949,7 +958,7 @@ C&#8217;est même assez courant pour représenter, par exemple, l&#8217;IHM de l
 </div>
 </div>
 <div class="sect2">
-<h3 id="_attributs">3.3. Attributs</h3>
+<h3 id="_attributs">4.3. Attributs</h3>
 <div class="paragraph">
 <p>Un attribut est une propriété d&#8217;une classe qui associe une information à chacun des objets instanciés à partir de cette classe.
 Un attribut peut avoir un type spécifié.
@@ -968,7 +977,7 @@ Le type d&#8217;un attribut, s&#8217;il est spécifié, doit être <em>simple</e
 </div>
 </div>
 <div class="sect2">
-<h3 id="_opérations">3.4. Opérations</h3>
+<h3 id="_opérations">4.4. Opérations</h3>
 <div class="paragraph">
 <p>Une opération est un service que peuvent rendre les instances de cette classe.
 On peut distinguer trois types d&#8217;opérations:</p>
@@ -1002,7 +1011,7 @@ On peut distinguer trois types d&#8217;opérations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_représentation_dune_classe">3.5. Représentation d&#8217;une classe</h3>
+<h3 id="_représentation_dune_classe">4.5. Représentation d&#8217;une classe</h3>
 <div class="imageblock">
 <div class="content">
 <img src="data:image/png;base64,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" alt="Une classe">
@@ -1010,7 +1019,7 @@ On peut distinguer trois types d&#8217;opérations:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_associations">3.6. Associations</h3>
+<h3 id="_associations">4.6. Associations</h3>
 <div class="paragraph">
 <p>Une <em>association</em> est une relation sémantique durable entre deux classes.
 Elle est généralement nommée par un verbe.</p>
@@ -1041,7 +1050,7 @@ On peut préciser le rôle joué par chaque classe dans l&#8217;association, par
 </div>
 </div>
 <div class="sect2">
-<h3 id="_multiplicités">3.7. Multiplicités</h3>
+<h3 id="_multiplicités">4.7. Multiplicités</h3>
 <div class="paragraph">
 <p>Pour donner une indication sur le nombre d&#8217;objets qui prennent part à chaque sens de l&#8217;association, on utilise des <em>multiplicités</em>.
 Une multiplicité est déterminée en considérant, pour <em>un</em> instant donné et <em>une</em> instance de la première classe,  combien d&#8217;instances de la deuxième classe peuvent être impliquées dans la relation.
@@ -1075,12 +1084,12 @@ Un nombre quelconque est représenté par une <code>*</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_agrégation_et_composition">3.8. Agrégation et composition</h3>
+<h3 id="_agrégation_et_composition">4.8. Agrégation et composition</h3>
 <div class="paragraph">
 <p>Un cas particulier d&#8217;association uni-directionnelle est l'<em>agrégation</em>.  Les deux (ou plus) classes n&#8217;ont plus un rôle symétrique.</p>
 </div>
 <div class="sect3">
-<h4 id="_agrégation">3.8.1. Agrégation</h4>
+<h4 id="_agrégation">4.8.1. Agrégation</h4>
 <div class="paragraph">
 <p>L&#8217;agrégation peut être vue comme une relation d&#8217;appartenance faible.  Elle n&#8217;implique pas qu&#8217;il n&#8217;y a qu&#8217;un seul contenant.</p>
 </div>
@@ -1102,7 +1111,7 @@ Un nombre quelconque est représenté par une <code>*</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_composition">3.8.2. Composition</h4>
+<h4 id="_composition">4.8.2. Composition</h4>
 <div class="paragraph">
 <p>Si l&#8217;agrégat gère le cycle de vie des sous-parties, qui ne peuvent appartenir qu&#8217;à un seul agrégat, on parle de <em>composition</em>.</p>
 </div>
@@ -1122,7 +1131,7 @@ Un nombre quelconque est représenté par une <code>*</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_généralisation">3.9. Généralisation</h3>
+<h3 id="_généralisation">4.9. Généralisation</h3>
 <div class="paragraph">
 <p>Deux classes peuvent avoir une relation de <em>généralisation</em>.
 Dans l&#8217;autre sens, on parlera de <em>spécialisation</em>.</p>
@@ -1157,7 +1166,7 @@ Elle peut rajouter ses propres propriétés.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_relation_n_aire">3.10. Relation n-aire</h3>
+<h3 id="_relation_n_aire">4.10. Relation n-aire</h3>
 <div class="paragraph">
 <p>Une relation peut metre en jeu plus de deux classes.</p>
 </div>
@@ -1194,7 +1203,7 @@ Par contre, si on suppose qu&#8217;un objet n&#8217;apparait que chez un seul ve
 </div>
 </div>
 <div class="sect2">
-<h3 id="_classe_association">3.11. Classe-association</h3>
+<h3 id="_classe_association">4.11. Classe-association</h3>
 <div class="paragraph">
 <p>Il est souvent nécessaire de stocker des informations à propos d&#8217;une relation.
 Par exemple, on peut vouloir stocker le niveau de compétence d&#8217;un employé pour une compétence donnée.
@@ -1228,7 +1237,7 @@ Ainsi, si plusieurs contrats de travail peuvent lier successivement la même soc
 </div>
 </div>
 <div class="sect1">
-<h2 id="_programmation_orientée_objet">4. Programmation Orientée Objet</h2>
+<h2 id="_programmation_orientée_objet">5. Programmation Orientée Objet</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Une fois le modèle statique définit, on peut l&#8217;exprimer dans n&#8217;importe quel langage de programmation.
@@ -1240,9 +1249,9 @@ L&#8217;héritage ne s&#8217;exprimerait pas directement, cependant&#8230;&#8203
 En particulier, les notions de classes, objets, attributs, opérations et généralisations apparaissent explicitement dans ces langages.</p>
 </div>
 <div class="sect2">
-<h3 id="_poo_en_python">4.1. POO en Python</h3>
+<h3 id="_poo_en_python">5.1. POO en Python</h3>
 <div class="sect3">
-<h4 id="_définition_dune_classe">4.1.1. Définition d&#8217;une classe</h4>
+<h4 id="_définition_dune_classe">5.1.1. Définition d&#8217;une classe</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>                      <b class="conum">(1)</b>
@@ -1311,7 +1320,7 @@ Cette méthode doit être considérée comme <em>privée</em> puisque son nom co
 </div>
 </div>
 <div class="sect3">
-<h4 id="_héritage">4.1.2. Héritage</h4>
+<h4 id="_héritage">5.1.2. Héritage</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
@@ -1386,9 +1395,9 @@ Vingt mille lieues sous la mer a été écrit il y a 154 ans.</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_poo_en_java">4.2. POO en Java</h3>
+<h3 id="_poo_en_java">5.2. POO en Java</h3>
 <div class="sect3">
-<h4 id="_définition_dune_classe_2">4.2.1. Définition d&#8217;une classe</h4>
+<h4 id="_définition_dune_classe_2">5.2.1. Définition d&#8217;une classe</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
@@ -1452,7 +1461,7 @@ C&#8217;est elle qui sera automatiquement appelée au démarrage du programme.</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_héritage_2">4.2.2. Héritage</h4>
+<h4 id="_héritage_2">5.2.2. Héritage</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
@@ -1546,9 +1555,9 @@ Vingt mille lieues sous la mer a ?t? ?crit il y a 152 ans.</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_poo_en_c">4.3. POO en C++</h3>
+<h3 id="_poo_en_c">5.3. POO en C++</h3>
 <div class="sect3">
-<h4 id="_définition_dune_classe_3">4.3.1. Définition d&#8217;une classe</h4>
+<h4 id="_définition_dune_classe_3">5.3.1. Définition d&#8217;une classe</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cpp"><span class="cp">#include &lt;iostream&gt;
@@ -1619,7 +1628,7 @@ Un constructeur peut comporter une liste d&#8217;initialisation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_héritage_3">4.3.2. Héritage</h4>
+<h4 id="_héritage_3">5.3.2. Héritage</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="cpp"><span class="cp">#include &lt;iostream&gt;
@@ -1740,10 +1749,10 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_un_peu_plus_de_python">5. Un peu plus de Python&#8230;&#8203;</h2>
+<h2 id="_un_peu_plus_de_python">6. Un peu plus de Python&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_liste">5.1. Liste</h3>
+<h3 id="_liste">6.1. Liste</h3>
 <div class="paragraph">
 <p><a href="https://docs.python.org/3/tutorial/datastructures.html" class="bare">https://docs.python.org/3/tutorial/datastructures.html</a></p>
 </div>
@@ -1786,7 +1795,7 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_structures_de_controle">5.2. Structures de controle</h3>
+<h3 id="_structures_de_controle">6.2. Structures de controle</h3>
 <div class="paragraph">
 <p><a href="https://docs.python.org/3/tutorial/controlflow.html" class="bare">https://docs.python.org/3/tutorial/controlflow.html</a></p>
 </div>
@@ -1836,7 +1845,7 @@ Vingt mille lieues sous la mer a été écrit il y a 152 ans.</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_dictionnaires">5.3. Dictionnaires</h3>
+<h3 id="_dictionnaires">6.3. Dictionnaires</h3>
 <div class="paragraph">
 <p><a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries" class="bare">https://docs.python.org/3/tutorial/datastructures.html#dictionaries</a></p>
 </div>
@@ -1898,7 +1907,7 @@ Key: b, value: 2</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_tuples">5.4. Tuples</h3>
+<h3 id="_tuples">6.4. Tuples</h3>
 <div class="paragraph">
 <p><a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences" class="bare">https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences</a></p>
 </div>
@@ -1952,7 +1961,7 @@ Key: b, value: 2</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-09 15:38:56 +0100
+Last updated 2023-11-21 19:16:57 +0100
 </div>
 </div>
 </body>
