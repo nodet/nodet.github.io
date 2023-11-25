@@ -480,7 +480,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">Novembre 2023  - 168b49c</span>
+<span id="revdate">Novembre 2023  - da001b8</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -1006,7 +1006,11 @@ Il peut passer d&#8217;un état à l&#8217;autre.</p>
 <p>Pour obtenir les nombres premiers compris entre 2 et un certain entier N on va construire une liste chaînée d’objets appelés des <code>MangeNombres</code>, chacun comportant deux variables d’instance : un nombre premier <code>p</code> et une référence sur le <code>MangeNombres</code> suivant de la liste.</p>
 </div>
 <div class="paragraph">
-<p>Le comportement d’un <code>MangeNombres</code> se réduit à l’opération ”manger un nombre”, implémentée par une méthode <code>mange</code> acceptant un entier <code>q</code> en paramètre. Le <code>MangeNombres</code> m<sub>p</sub> associé au nombre <code>p</code> mange les multiples de <code>p</code> : si on lui donne à manger un nombre <code>q</code> qui n’est pas multiple de <code>p</code>, m<sub>p</sub> le donne à manger à son MangeNombres suivant, s’il existe. Si m<sub>p</sub> n’a pas de suivant, il en crée un, associé à <code>q</code>, et le stocke comme <code>suivant</code>. La création d’un <code>MangeNombres</code> m<sub>p</sub> provoque l’affichage de <code>p</code>. Définissez la classe <code>MangeNombres</code> et écrivez un programme affichant les nombres premiers entre 2 et N.</p>
+<p>Le comportement d’un <code>MangeNombres</code> se réduit à l’opération ”manger un nombre”, implémentée par une méthode <code>mange</code> acceptant un entier <code>q</code> en paramètre.
+Le <code>MangeNombres</code> m<sub>p</sub> associé au nombre <code>p</code> mange les multiples de <code>p</code> : si on lui donne à manger un nombre <code>q</code> qui n’est pas multiple de <code>p</code>, m<sub>p</sub> le donne à manger à son MangeNombres suivant, s’il existe.
+Si m<sub>p</sub> n’a pas de suivant, il en crée un, associé à <code>q</code>, et le stocke comme <code>suivant</code>.
+La création d’un <code>MangeNombres</code> m<sub>p</sub> provoque l’affichage de <code>p</code>.
+Définissez la classe <code>MangeNombres</code> et écrivez un programme affichant les nombres premiers entre 2 et 20.</p>
 </div>
 <div class="paragraph">
 <p>Complétez ce programme.</p>
@@ -1043,12 +1047,49 @@ Il peut passer d&#8217;un état à l&#8217;autre.</p>
 <div class="paragraph">
 <p>As a bonus, define a function that computes how much money you are spending across class categories as a % of your total expenses.</p>
 </div>
+<div class="paragraph">
+<p>Here&#8217;s a skeleton of program to get you started&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="k">class</span> <span class="nc">Category</span><span class="p">:</span>
+  <span class="s">"""
+  Records a budget, a list of expenses.
+  Budget can be updated later
+  """</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">...</span>
+
+
+<span class="k">class</span> <span class="nc">Budget</span><span class="p">:</span>
+  <span class="s">"""
+  This class allows to record expenses and
+  categorize them into various types of
+  expenses
+  """</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">...</span>
+
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">Budget</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">b</span><span class="p">.</span><span class="n">print_status</span><span class="p">()</span>
+<span class="n">b</span><span class="p">.</span><span class="n">add_category</span><span class="p">(</span><span class="s">'Food'</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">b</span><span class="p">.</span><span class="n">add_category</span><span class="p">(</span><span class="s">'Transport'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">b</span><span class="p">.</span><span class="n">print_status</span><span class="p">()</span>
+<span class="n">b</span><span class="p">.</span><span class="n">add_expense</span><span class="p">(</span><span class="s">'Food'</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">)</span>
+<span class="n">b</span><span class="p">.</span><span class="n">add_expense</span><span class="p">(</span><span class="s">'Transport'</span><span class="p">,</span> <span class="mf">4.6</span><span class="p">)</span>
+<span class="n">b</span><span class="p">.</span><span class="n">print_status</span><span class="p">()</span>
+<span class="n">b</span><span class="p">.</span><span class="n">balance</span><span class="p">(</span><span class="s">'Food'</span><span class="p">,</span> <span class="s">'Transport'</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">)</span>
+<span class="n">b</span><span class="p">.</span><span class="n">print_status</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">proportions</span><span class="p">())</span></code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-11-24 13:18:03 +0100
+Last updated 2023-11-25 08:16:29 +0100
 </div>
 </div>
 </body>
