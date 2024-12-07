@@ -478,13 +478,14 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 51c6472</span>
+<span id="revdate">January 2025  - 8a0e756</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
 <ul class="sectlevel1">
 <li><a href="#_requirements">1. Requirements</a></li>
 <li><a href="#_an_example">2. An example</a></li>
+<li><a href="#_same_example_using_the_matrix_api">3. Same example, using the matrix API</a></li>
 </ul>
 </div>
 </div>
@@ -506,7 +507,12 @@ the slides shown during the lecture are available on
 <div class="sect1">
 <h2 id="_requirements">1. Requirements</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Gurobi can be used from multiple programming languages and tools (C,
+C++, Java, .NET, Python, MATLAB, R).  Computations can be executed
+locally, on a remote Compute Server, or on Gurobi Cloud by changing only
+the license file.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -527,11 +533,12 @@ the slides shown during the lecture are available on
 
     <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>              <b class="conum">(6)</b>
 
-    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>                                                   <b class="conum">(7)</b>
+    <span class="n">model</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">example.lp</span><span class="sh">"</span><span class="p">)</span>                                          <b class="conum">(7)</b>
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>                                                   <b class="conum">(8)</b>
 
     <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">******* Solution *******</span><span class="sh">"</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">getVars</span><span class="p">():</span>
-        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>                               <b class="conum">(9)</b>
     <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">************************</span><span class="sh">"</span><span class="p">)</span></code></pre>
 </div>
 </div>
@@ -556,7 +563,13 @@ the slides shown during the lecture are available on
 <p>Define objective</p>
 </li>
 <li>
+<p>Save the model as an LP file</p>
+</li>
+<li>
 <p>Optimize model</p>
+</li>
+<li>
+<p>X attribute is the variable&#8217;s value in the solution</p>
 </li>
 </ol>
 </div>
@@ -595,12 +608,127 @@ z: 1.0
 ************************</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>And here&#8217;s the generated LP file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>\ Model simple-example
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+\ Signature: 0xd6af213f17f735ae
+Maximize
+  x + y + 2 z
+Subject To
+ c0: x + 2 y + 3 z &lt;= 4
+ c1: x + y &gt;= 1
+Bounds
+Binaries
+ x y z
+End</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_same_example_using_the_matrix_api">3. Same example, using the matrix API</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">scipy.sparse</span> <span class="k">as</span> <span class="n">sp</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">matrix1</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
+
+    <span class="c1"># Create variables
+</span>    <span class="n">x</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Set objective
+</span>    <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+    <span class="n">m</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">obj</span> <span class="o">@</span> <span class="n">x</span><span class="p">,</span> <span class="n">GRB</span><span class="p">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>
+
+    <span class="c1"># Build (sparse) constraint matrix
+</span>    <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+    <span class="c1"># A is such that A[row[k], col[k]] = val[k]
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="nf">csr_matrix</span><span class="p">((</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="c1"># Build rhs vector
+</span>    <span class="n">rhs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mf">4.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+
+    <span class="c1"># Add constraints
+</span>    <span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Write the model
+</span>    <span class="n">m</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">matrix1.lp</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Optimize model
+</span>    <span class="n">m</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">X</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Obj: </span><span class="si">{</span><span class="n">m</span><span class="p">.</span><span class="n">ObjVal</span><span class="si">:</span><span class="n">g</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Set parameter LicenseID to value 2427043
+Set parameter LicenseID to value 2427043
+Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Model fingerprint: 0x8d4960d3
+Variable types: 0 continuous, 3 integer (3 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 2e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 2.0000000
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds (0.00 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 2: 3 2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+[1. 0. 1.]
+Obj: 3</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And here&#8217;s the generated LP file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>\ Model matrix1
+\ LP format - for model browsing. Use MPS format to capture full model detail.
+\ Signature: 0xd6af213f17f735ae
+Maximize
+  x[0] + x[1] + 2 x[2]
+Subject To
+ c[0]: x[0] + 2 x[1] + 3 x[2] &lt;= 4
+ c[1]: - x[0] - x[1] &lt;= -1
+Bounds
+Binaries
+ x[0] x[1] x[2]
+End</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-07 19:23:39 +0100
+Last updated 2024-12-08 00:07:42 +0100
 </div>
 </div>
 </body>
