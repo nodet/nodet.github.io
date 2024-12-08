@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - d17456e</span>
+<span id="revdate">January 2025  - 92bb1e9</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -503,8 +503,9 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_environments">6. Environments</a></li>
 <li><a href="#_models">7. Models</a>
 <ul class="sectlevel2">
-<li><a href="#_decision_variables">7.1. Decision Variables</a></li>
+<li><a href="#_decision_variables_model_addvar">7.1. Decision Variables, Model.addVar()</a></li>
 <li><a href="#_model_addvars">7.2. Model.addVars()</a></li>
+<li><a href="#_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</a></li>
 </ul>
 </li>
 </ul>
@@ -641,8 +642,7 @@ such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will not discuss this
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Set parameter LicenseID to value 2427043
-Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
 
 CPU model: Apple M1 Pro
 Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
@@ -737,8 +737,7 @@ End</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Set parameter LicenseID to value 2427043
-Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
 
 CPU model: Apple M1 Pro
 Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
@@ -756,7 +755,7 @@ Presolve removed 2 rows and 3 columns
 Presolve time: 0.00s
 Presolve: All rows and columns removed
 
-Explored 0 nodes (0 simplex iterations) in 0.01 seconds (0.00 work units)
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
 Thread count was 1 (of 8 available processors)
 
 Solution count 2: 3 2 
@@ -890,8 +889,7 @@ pattern)</a> &#8594; <code>gp.LinExpr</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Set parameter LicenseID to value 2427043
-x[1,3] + x[2,3]</pre>
+<pre>x[1,3] + x[2,3]</pre>
 </div>
 </div>
 </div>
@@ -1134,7 +1132,7 @@ that define the behaviour of the solver.</p>
 </ol>
 </div>
 <div class="sect2">
-<h3 id="_decision_variables">7.1. Decision Variables</h3>
+<h3 id="_decision_variables_model_addvar">7.1. Decision Variables, Model.addVar()</h3>
 <div class="paragraph">
 <p>A decision variable is necessarily associated to exactly one instance of
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html">Model</a>, and gets created using
@@ -1259,8 +1257,7 @@ should not use non-ASCII characters or spaces.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Set parameter LicenseID to value 2427043
-['x[0,0,0]', 'x[0,0,1]', 'x[0,0,2]', 'x[0,0,3]', 'x[0,1,0]', 'x[0,1,1]', 'x[0,1,2]', 'x[0,1,3]', 'x[0,2,0]', 'x[0,2,1]', 'x[0,2,2]', 'x[0,2,3]', 'x[1,0,0]', 'x[1,0,1]', 'x[1,0,2]', 'x[1,0,3]', 'x[1,1,0]', 'x[1,1,1]', 'x[1,1,2]', 'x[1,1,3]', 'x[1,2,0]', 'x[1,2,1]', 'x[1,2,2]', 'x[1,2,3]']
+<pre>['x[0,0,0]', 'x[0,0,1]', 'x[0,0,2]', 'x[0,0,3]', 'x[0,1,0]', 'x[0,1,1]', 'x[0,1,2]', 'x[0,1,3]', 'x[0,2,0]', 'x[0,2,1]', 'x[0,2,2]', 'x[0,2,3]', 'x[1,0,0]', 'x[1,0,1]', 'x[1,0,2]', 'x[1,0,3]', 'x[1,1,0]', 'x[1,1,1]', 'x[1,1,2]', 'x[1,1,3]', 'x[1,2,0]', 'x[1,2,1]', 'x[1,2,2]', 'x[1,2,3]']
 
 Variables names, upper bounds, and indices:
 name: y_0, ub: 0.0, index: (1, 7)
@@ -1278,12 +1275,126 @@ name: z[7,c], lb: 0.0, ub: inf</pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</h3>
+<div class="paragraph">
+<p>Like variables, constraints are also associated with a model. Use the method <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstr">Model.addConstr()</a> to add a constraint to a model.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">constr</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">""</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>constr</code> is a <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tempconstr.html#TempConstr">TempConstr</a> object that can take different types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Linear Constraint: <code>x + y &lt;= 1</code></p>
+</li>
+<li>
+<p>Ranged Linear Constraint: <code>x + y == [1, 3]</code></p>
+</li>
+<li>
+<p>Quadratic Constraint: <code>x*x + y*y + x*y &lt;= 1</code></p>
+</li>
+<li>
+<p>Linear Matrix Constraint: <code>A @ x &lt;= 1</code></p>
+</li>
+<li>
+<p>Quadratic Matrix Constraint: <code>x @ Q @ y &lt;= 2</code></p>
+</li>
+<li>
+<p>Absolute Value Constraint: <code>x == abs_(y)</code></p>
+</li>
+<li>
+<p>Logical Constraint: <code>x == and_(y, z)</code></p>
+</li>
+<li>
+<p>Min or Max Constraint: <code>z == max_(x, y, constant=9)</code></p>
+</li>
+<li>
+<p>Indicator Constraint: <code>(x == 1) &gt;&gt; (y + z &lt;= 5)</code></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="c1"># Add constraint "\sum_{i=0}^{n-1} x_i &lt;= b" for any given n and b.
+</span><span class="n">n</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span>
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c1</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+
+    <span class="c1"># Print the LHS, Sense, and RHS of c1
+</span>    <span class="n">c1</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">getConstrByName</span><span class="p">(</span><span class="sh">"</span><span class="s">c1</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">RHS, sense = </span><span class="si">{</span><span class="n">c1</span><span class="p">.</span><span class="n">RHS</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">c1</span><span class="p">.</span><span class="n">Sense</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">row: </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="nf">getRow</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n\n</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>RHS, sense = 4.0, &lt;
+row: x[0] + x[1] + x[2] + x[3] + x[4] + x[5] + x[6] + x[7] + x[8] + x[9]</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="c1"># Add constraints "x_i + y_j - x_i * y_j &gt;= 3".
+</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span>
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="sh">"</span><span class="s">c_</span><span class="si">{</span><span class="n">i</span><span class="si">}{</span><span class="n">j</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+
+    <span class="c1"># Print the LHS, Sense, and RHS of all c_ij constraints
+</span>    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">getQConstrs</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Name: </span><span class="si">{</span><span class="n">c</span><span class="p">.</span><span class="n">QCName</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">RHS, sense = </span><span class="si">{</span><span class="n">c</span><span class="p">.</span><span class="n">QCRHS</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">c</span><span class="p">.</span><span class="n">QCSense</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">row: </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="nf">getQCRow</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name: c_00
+	RHS, sense = 3.0, &gt;
+	row: x[0] + y[0] + [ -1.0 x[0] * y[0] ]
+Name: c_01
+	RHS, sense = 3.0, &gt;
+	row: x[0] + y[1] + [ -1.0 x[0] * y[1] ]
+Name: c_10
+	RHS, sense = 3.0, &gt;
+	row: x[1] + y[0] + [ -1.0 x[1] * y[0] ]
+Name: c_11
+	RHS, sense = 3.0, &gt;
+	row: x[1] + y[1] + [ -1.0 x[1] * y[1] ]
+Name: c_20
+	RHS, sense = 3.0, &gt;
+	row: x[2] + y[0] + [ -1.0 x[2] * y[0] ]
+Name: c_21
+	RHS, sense = 3.0, &gt;
+	row: x[2] + y[1] + [ -1.0 x[2] * y[1] ]</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-08 16:18:16 +0100
+Last updated 2024-12-08 16:43:50 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
