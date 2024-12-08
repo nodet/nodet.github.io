@@ -478,14 +478,35 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 8a0e756</span>
+<span id="revdate">January 2025  - d17456e</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
 <ul class="sectlevel1">
 <li><a href="#_requirements">1. Requirements</a></li>
-<li><a href="#_an_example">2. An example</a></li>
-<li><a href="#_same_example_using_the_matrix_api">3. Same example, using the matrix API</a></li>
+<li><a href="#_optimization_models">2. Optimization Models</a></li>
+<li><a href="#_introductory_examples">3. Introductory examples</a>
+<ul class="sectlevel2">
+<li><a href="#simple-example">3.1. Simple example</a></li>
+<li><a href="#_same_example_using_the_matrix_api">3.2. Same example, using the matrix API</a></li>
+</ul>
+</li>
+<li><a href="#_python_data_structures">4. Python Data Structures</a></li>
+<li><a href="#_extended_data_structures_in_gurobipy">5. Extended Data Structures in gurobipy</a>
+<ul class="sectlevel2">
+<li><a href="#tuplelist">5.1. tuplelist</a></li>
+<li><a href="#tupledict">5.2. tupledict</a></li>
+<li><a href="#_multidict">5.3. multidict()</a></li>
+<li><a href="#_example_of_extended_structures">5.4. Example of extended structures</a></li>
+</ul>
+</li>
+<li><a href="#_environments">6. Environments</a></li>
+<li><a href="#_models">7. Models</a>
+<ul class="sectlevel2">
+<li><a href="#_decision_variables">7.1. Decision Variables</a></li>
+<li><a href="#_model_addvars">7.2. Model.addVars()</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -516,8 +537,50 @@ the license file.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_an_example">2. An example</h2>
+<h2 id="_optimization_models">2. Optimization Models</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Gurobi can solve models with linear and quadratic (incl. nonconvex)
+constraints and objective.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+\mbox{minimize} \quad &amp; x^T Q x + c^T x + d &amp;  \notag \\
+\mbox{subject to} \quad &amp; Ax = b &amp; \notag &amp; \notag \\
+                        &amp; x^T Q_i x + c_i^T x \leq d_i &amp; \forall i \in I \notag \\
+                        &amp; l \leq x \leq u &amp; \notag \\
+                        &amp; x_j \in \mathbb{Z} &amp; \forall j \in J
+\end{align}\]
+</div>
+</div>
+<div class="paragraph">
+<p>It can also solve models including functions
+such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will not discuss this is this course.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introductory_examples">3. Introductory examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="simple-example">3.1. Simple example</h3>
+<div class="paragraph">
+<p>Let us start with a simple example</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+\mbox{maximize} \quad &amp; x + y + 2z \notag \\
+\mbox{subject to} \quad &amp; x + 2y + 3z \leq 4 \notag \\
+                        &amp; x + y \geq 1 \notag \\
+                        &amp; x, y, z \in \{0, 1\} \notag
+\end{align}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the Python code to solve this problem:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>                                                  <b class="conum">(1)</b>
@@ -572,6 +635,9 @@ the license file.</p>
 <p>X attribute is the variable&#8217;s value in the solution</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Here is the log of the execution of this program:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -628,10 +694,8 @@ End</pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_same_example_using_the_matrix_api">3. Same example, using the matrix API</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_same_example_using_the_matrix_api">3.2. Same example, using the matrix API</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -639,7 +703,7 @@ End</pre>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">import</span> <span class="n">scipy.sparse</span> <span class="k">as</span> <span class="n">sp</span>
 
-<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">matrix1</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">matrix1</span><span class="sh">"</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
 
     <span class="c1"># Create variables
 </span>    <span class="n">x</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
@@ -674,7 +738,6 @@ End</pre>
 <div class="listingblock">
 <div class="content">
 <pre>Set parameter LicenseID to value 2427043
-Set parameter LicenseID to value 2427043
 Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
 
 CPU model: Apple M1 Pro
@@ -726,10 +789,526 @@ End</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_python_data_structures">4. Python Data Structures</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>tuple</code>: An ordered, compound grouping that cannot be modified once it is created and is ideal for representing multi dimensional subscripts.</p>
+<div class="literalblock">
+<div class="content">
+<pre>("city_0", "city_1")</pre>
+</div>
+</div>
+</li>
+<li>
+<p><code>list</code>: An ordered group, so each item is indexed. Lists can be modified by adding, deleting or sorting elements.</p>
+<div class="literalblock">
+<div class="content">
+<pre>["city_0", "city_1", "city_2"]</pre>
+</div>
+</div>
+</li>
+<li>
+<p><code>set</code>: An unordered group of unique elements. Sets can only be modified by adding or deleting.</p>
+<div class="literalblock">
+<div class="content">
+<pre>{"city_0", "city_1", "city_2"}</pre>
+</div>
+</div>
+</li>
+<li>
+<p><code>dict</code>: A key-value pair mapping that is ideal for representing indexed data such as cost, demand, capacity.</p>
+<div class="literalblock">
+<div class="content">
+<pre>demand = {"city_0": 100, "city_1": 50, "city_2": 40}</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_extended_data_structures_in_gurobipy">5. Extended Data Structures in gurobipy</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="tuplelist">5.1. tuplelist</h3>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tuplelist.html"><code>tuplelist</code></a>: a sub-class of
+Python list, used to build sub-lists efficiently. See in particular
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tuplelist.html#tuplelist.select"><code>tuplelist.select(pattern)</code></a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">tuplelist</span><span class="p">([(</span><span class="sh">'</span><span class="s">A</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">B</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">C</span><span class="sh">'</span><span class="p">),</span>
+                  <span class="p">(</span><span class="sh">'</span><span class="s">A</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">C</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">D</span><span class="sh">'</span><span class="p">),</span>
+                  <span class="p">(</span><span class="sh">'</span><span class="s">A</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">E</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">C</span><span class="sh">'</span><span class="p">)])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="nf">select</span><span class="p">(</span><span class="sh">'</span><span class="s">A</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">C</span><span class="sh">'</span><span class="p">))</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;gurobi.tuplelist (2 tuples, 3 values each):
+ ( A , B , C )
+ ( A , E , C )
+&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tupledict">5.2. tupledict</h3>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tupledict.html"><code>tupledict</code></a>: a sub-class of
+Python dict, where the values are usually
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/var.html#Var">Gurobi variables</a>, to
+efficiently retrieve those whose key match a specified tuple pattern.</p>
+</div>
+<div class="paragraph">
+<p>Some important methods to build linear expressions efficiently:</p>
+</div>
+<div class="paragraph">
+<p>-
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tupledict.html#tupledict.select">tupledict.select(pattern)</a>
+&#8594; <code>list</code> -
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tupledict.html#tupledict.sum">tupledict.sum(pattern)</a>
+&#8594; <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/linexpr.html"><code>gp.LinExpr</code></a> -
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tupledict.html#tupledict.prod">tupledict.prod(coeff,
+pattern)</a> &#8594; <code>gp.LinExpr</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">addVars</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)],</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>     <span class="c1"># x is a tupledict
+</span><span class="n">m</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>                                         <span class="c1"># Process all model updates
+</span><span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Set parameter LicenseID to value 2427043
+x[1,3] + x[2,3]</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_multidict">5.3. multidict()</h3>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_global.html#multidict">multidict()</a>
+is a convenience function to split a dict of lists.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="n">keys</span><span class="p">,</span> <span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span> <span class="p">{</span>
+  <span class="sh">'</span><span class="s">key1</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+  <span class="sh">'</span><span class="s">key2</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+  <span class="sh">'</span><span class="s">key3</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="p">}</span> <span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>['key1', 'key2', 'key3']
+{'key1': 1, 'key2': 1, 'key3': 1}
+{'key1': 2, 'key2': 3, 'key3': 4}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_of_extended_structures">5.4. Example of extended structures</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">tupledict</span><span class="p">([</span>
+        <span class="p">((</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="p">((</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="p">((</span><span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="p">((</span><span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">),</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="p">((</span><span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">),</span> <span class="mi">7</span><span class="p">),</span>
+        <span class="p">((</span><span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Tuplelist:</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">tuplelist</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">keys</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">select: </span><span class="si">{</span><span class="n">keys</span><span class="p">.</span><span class="nf">select</span><span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Tupledict:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">select  : </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nf">select</span><span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">sum     : </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">coeff</span> <span class="o">=</span> <span class="p">{(</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">):</span> <span class="mi">6</span><span class="p">,</span> <span class="p">(</span><span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">):</span> <span class="o">-</span><span class="mi">4</span><span class="p">}</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">prod    : </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nf">prod</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">c</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">arcs</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">({</span>
+        <span class="p">(</span><span class="sh">"</span><span class="s">Detroit </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Boston </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+        <span class="p">(</span><span class="sh">"</span><span class="s">Detroit </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">New York </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+        <span class="p">(</span><span class="sh">"</span><span class="s">Detroit </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Seattle </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+        <span class="p">(</span><span class="sh">"</span><span class="s">Denver </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Boston </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+        <span class="p">(</span><span class="sh">"</span><span class="s">Denver </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">New York </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+        <span class="p">(</span><span class="sh">"</span><span class="s">Denver </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Seattle </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">})</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Multidict:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">cost: </span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">capacity: </span><span class="si">{</span><span class="n">capacity</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>data: {('a', 'b', 'c'): 3, ('a', 'c', 'b'): 4, ('b', 'a', 'c'): 5, ('b', 'c', 'a'): 6, ('c', 'a', 'b'): 7, ('c', 'b', 'a'): 3}
+
+Tuplelist:
+	select: &lt;gurobi.tuplelist (2 tuples, 3 values each):
+ ( a , b , c )
+ ( a , c , b )
+&gt;
+
+Tupledict:
+	select  : [3, 4]
+	sum     : 28.0
+	prod    : 0.0
+
+Multidict:
+	cost: {('Detroit ', 'Boston '): 7, ('Detroit ', 'New York '): 5, ('Detroit ', 'Seattle '): 4, ('Denver ', 'Boston '): 8, ('Denver ', 'New York '): 11, ('Denver ', 'Seattle '): 4}
+
+
+	capacity: {('Detroit ', 'Boston '): 100, ('Detroit ', 'New York '): 80, ('Detroit ', 'Seattle '): 120, ('Denver ', 'Boston '): 120, ('Denver ', 'New York '): 120, ('Denver ', 'Seattle '): 120}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_environments">6. Environments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Environments hold data that is global to one or more models.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>They hold a Gurobi license.  The license is required as soon as the
+environment is started, and until it is disposed of.  The license may be
+either completely
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/environments/configuration.html#">specified through
+parameters</a>, or found in a <code>gurobi.lic</code> file in one of the locations
+that Gurobi looks into (home directory or default installation
+location), or found in a
+<a href="https://support.gurobi.com/hc/en-us/articles/360013417211-Where-do-I-place-the-Gurobi-license-file-gurobi-lic">non-default
+location</a> through the <code>GRB_LICENSE_FILE</code> environment variable.</p>
+</li>
+<li>
+<p>They capture sets of parameter settings. This is used to control the
+behaviour of the solver. For example, the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/parameters.html#parametertimelimit">TimeLimit</a>
+parameter indicates the maximum allowed runtime for any solve, while the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/parameters.html#parametermethod">Method</a> parameter
+chooses the algorithm used to solve continuous optimization models.</p>
+</li>
+<li>
+<p>They delineate a (single-threaded)
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/environments/session.html">Gurobi session</a>.  When
+using remote machines for the computations, you may not want to let go
+of the session after each model if solving a sequence of them. Creating
+a Gurobi environment incurs overhead, ranging anywhere from a quick
+local license check all the way to spinning up a machine on the cloud.
+By reusing a single environment, you avoid paying this overhead multiple
+times.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The basic usage pattern is the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
+    <span class="c1"># Use the model
+</span>    <span class="bp">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This creates an Environment using the license found in one of the
+default location, and a model on top if this environment. Both are disposed
+when leaving the scope.</p>
+</div>
+<div class="paragraph">
+<p>A more advanced usage pattern is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">(</span><span class="n">empty</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">env</span><span class="p">:</span>
+    <span class="c1"># Set licensing parameters
+</span>    <span class="n">env</span><span class="p">.</span><span class="nf">setParam</span><span class="p">(</span><span class="sh">"</span><span class="s">CloudAccessID</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">env</span><span class="p">.</span><span class="nf">setParam</span><span class="p">(</span><span class="sh">"</span><span class="s">CloudSecretKey</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">env</span><span class="p">.</span><span class="nf">setParam</span><span class="p">(</span><span class="sh">"</span><span class="s">LicenseID</span><span class="sh">"</span><span class="p">,</span> <span class="p">...)</span>
+    <span class="c1"># Start the environment before creating a model
+</span>    <span class="n">env</span><span class="p">.</span><span class="nf">start</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
+        <span class="c1"># Use the model
+</span>        <span class="bp">...</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_models">7. Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html">Model</a> instance holds variables
+and constraints that define the model to solve, as well as parameters
+that define the behaviour of the solver.</p>
+</div>
+<div class="paragraph">
+<p>It has methods to create and edit variables and constraints, to set parameters, to solve the model, to retrieve information, and more.  Here is again the example from section <a href="#simple-example">Simple example</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>                                                  <b class="conum">(1)</b>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>                                               <b class="conum">(2)</b>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">simple-example</span><span class="sh">"</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>    <b class="conum">(3)</b>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>                       <b class="conum">(4)</b>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">z</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c0</span><span class="sh">"</span><span class="p">)</span>                 <b class="conum">(5)</b>
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c1</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>              <b class="conum">(6)</b>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">example.lp</span><span class="sh">"</span><span class="p">)</span>                                          <b class="conum">(7)</b>
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>                                                   <b class="conum">(8)</b>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">******* Solution *******</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">getVars</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>                               <b class="conum">(9)</b>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">************************</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Import gurobipy package as gp for convenience</p>
+</li>
+<li>
+<p>GRB is the list of all Gurobi constants</p>
+</li>
+<li>
+<p>Create a Gurobi environment and a model object</p>
+</li>
+<li>
+<p>Define decision variables</p>
+</li>
+<li>
+<p>Define constraints</p>
+</li>
+<li>
+<p>Define objective</p>
+</li>
+<li>
+<p>Save the model as an LP file</p>
+</li>
+<li>
+<p>Optimize model</p>
+</li>
+<li>
+<p>X attribute is the variable&#8217;s value in the solution</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_decision_variables">7.1. Decision Variables</h3>
+<div class="paragraph">
+<p>A decision variable is necessarily associated to exactly one instance of
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html">Model</a>, and gets created using
+methods such as
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVar">Model.addVar()</a>
+to create a single variable,
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVars">Model.addVars()</a>
+to create multiple variables at once and
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addMVar">Model.addMVars()</a>
+to create a matrix of variables.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">),</span>
+             <span class="n">obj</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+             <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">CONTINUOUS</span><span class="p">,</span>
+             <span class="n">name</span><span class="o">=</span><span class="sh">""</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The available variable types in Gurobi are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Continuous: GRB.CONTINUOUS</p>
+</li>
+<li>
+<p>General integer: GRB.INTEGER</p>
+</li>
+<li>
+<p>Binary: GRB.BINARY</p>
+</li>
+<li>
+<p>Semi-continuous: GRB.SEMICONT</p>
+</li>
+<li>
+<p>Semi-integer: GRB.SEMIINT</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A semi-continuous variable has the property that it takes a value of 0,
+or a value between the specified lower and upper bounds. A semi-integer
+variable adds the additional restriction that the variable should take
+an integral value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="c1"># Define a binary decision variable with (default) lb=0
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+<span class="c1"># Define an integer variable with lb=-1, ub=100
+</span><span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_model_addvars">7.2. Model.addVars()</h3>
+<div class="paragraph">
+<p>To add multiple decision variables to the model, use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVars">Model.addVars()</a> method which returns a Gurobi <a href="#tupledict">tupledict</a> object containing the newly created variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="o">*</span><span class="n">indices</span><span class="p">,</span>
+              <span class="n">lb</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">),</span>
+              <span class="n">obj</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+              <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">CONTINUOUS</span><span class="p">,</span>
+              <span class="n">name</span><span class="o">=</span><span class="sh">""</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first argument is an iterable giving indices for accessing the variables:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>several integers (specifying the dimensions of the matrix)</p>
+</li>
+<li>
+<p>several lists of scalars (each list specifies indices across one dimension of the matrix)</p>
+</li>
+<li>
+<p>one list of tuples, or a <a href="#tuplelist">tuplelist</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When the given name is a single string, it is subscripted by the index
+of the generator expression. The names are stored as ASCII strings, you
+should not use non-ASCII characters or spaces.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># 3D array of binary variables
+</span>    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">getAttr</span><span class="p">(</span><span class="sh">"</span><span class="s">VarName</span><span class="sh">"</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="nf">getVars</span><span class="p">()))</span>
+
+    <span class="c1"># Use arbitrary lists of immutable objects to create a tupledict of 6 variables
+</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">ub</span><span class="o">=</span><span class="nf">range</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="sh">"</span><span class="s">y_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="sh">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)])</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Variables names, upper bounds, and indices:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">y</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">name: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="si">}</span><span class="s">, ub: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">UB</span><span class="si">}</span><span class="s">, index: </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Use arbitrary list of tuples as indices
+</span>    <span class="n">z</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span>
+        <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">)],</span>
+        <span class="c1"># Default lower bound is 0
+</span>        <span class="n">ub</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">INFINITY</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">z</span><span class="sh">"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Variables names and lower and upper bounds:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">z</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">name: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="si">}</span><span class="s">, lb: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">LB</span><span class="si">}</span><span class="s">, ub: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">UB</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Set parameter LicenseID to value 2427043
+['x[0,0,0]', 'x[0,0,1]', 'x[0,0,2]', 'x[0,0,3]', 'x[0,1,0]', 'x[0,1,1]', 'x[0,1,2]', 'x[0,1,3]', 'x[0,2,0]', 'x[0,2,1]', 'x[0,2,2]', 'x[0,2,3]', 'x[1,0,0]', 'x[1,0,1]', 'x[1,0,2]', 'x[1,0,3]', 'x[1,1,0]', 'x[1,1,1]', 'x[1,1,2]', 'x[1,1,3]', 'x[1,2,0]', 'x[1,2,1]', 'x[1,2,2]', 'x[1,2,3]']
+
+Variables names, upper bounds, and indices:
+name: y_0, ub: 0.0, index: (1, 7)
+name: y_1, ub: 1.0, index: (1, 3)
+name: y_2, ub: 2.0, index: (1, 2)
+name: y_3, ub: 3.0, index: (5, 7)
+name: y_4, ub: 4.0, index: (5, 3)
+name: y_5, ub: 5.0, index: (5, 2)
+
+Variables names and lower and upper bounds:
+name: z[3,a], lb: 0.0, ub: inf
+name: z[3,b], lb: 0.0, ub: inf
+name: z[7,b], lb: 0.0, ub: inf
+name: z[7,c], lb: 0.0, ub: inf</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-08 00:07:42 +0100
+Last updated 2024-12-08 16:18:16 +0100
 </div>
 </div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 </body>
 </html>
