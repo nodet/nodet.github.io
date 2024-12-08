@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - d6be9e4</span>
+<span id="revdate">January 2025  - 47054d9</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -534,13 +534,6 @@ the slides shown during the lecture are available on
 Python interpreter of any version between 3.9 and 3.12. The Gurobi
 Python API can be downloaded <a href="https://pypi.org/project/gurobipy/">from
 pypi.org</a>, and comes with a (limited) license file included.</p>
-</div>
-<div class="paragraph">
-<p>As a student, you are entitled to a
-<a href="https://www.gurobi.com/features/academic-wls-license/">free Academic Web
-License Service (WLS) License</a> that works on any platform, and offers
-all features of the solver.  You will need such a license to run Gurobi
-on datasets of realistic sizes.</p>
 </div>
 <div class="paragraph">
 <p>Here&#8217;s a suggested setup. The instructions below were tested on macOS.</p>
@@ -621,8 +614,17 @@ $ pip install --upgrade pip</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>$ pip install gurobipy</code></pre>
+<pre class="rouge highlight"><code>$ pip install gurobipy
+$ python -c "import gurobipy as gp; gp.Model()"
+Restricted license - for non-production use only - expires 2026-11-23</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>As a student, you are entitled to a
+<a href="https://www.gurobi.com/features/academic-wls-license/">free Academic Web
+License Service (WLS) License</a> that works on any platform, and offers
+all features of the solver.  You will need such a license to run Gurobi
+on datasets of realistic sizes.</p>
 </div>
 </div>
 </div>
@@ -1489,7 +1491,7 @@ Name: c_21
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-08 17:30:30 +0100
+Last updated 2024-12-08 18:29:09 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
