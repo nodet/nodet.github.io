@@ -478,12 +478,12 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 92bb1e9</span>
+<span id="revdate">January 2025  - d6be9e4</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
 <ul class="sectlevel1">
-<li><a href="#_requirements">1. Requirements</a></li>
+<li><a href="#_requirements_and_installation">1. Requirements and installation</a></li>
 <li><a href="#_optimization_models">2. Optimization Models</a></li>
 <li><a href="#_introductory_examples">3. Introductory examples</a>
 <ul class="sectlevel2">
@@ -527,7 +527,107 @@ the slides shown during the lecture are available on
 </div>
 </div>
 <div class="sect1">
-<h2 id="_requirements">1. Requirements</h2>
+<h2 id="_requirements_and_installation">1. Requirements and installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use the Gurobi Python API, also known as <code>gurobipy</code>, you need a
+Python interpreter of any version between 3.9 and 3.12. The Gurobi
+Python API can be downloaded <a href="https://pypi.org/project/gurobipy/">from
+pypi.org</a>, and comes with a (limited) license file included.</p>
+</div>
+<div class="paragraph">
+<p>As a student, you are entitled to a
+<a href="https://www.gurobi.com/features/academic-wls-license/">free Academic Web
+License Service (WLS) License</a> that works on any platform, and offers
+all features of the solver.  You will need such a license to run Gurobi
+on datasets of realistic sizes.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a suggested setup. The instructions below were tested on macOS.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a local directory for the course.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ mkdir gurobipy-course
+$ cd gurobipy-course
+$ git init
+$ git commit --allow-empty -m "Initial commit"</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a repository on github.com to hold your content, and add that
+as a remote in your working copy:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ git remote add origin git@github.com:nodet/test-course.git
+$ git push -u origin main</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install <a href="https://github.com/pyenv/pyenv">pyenv</a> to facilitate installing
+multiple Python versions concurrently and choosing the Python
+interpreter for each project. Details about pyenv
+<a href="https://realpython.com/intro-to-pyenv">here</a>.</p>
+</li>
+<li>
+<p>Get the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/releasenotes/platforms.html">latest
+Python version supported</a> for <code>gurobipy</code> and set it as the default for
+this project.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ pyenv install 3.12
+$ pyenv local 3.12.7
+$ git add .python-version
+$ git commit -a -m "Set Python version"</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Setup a virtual environment using that python version</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ python -m venv venv --prompt "gurobipy-course"
+$ source venv/bin/activate
+$ pip install --upgrade pip</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install the latest version of gurobipy</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ pip install gurobipy</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optimization_models">2. Optimization Models</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Gurobi can be used from multiple programming languages and tools (C,
@@ -535,11 +635,6 @@ C++, Java, .NET, Python, MATLAB, R).  Computations can be executed
 locally, on a remote Compute Server, or on Gurobi Cloud by changing only
 the license file.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_optimization_models">2. Optimization Models</h2>
-<div class="sectionbody">
 <div class="paragraph">
 <p>Gurobi can solve models with linear and quadratic (incl. nonconvex)
 constraints and objective.</p>
@@ -1394,7 +1489,7 @@ Name: c_21
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-08 16:43:50 +0100
+Last updated 2024-12-08 17:30:30 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
