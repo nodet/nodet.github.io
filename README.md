@@ -2,8 +2,7 @@
 
 ### Gurobi Python API: `gurobipy`
 * [cours](./gurobipy-course/cours.html)
-* [exercices](./gurobipy-course/exercices.html)
-* [slides](./gurobipy-course/slides.pdf)
+* [git](./gurobipy-course/git.pdf)
 
 ### Introduction à UML et la POO
 * [cours](./cours-UML/cours.html)
