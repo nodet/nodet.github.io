@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 47054d9</span>
+<span id="revdate">January 2025  - 4cb64d6</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -506,6 +506,13 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_decision_variables_model_addvar">7.1. Decision Variables, Model.addVar()</a></li>
 <li><a href="#_model_addvars">7.2. Model.addVars()</a></li>
 <li><a href="#_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</a></li>
+<li><a href="#_model_addconstrs">7.4. Model.addConstrs()</a></li>
+<li><a href="#_objective_function">7.5. Objective Function</a></li>
+<li><a href="#_attributes">7.6. Attributes</a></li>
+<li><a href="#_parameters">7.7. Parameters</a></li>
+<li><a href="#_callbacks">7.8. Callbacks</a></li>
+<li><a href="#_sos_constraints">7.9. SOS Constraints</a></li>
+<li><a href="#_general_constraints">7.10. General Constraints</a></li>
 </ul>
 </li>
 </ul>
@@ -1486,12 +1493,702 @@ Name: c_21
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_model_addconstrs">7.4. Model.addConstrs()</h3>
+<div class="paragraph">
+<p>To add multiple constraints to the model, use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstrs">Model.addConstrs()</a> method which returns a Gurobi <a href="#tupledict">tupledict</a> that contains the newly created constraints:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">addConstrs</span><span class="p">(</span><span class="n">generator</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">""</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="c1"># Add constraints x_i + y_j &lt;= 1 for all (i, j). Assume x_i and y_j are binary variables
+</span><span class="n">I</span> <span class="o">=</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">J</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">]</span>
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">I</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">J</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstrs</span><span class="p">(</span><span class="n">generator</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+
+    <span class="c1"># Print constraint names
+</span>    <span class="nf">print</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">getAttr</span><span class="p">(</span><span class="sh">"</span><span class="s">ConstrName</span><span class="sh">"</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="nf">getConstrs</span><span class="p">()))</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>['c[0,a]', 'c[0,b]', 'c[0,c]', 'c[1,a]', 'c[1,b]', 'c[1,c]', 'c[2,a]', 'c[2,b]', 'c[2,c]', 'c[3,a]', 'c[3,b]', 'c[3,c]', 'c[4,a]', 'c[4,b]', 'c[4,c]']</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_objective_function">7.5. Objective Function</h3>
+<div class="paragraph">
+<p>To set the model objective equal to a linear or a quadratic expression, use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.setObjective">Model.setObjective()</a> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">MINIMIZE</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>expr</code> can be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/linexpr.html#LinExpr">LinExpr</a>, a linear expression (constant plus pairs of coefficients/variables)</p>
+</li>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/quadexpr.html">QuadExpr</a>, a quadratic expression (linear expression plus triplets of coefficients/variables/variables)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>sense</code> is either <code>GRB.MINIMIZE</code> (the default) or <code>GRB.MAXIMIZE</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c1"># Add linear objectives c^Tx
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">linexpr</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">quicksum</span><span class="p">(</span><span class="n">c_i</span> <span class="o">*</span> <span class="n">x_i</span> <span class="k">for</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="nf">values</span><span class="p">()))</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">linexpr</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+
+    <span class="c1"># Print objective expression
+</span>    <span class="n">obj</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">getObjective</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">obj: </span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>obj: 0.7969872821012581 x[0] + 0.8381749342108862 x[1] + 0.5088397689274015 x[2] + 0.07174898144427355 x[3] + 0.33592153457205 x[4]</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c1"># Add quadratic objective in the form x^T Q x
+</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">quadexpr</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">quadexpr</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">quadexpr</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>
+
+    <span class="c1"># Print objective expression
+</span>    <span class="n">obj</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">getObjective</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">obj: </span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>obj: 0.0 + [ 0.0017925286130057172 x[0] ^ 2 + 1.9754045797876238 x[0] * x[1] + 0.16341452344520668 x[0] * x[2] + 1.5436307577284119 x[0] * x[3] + 1.847889511843424 x[0] * x[4] + 0.887549392447781 x[1] ^ 2 + 0.14066903177270085 x[1] * x[2] + 0.9305402391903437 x[1] * x[3] + 1.6300246985463809 x[1] * x[4] + 0.3748541196271874 x[2] ^ 2 + 1.1065969294716096 x[2] * x[3] + 1.2347203433499683 x[2] * x[4] + 0.22119484130264622 x[3] ^ 2 + 1.096250877984486 x[3] * x[4] + 0.5066537832287884 x[4] ^ 2 ]</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_attributes">7.6. Attributes</h3>
+<div class="paragraph">
+<p>The primary mechanism for querying and modifying properties of a Gurobi
+object is through the
+<a href="file:///Users/xavier.nodet/Documents/work/offline/12.0/optimizer/html/reference/attributes.html">attribute
+interface</a>.  Attributes exist on instances of Model, Variable, all types
+of constraints, and more.  Here are some of the most commonly used:</p>
+</div>
+<div class="paragraph">
+<p>Model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>number of modelling elements of each type</p>
+</li>
+<li>
+<p>information about the type of model, its statistics</p>
+</li>
+<li>
+<p>information about the solutions found, the best known bound, the gap, etc.</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Variables:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>lower and upper bounds</p>
+</li>
+<li>
+<p>value in a MIP start vector</p>
+</li>
+<li>
+<p>value in the best solution</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Constraints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>right-hand side value</p>
+</li>
+<li>
+<p>dual value in the best solution</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="sh">"</span><span class="s">data/glass4.mps.bz2</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">****************** SOLUTION ******************</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">Status       : </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="n">Status</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">Obj          : </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="n">ObjVal</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">SolutionCount: </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="n">SolCount</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">Runtime      : </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="n">Runtime</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">MIPGap       : </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="n">MIPGap</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">getVars</span><span class="p">()[:</span><span class="mi">20</span><span class="p">]:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="si">}</span><span class="s"> = </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Read MPS format model from file data/glass4.mps.bz2
+Reading time = 0.02 seconds
+glass4: 396 rows, 322 columns, 1815 nonzeros
+Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 396 rows, 322 columns and 1815 nonzeros
+Model fingerprint: 0x18b19fdf
+Variable types: 20 continuous, 302 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 8e+06]
+  Objective range  [1e+00, 1e+06]
+  Bounds range     [1e+00, 8e+02]
+  RHS range        [1e+00, 8e+06]
+Presolve removed 6 rows and 6 columns
+Presolve time: 0.01s
+Presolved: 390 rows, 316 columns, 1803 nonzeros
+Variable types: 19 continuous, 297 integer (297 binary)
+Found heuristic solution: objective 3.133356e+09
+
+Root relaxation: objective 8.000024e+08, 72 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 8.0000e+08    0   72 3.1334e+09 8.0000e+08  74.5%     -    0s
+H    0     0                    2.600019e+09 8.0000e+08  69.2%     -    0s
+H    0     0                    2.366684e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   72 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   72 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   77 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   76 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     2 8.0000e+08    0   75 2.3667e+09 8.0000e+08  66.2%     -    0s
+H   26    80                    2.116683e+09 8.0000e+08  62.2%  38.4    0s
+H   36    80                    2.016683e+09 8.0000e+08  60.3%  30.6    0s
+H   65    80                    2.000015e+09 8.0000e+08  60.0%  20.1    0s
+H  251   274                    1.991127e+09 8.0000e+08  59.8%  10.8    0s
+* 1128  1027             112    1.920014e+09 8.0000e+08  58.3%   6.3    0s
+H 1695  1546                    1.812517e+09 8.0000e+08  55.9%   6.2    0s
+H 1788  1729                    1.800017e+09 8.0000e+08  55.6%   6.1    0s
+H 2010  1645                    1.766684e+09 8.0000e+08  54.7%   6.0    0s
+H 2353  1796                    1.700017e+09 8.0000e+08  52.9%   5.6    0s
+H 2399  1782                    1.700017e+09 8.0000e+08  52.9%   5.6    0s
+H 3109  1938                    1.700016e+09 8.0000e+08  52.9%   5.4    0s
+* 9626  5603              77    1.700016e+09 8.0000e+08  52.9%   3.9    0s
+* 9627  5603              77    1.700016e+09 8.0000e+08  52.9%   3.9    0s
+H10514  6175                    1.700016e+09 8.0000e+08  52.9%   3.9    0s
+H11625  7019                    1.666683e+09 8.0000e+08  52.0%   3.8    0s
+H11975  6974                    1.650016e+09 8.0000e+08  51.5%   3.7    0s
+H13781  7848                    1.650016e+09 8.0000e+08  51.5%   3.6    0s
+H13830  7848                    1.650016e+09 8.0000e+08  51.5%   3.6    0s
+H14108  8324                    1.600015e+09 8.0000e+08  50.0%   3.6    0s
+H16117  9426                    1.600015e+09 8.0000e+08  50.0%   3.5    0s
+H18938 10840                    1.600014e+09 8.0000e+08  50.0%   3.5    0s
+H19146  9570                    1.500013e+09 8.0000e+08  46.7%   3.5    0s
+H20592 10593                    1.500013e+09 8.0000e+08  46.7%   3.5    1s
+H30377 13890                    1.500012e+09 8.3576e+08  44.3%   3.7    2s
+ 30583 14035 1.3000e+09   58   94 1.5000e+09 8.8794e+08  40.8%   4.0    5s
+ 30909 14262 1.5000e+09   72  129 1.5000e+09 8.9996e+08  40.0%   4.4   10s
+ 68751 18770 infeasible  206      1.5000e+09 1.0000e+09  33.3%   7.1   15s
+*135241 22495             219    1.400016e+09 1.1000e+09  21.4%   7.0   17s
+*136789 22885             210    1.400014e+09 1.1000e+09  21.4%   7.0   17s
+*142250 22031             209    1.400013e+09 1.1098e+09  20.7%   7.0   17s
+*186816 33080             211    1.400013e+09 1.2000e+09  14.3%   7.1   19s
+ 201227 37127 1.4000e+09  211   10 1.4000e+09 1.2000e+09  14.3%   7.1   20s
+*228748 44827             206    1.400013e+09 1.2000e+09  14.3%   6.9   21s
+*284522  5732             204    1.200013e+09 1.2000e+09  0.00%   6.6   23s
+
+Cutting planes:
+  Learned: 1
+  Gomory: 7
+  Implied bound: 12
+  Projected implied bound: 1
+  MIR: 42
+  Flow cover: 17
+  RLT: 5
+  Relax-and-lift: 16
+
+Explored 284537 nodes (1881113 simplex iterations) in 23.26 seconds (29.59 work units)
+Thread count was 8 (of 8 available processors)
+
+Solution count 10: 1.20001e+09 1.40001e+09 1.40001e+09 ... 1.60001e+09
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
+****************** SOLUTION ******************
+	Status       : 2
+	Obj          : 1200012600.0
+	SolutionCount: 10
+	Runtime      : 23.25736689567566
+	MIPGap       : 2.968064893289939e-06
+
+
+	x1 = 0.0
+	x2 = 700.0000000000001
+	x3 = 1000.0
+	x4 = 1000.0
+	x5 = 400.0
+	x6 = 200.0
+	x7 = 200.0
+	x8 = 500.0
+	x9 = 700.0
+	x10 = 1200.0
+	x11 = 0.0
+	x12 = 0.0
+	x13 = 200.0
+	x14 = 800.0
+	x15 = 800.0
+	x16 = 600.0
+	x17 = 300.0
+	x18 = 300.0
+	x19 = 199.99999999999991
+	x20 = 1.0</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parameters">7.7. Parameters</h3>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/parameters/groups.html#secparametergroups">Parameters</a> control the mechanics of the Gurobi Optimizer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="sh">"</span><span class="s">data/glass4.mps.bz2</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">Threads</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">TimeLimit</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Read MPS format model from file data/glass4.mps.bz2
+Reading time = 0.04 seconds
+glass4: 396 rows, 322 columns, 1815 nonzeros
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 10
+Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Non-default parameters:
+TimeLimit  10
+Threads  1
+
+Optimize a model with 396 rows, 322 columns and 1815 nonzeros
+Model fingerprint: 0x18b19fdf
+Variable types: 20 continuous, 302 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 8e+06]
+  Objective range  [1e+00, 1e+06]
+  Bounds range     [1e+00, 8e+02]
+  RHS range        [1e+00, 8e+06]
+Presolve removed 6 rows and 6 columns
+Presolve time: 0.01s
+Presolved: 390 rows, 316 columns, 1803 nonzeros
+Variable types: 19 continuous, 297 integer (297 binary)
+Found heuristic solution: objective 3.133356e+09
+
+Root relaxation: objective 8.000024e+08, 72 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 8.0000e+08    0   72 3.1334e+09 8.0000e+08  74.5%     -    0s
+H    0     0                    2.600019e+09 8.0000e+08  69.2%     -    0s
+     0     0 8.0000e+08    0   72 2.6000e+09 8.0000e+08  69.2%     -    0s
+     0     0 8.0000e+08    0   72 2.6000e+09 8.0000e+08  69.2%     -    0s
+     0     0 8.0000e+08    0   76 2.6000e+09 8.0000e+08  69.2%     -    0s
+     0     0 8.0000e+08    0   76 2.6000e+09 8.0000e+08  69.2%     -    0s
+H    0     0                    2.500018e+09 8.0000e+08  68.0%     -    0s
+H    0     0                    2.400019e+09 8.0000e+08  66.7%     -    0s
+     0     2 8.0000e+08    0   76 2.4000e+09 8.0000e+08  66.7%     -    0s
+H   52    52                    2.288909e+09 8.0000e+08  65.0%   4.1    0s
+H   52    52                    2.200018e+09 8.0000e+08  63.6%   4.1    0s
+H   52    52                    2.150019e+09 8.0000e+08  62.8%   4.1    0s
+H   52    52                    2.133352e+09 8.0000e+08  62.5%   4.1    0s
+H   54    54                    2.000018e+09 8.0000e+08  60.0%   4.1    0s
+H  461   419                    2.000018e+09 8.0000e+08  60.0%   4.1    0s
+H  461   419                    2.000017e+09 8.0000e+08  60.0%   4.1    0s
+H  461   411                    1.950017e+09 8.0000e+08  59.0%   4.1    0s
+H  461   411                    1.933350e+09 8.0000e+08  58.6%   4.1    0s
+H  461   411                    1.900017e+09 8.0000e+08  57.9%   4.1    0s
+H  547   479                    1.900017e+09 8.0000e+08  57.9%   4.3    0s
+H  688   536                    1.900017e+09 8.0000e+08  57.9%   4.4    0s
+H  708   526                    1.900016e+09 8.0000e+08  57.9%   4.4    0s
+H  708   501                    1.866683e+09 8.0000e+08  57.1%   4.4    0s
+*  735   483             126    1.833351e+09 8.0000e+08  56.4%   4.5    0s
+H  931   559                    1.833351e+09 8.0000e+08  56.4%   4.4    0s
+H  931   538                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
+H  931   520                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
+H  958   518                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
+H  958   502                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
+* 1108   537              83    1.800015e+09 8.0000e+08  55.6%   4.6    0s
+H 2106  1138                    1.775015e+09 8.0000e+08  54.9%   4.1    0s
+H 2555  1485                    1.775015e+09 8.0000e+08  54.9%   4.0    0s
+* 4189  2637              57    1.758351e+09 8.0000e+08  54.5%   3.9    1s
+H 4665  2932                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
+H 5665  3637                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
+H 5665  3621                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
+H 6130  3954                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
+ 10329  6923 1.4000e+09   72   95 1.7000e+09 8.3652e+08  50.8%   4.1    5s
+H10418  6636                    1.675016e+09 8.4985e+08  49.3%   4.4    5s
+H10435  6314                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
+H10435  5998                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
+H10760  5883                    1.600016e+09 8.8011e+08  45.0%   5.1    9s
+H10801  5616                    1.600016e+09 8.8011e+08  45.0%   5.2    9s
+H10801  5339                    1.600016e+09 8.8011e+08  45.0%   5.2    9s
+H11173  5253                    1.600016e+09 9.0000e+08  43.8%   5.7    9s
+
+Cutting planes:
+  Learned: 1
+  Gomory: 11
+  Cover: 1
+  Implied bound: 5
+  Projected implied bound: 2
+  Clique: 1
+  MIR: 34
+  Flow cover: 20
+  RLT: 5
+  Relax-and-lift: 13
+
+Explored 11786 nodes (71013 simplex iterations) in 10.00 seconds (10.64 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 10: 1.60002e+09 1.60002e+09 1.60002e+09 ... 1.72502e+09
+
+Time limit reached
+Best objective 1.600015500000e+09, best bound 9.000053632839e+08, gap 43.7502%</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_callbacks">7.8. Callbacks</h3>
+<div class="paragraph">
+<p>A callback is a user-defined function invoked by Gurobi while the optimization process is going on. They enable more control over the optimization. They can be used to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>customize the termination of the solve</p>
+</li>
+<li>
+<p>add user cuts and lazy constraints</p>
+</li>
+<li>
+<p>add custom feasible solutions</p>
+</li>
+<li>
+<p>monitor the progress of optimization</p>
+</li>
+<li>
+<p>customize the optimization progress display</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A callback must be a function that accepts two arguments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>model</code>: the model that is being solved</p>
+</li>
+<li>
+<p><code>where</code>: from where is the Gurobi Optimizer is the callback invoked (presolve, simplex, barrier, MIP, at a node, etc.)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A callback can query information from the solver using <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGet">Model.cbGet()</a>. The type of information that can be queried depends on from <code>where</code> the callback is invoked. For example, when <code>where == PRESOLVE</code>, you can query the number of rows removed using <code>what == PRE_ROWDEL</code>.</p>
+</div>
+<div class="paragraph">
+<p>Other methods of interest are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGetNodeRel">Model.cbGetNodeRel()</a>: retrieve the values of the variables in the node relaxation solution at the current node.</p>
+</li>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGetSolution">Model.cbGetSolution()</a>: retrieve the values of the variables in the new MIP solution.</p>
+</li>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbCut">Model.cbCut()</a>: add a new cutting plane to the model.</p>
+</li>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbLazy">Model.cbLazy()</a>: add a new lazy constraint to the model.</p>
+</li>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbSetSolution">Model.cbSetSolution()</a>: import a user-constructed solution into Gurobi.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sos_constraints">7.9. SOS Constraints</h3>
+<div class="paragraph">
+<p>A Special-Ordered Set, or <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#sos-constraints">SOS constraint</a>, is a highly specialized constraint that places restrictions on the values that variables in a given list can take.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>SOS constraint of type 1 (SOS1): at most one variable is allowed to take a non-zero value.</p>
+</li>
+<li>
+<p>SOS constraint of type 2 (SOS2): at most two variables are allowed to take non-zero values, and those non-zero variables must be contiguous.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Use <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addSOS">Model.addSOS()</a> to add such constraints:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">addSOS</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="nb">vars</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>type</code>: the type of SOS constraint. Can be either <code>GRB.SOS_TYPE1</code> or <code>GRB.SOS_TYPE2</code>.</p>
+</li>
+<li>
+<p><code>vars</code>: list of variables that participate in the consstraint.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the MIP formulation of \(z = max(x,y,3)\), using SOS1 constraints, is:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+z = x + s_1 \\
+z = y + s_2 \\
+z = 3 + s_3 \\
+v_1 + v_2 + v_3 = 1 \\
+SOS1(s_1, v_1) \\
+SOS1(s_2, v_2) \\
+SOS1(s_3, v_3) \\
+s_1, s_2, s_3 \gt 0 \\
+v_1, v_2, v_3 \in \{0,1\}
+\end{align}\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_general_constraints">7.10. General Constraints</h3>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#general-constraints">General constraints</a>
+allow you to directly model complex relationships between variables.</p>
+</div>
+<div class="sect3">
+<h4 id="_simple_constraints">7.10.1. Simple Constraints</h4>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#subsubsectiongenconstrsimple">Simple constraints</a> are a modeling convenience. They allow you to state fairly simple relationships between variables (min, max, absolute value, logical OR, etc.). Techniques for translating these constraints into lower-level modeling objects (typically using auxiliary binary variables and linear or SOS constraints) are well known and can be found in optimization modeling textbooks.</p>
+</div>
+<div class="paragraph">
+<p>They include max, min, abs, and, or, norm, indicator and piecewise-linear constraints. In Python, you can use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_utility.html">General Constraints Helper Functions</a> to create such constraints.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="n">gp</span><span class="p">.</span><span class="nf">and_</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="n">gp</span><span class="p">.</span><span class="nf">max_</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nonlinear_constraints">7.10.2. Nonlinear constraints</h4>
+<div class="paragraph">
+<p>Nonlinear constraints are relationships of the form \(y=f(x)\) where \(x\) is a vector of Gurobi variables, \(y\) is a single Gurobi variable and \(f\) is a function \(f:\mathbb{R}^n\rightarrow \mathbb{R}\). The function  may be composed of arithmetic operations (addition, subtraction, multiplication) and various <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#function-constraints">univariate nonlinear functions</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Polynomial: \(y=p_0x^n + p_1x^{n-1} + \cdots + p_{n-1}x + p_n\)</p>
+</li>
+<li>
+<p>Natural exponential: \(y=e^x\)</p>
+</li>
+<li>
+<p>Exponential: \(y=a^x\), where \(a&gt;0\) is the base for the exponential function.</p>
+</li>
+<li>
+<p>Natural logarithm: \(y=ln(x)\)</p>
+</li>
+<li>
+<p>Logarithm: \(y=log_a(x)\) where \(a&gt;0\) is the base for the logarithmic function.</p>
+</li>
+<li>
+<p>Logistic: \(y=\frac{1}{1+e^{-x}}\)</p>
+</li>
+<li>
+<p>Power: \(y=x^a\), where \(x\geq 0\) for any fractional \(a\) and \(x&gt;0\) for \(a&lt;0\).</p>
+</li>
+<li>
+<p>Sine: \(y=sin(x)\)</p>
+</li>
+<li>
+<p>Cosine: \(y=cos(x)\)</p>
+</li>
+<li>
+<p>Tangent: \(y=tan(x)\)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">nlfunc</span>
+
+
+<span class="c1"># Formulate and solve the simple nonlinear model
+</span>
+<span class="c1"># Minimize y
+# s.t.     y = sin(2.5 x1) + x2
+#          -1 &lt;= x1, x2 &lt;= 1
+</span>
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># Optimization variables
+</span>    <span class="n">x1</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x1</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x2</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Auxiliary resultant variable for general constraint
+</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="nf">float</span><span class="p">(</span><span class="sh">"</span><span class="s">inf</span><span class="sh">"</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Nonlinear constraint for y
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrNL</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">nlfunc</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="n">x2</span><span class="p">)</span>
+
+    <span class="c1"># Use y for objective function
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">x1=</span><span class="si">{</span><span class="n">x1</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="s">  x2=</span><span class="si">{</span><span class="n">x2</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="s">  obj=</span><span class="si">{</span><span class="n">y</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 0 rows, 3 columns and 0 nonzeros
+Model fingerprint: 0x00339c10
+Model has 1 general nonlinear constraint (1 nonlinear terms)
+Variable types: 3 continuous, 0 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [0e+00, 0e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [0e+00, 0e+00]
+Presolve model has 1 nlconstr
+Added 2 variables to disaggregate expressions.
+Presolve time: 0.00s
+Presolved: 10 rows, 6 columns, 21 nonzeros
+Presolved model has 1 nonlinear constraint(s)
+
+Solving non-convex MINLP
+
+Variable types: 6 continuous, 0 integer (0 binary)
+Found heuristic solution: objective -2.0000000
+
+Explored 1 nodes (0 simplex iterations) in 0.01 seconds (0.00 work units)
+Thread count was 8 (of 8 available processors)
+
+Solution count 1: -2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -1.999999998349e+00, best bound -2.000000000000e+00, gap 0.0000%
+x1=-0.6282022274684884  x2=-1.0  obj=-1.9999999983490295</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-08 18:29:09 +0100
+Last updated 2024-12-29 16:30:51 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
