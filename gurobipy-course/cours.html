@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 96c8d0a</span>
+<span id="revdate">January 2025  - 722b2dc</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -574,19 +574,32 @@ as a remote in your working copy:</p>
 $ git push -u origin main</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The next two items are really not specific to this course, just best practices that facilitate people&#8217;s lives, in my experience.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Install <a href="https://github.com/pyenv/pyenv">pyenv</a> to facilitate installing
-multiple Python versions concurrently and choosing the Python
-interpreter for each project. Details about pyenv
+<p>If you don&#8217;t have it already, or an equivalent, install
+<a href="https://github.com/pyenv/pyenv">pyenv</a> to facilitate installing multiple
+Python versions concurrently and choosing the Python interpreter for
+each project. Details about pyenv
 <a href="https://realpython.com/intro-to-pyenv">here</a>.</p>
 </li>
 <li>
-<p>Get the
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/releasenotes/platforms.html">latest
-Python version supported</a> for <code>gurobipy</code> and set it as the default for
-this project.</p>
+<p>To avoid messing up your main Python environment, set the environment variable <code>PIP_REQUIRE_VIRTUALENV=true</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Back to <code>gurobipy</code>&#8230;&#8203;</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Get the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/releasenotes/platforms.html">latest Python
+version supported</a> for <code>gurobipy</code> and set it as the default for this
+project.</p>
 </li>
 </ul>
 </div>
@@ -631,7 +644,7 @@ Restricted license - for non-production use only - expires 2026-11-23</code></pr
 <a href="https://www.gurobi.com/features/academic-wls-license/">free Academic Web
 License Service (WLS) License</a> that works on any platform, and offers
 all features of the solver.  You will need such a license to run Gurobi
-on datasets of realistic sizes.</p>
+on datasets of realistic sizes, including the exercices for this course.</p>
 </div>
 </div>
 </div>
@@ -898,7 +911,8 @@ End</pre>
 <div class="ulist">
 <ul>
 <li>
-<p><code>tuple</code>: An ordered, compound grouping that cannot be modified once it is created and is ideal for representing multi dimensional subscripts.</p>
+<p><code>tuple</code>: An ordered, compound grouping that cannot be modified once it
+is created and is ideal for representing multi dimensional subscripts.</p>
 <div class="literalblock">
 <div class="content">
 <pre>("city_0", "city_1")</pre>
@@ -906,7 +920,8 @@ End</pre>
 </div>
 </li>
 <li>
-<p><code>list</code>: An ordered group, so each item is indexed. Lists can be modified by adding, deleting or sorting elements.</p>
+<p><code>list</code>: An ordered group, so each item is indexed. Lists can be
+modified by adding, deleting or sorting elements.</p>
 <div class="literalblock">
 <div class="content">
 <pre>["city_0", "city_1", "city_2"]</pre>
@@ -914,7 +929,8 @@ End</pre>
 </div>
 </li>
 <li>
-<p><code>set</code>: An unordered group of unique elements. Sets can only be modified by adding or deleting.</p>
+<p><code>set</code>: An unordered group of unique elements. Sets can only be
+modified by adding or deleting.</p>
 <div class="literalblock">
 <div class="content">
 <pre>{"city_0", "city_1", "city_2"}</pre>
@@ -922,7 +938,8 @@ End</pre>
 </div>
 </li>
 <li>
-<p><code>dict</code>: A key-value pair mapping that is ideal for representing indexed data such as cost, demand, capacity.</p>
+<p><code>dict</code>: A key-value pair mapping that is ideal for representing
+indexed data such as cost, demand, capacity.</p>
 <div class="literalblock">
 <div class="content">
 <pre>demand = {"city_0": 100, "city_1": 50, "city_2": 40}</pre>
@@ -1185,7 +1202,9 @@ and constraints that define the model to solve, as well as parameters
 that define the behaviour of the solver.</p>
 </div>
 <div class="paragraph">
-<p>It has methods to create and edit variables and constraints, to set parameters, to solve the model, to retrieve information, and more.  Here is again the example from section <a href="#simple-example">Simple example</a>.</p>
+<p>It has methods to create and edit variables and constraints, to set
+parameters, to solve the model, to retrieve information, and more.  Here
+is again the example from section <a href="#simple-example">Simple example</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1248,12 +1267,12 @@ that define the behaviour of the solver.</p>
 <p>A decision variable is necessarily associated to exactly one instance of
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html">Model</a>, and gets created using
 methods such as
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVar">Model.addVar()</a>
-to create a single variable,
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVars">Model.addVars()</a>
-to create multiple variables at once and
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addMVar">Model.addMVars()</a>
-to create a matrix of variables.</p>
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVar">Model.addVar()</a> to
+create a single variable,
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVars">Model.addVars()</a> to
+create multiple variables at once and
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addMVar">Model.addMVars()</a> to
+create a matrix of variables.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1303,7 +1322,10 @@ an integral value.</p>
 <div class="sect2">
 <h3 id="_model_addvars">7.2. Model.addVars()</h3>
 <div class="paragraph">
-<p>To add multiple decision variables to the model, use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVars">Model.addVars()</a> method which returns a Gurobi <a href="#tupledict">tupledict</a> object containing the newly created variables:</p>
+<p>To add multiple decision variables to the model, use the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVars">Model.addVars()</a>
+method which returns a Gurobi <a href="#tupledict">tupledict</a> object containing the newly
+created variables:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1315,7 +1337,8 @@ an integral value.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The first argument is an iterable giving indices for accessing the variables:</p>
+<p>The first argument is an iterable giving indices for accessing the
+variables:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1323,7 +1346,8 @@ an integral value.</p>
 <p>several integers (specifying the dimensions of the matrix)</p>
 </li>
 <li>
-<p>several lists of scalars (each list specifies indices across one dimension of the matrix)</p>
+<p>several lists of scalars (each list specifies indices across one
+dimension of the matrix)</p>
 </li>
 <li>
 <p>one list of tuples, or a <a href="#tuplelist">tuplelist</a></p>
@@ -1389,7 +1413,10 @@ name: z[7,c], lb: 0.0, ub: inf</pre>
 <div class="sect2">
 <h3 id="_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</h3>
 <div class="paragraph">
-<p>Like variables, constraints are also associated with a model. Use the method <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstr">Model.addConstr()</a> to add a constraint to a model.</p>
+<p>Like variables, constraints are also associated with a model. Use the
+method
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstr">Model.addConstr()</a>
+to add a constraint to a model.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1397,7 +1424,9 @@ name: z[7,c], lb: 0.0, ub: inf</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>constr</code> is a <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tempconstr.html#TempConstr">TempConstr</a> object that can take different types:</p>
+<p><code>constr</code> is a
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tempconstr.html#TempConstr">TempConstr</a> object
+that can take different types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1503,7 +1532,10 @@ Name: c_21
 <div class="sect2">
 <h3 id="_model_addconstrs">7.4. Model.addConstrs()</h3>
 <div class="paragraph">
-<p>To add multiple constraints to the model, use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstrs">Model.addConstrs()</a> method which returns a Gurobi <a href="#tupledict">tupledict</a> that contains the newly created constraints:</p>
+<p>To add multiple constraints to the model, use the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstrs">Model.addConstrs()</a>
+method which returns a Gurobi <a href="#tupledict">tupledict</a> that contains the newly
+created constraints:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1539,7 +1571,10 @@ Name: c_21
 <div class="sect2">
 <h3 id="_objective_function">7.5. Objective Function</h3>
 <div class="paragraph">
-<p>To set the model objective equal to a linear or a quadratic expression, use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.setObjective">Model.setObjective()</a> method:</p>
+<p>To set the model objective equal to a linear or a quadratic expression,
+use the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.setObjective">Model.setObjective()</a>
+method:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1552,10 +1587,11 @@ Name: c_21
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/linexpr.html#LinExpr">LinExpr</a>, a linear expression (constant plus pairs of coefficients/variables)</p>
-</li>
-<li>
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/quadexpr.html">QuadExpr</a>, a quadratic expression (linear expression plus triplets of coefficients/variables/variables)</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/linexpr.html#LinExpr">LinExpr</a>, a linear
+expression (constant plus pairs of coefficients/variables) -
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/quadexpr.html">QuadExpr</a>, a quadratic
+expression (linear expression plus triplets of
+coefficients/variables/variables)</p>
 </li>
 </ul>
 </div>
@@ -1827,7 +1863,8 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 <div class="sect2">
 <h3 id="_parameters">7.7. Parameters</h3>
 <div class="paragraph">
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/parameters/groups.html#secparametergroups">Parameters</a> control the mechanics of the Gurobi Optimizer.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/parameters/groups.html#secparametergroups">Parameters</a>
+control the mechanics of the Gurobi Optimizer.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1946,7 +1983,9 @@ Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</
 <div class="sect2">
 <h3 id="_callbacks">7.8. Callbacks</h3>
 <div class="paragraph">
-<p>A callback is a user-defined function invoked by Gurobi while the optimization process is going on. They enable more control over the optimization. They can be used to:</p>
+<p>A callback is a user-defined function invoked by Gurobi while the
+optimization process is going on. They enable more control over the
+optimization. They can be used to:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1976,12 +2015,20 @@ Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</
 <p><code>model</code>: the model that is being solved</p>
 </li>
 <li>
-<p><code>where</code>: from where is the Gurobi Optimizer is the callback invoked (presolve, simplex, barrier, MIP, at a node, etc.)</p>
+<p><code>where</code>: from where is
+the Gurobi Optimizer is the callback invoked (presolve, simplex,
+barrier, MIP, at a node, etc.)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>A callback can query information from the solver using <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGet">Model.cbGet()</a>. The type of information that can be queried depends on from <code>where</code> the callback is invoked. For example, when <code>where == PRESOLVE</code>, you can query the number of rows removed using <code>what == PRE_ROWDEL</code>.  All the callback code values that you can query are listed <a href="https://docs.gurobi.com/projects/optimizer/en/current/reference/numericcodes/callbacks.html">here</a>.</p>
+<p>A callback can query information from the solver using
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGet">Model.cbGet()</a>. The
+type of information that can be queried depends on from <code>where</code> the
+callback is invoked. For example, when <code>where == PRESOLVE</code>, you can
+query the number of rows removed using <code>what == PRE_ROWDEL</code>.  All the
+callback code values that you can query are listed
+<a href="https://docs.gurobi.com/projects/optimizer/en/current/reference/numericcodes/callbacks.html">here</a>.</p>
 </div>
 <div class="paragraph">
 <p>Other methods of interest are:</p>
@@ -1989,19 +2036,25 @@ Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGetNodeRel">Model.cbGetNodeRel()</a>: retrieve the values of the variables in the node relaxation solution at the current node.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGetNodeRel">Model.cbGetNodeRel()</a>:
+retrieve the values of the variables in the node relaxation solution at
+the current node.</p>
 </li>
 <li>
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGetSolution">Model.cbGetSolution()</a>: retrieve the values of the variables in the new MIP solution.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGetSolution">Model.cbGetSolution()</a>:
+retrieve the values of the variables in the new MIP solution.</p>
 </li>
 <li>
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbCut">Model.cbCut()</a>: add a new cutting plane to the model.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbCut">Model.cbCut()</a>: add a
+new cutting plane to the model.</p>
 </li>
 <li>
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbLazy">Model.cbLazy()</a>: add a new lazy constraint to the model.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbLazy">Model.cbLazy()</a>: add
+a new lazy constraint to the model.</p>
 </li>
 <li>
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbSetSolution">Model.cbSetSolution()</a>: import a user-constructed solution into Gurobi.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbSetSolution">Model.cbSetSolution()</a>:
+import a user-constructed solution into Gurobi.</p>
 </li>
 </ul>
 </div>
@@ -2009,20 +2062,26 @@ Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</
 <div class="sect2">
 <h3 id="_sos_constraints">7.9. SOS Constraints</h3>
 <div class="paragraph">
-<p>A Special-Ordered Set, or <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#sos-constraints">SOS constraint</a>, is a highly specialized constraint that places restrictions on the values that variables in a given list can take.</p>
+<p>A Special-Ordered Set, or
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#sos-constraints">SOS
+constraint</a>, is a highly specialized constraint that places restrictions
+on the values that variables in a given list can take.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>SOS constraint of type 1 (SOS1): at most one variable is allowed to take a non-zero value.</p>
+<p>SOS constraint of type 1 (SOS1): at most one variable is allowed to
+take a non-zero value.</p>
 </li>
 <li>
-<p>SOS constraint of type 2 (SOS2): at most two variables are allowed to take non-zero values, and those non-zero variables must be contiguous.</p>
+<p>SOS constraint of type 2 (SOS2): at most two variables are allowed to
+take non-zero values, and those non-zero variables must be contiguous.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Use <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addSOS">Model.addSOS()</a> to add such constraints:</p>
+<p>Use <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addSOS">Model.addSOS()</a>
+to add such constraints:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2035,7 +2094,8 @@ Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</
 <div class="ulist">
 <ul>
 <li>
-<p><code>type</code>: the type of SOS constraint. Can be either <code>GRB.SOS_TYPE1</code> or <code>GRB.SOS_TYPE2</code>.</p>
+<p><code>type</code>: the type of SOS constraint. Can be either <code>GRB.SOS_TYPE1</code>
+or <code>GRB.SOS_TYPE2</code>.</p>
 </li>
 <li>
 <p><code>vars</code>: list of variables that participate in the consstraint.</p>
@@ -2064,16 +2124,26 @@ v_1, v_2, v_3 \in \{0,1\}
 <div class="sect2">
 <h3 id="_general_constraints">7.10. General Constraints</h3>
 <div class="paragraph">
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#general-constraints">General constraints</a>
-allow you to directly model complex relationships between variables.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#general-constraints">General
+constraints</a> allow you to directly model complex relationships between
+variables.</p>
 </div>
 <div class="sect3">
 <h4 id="_simple_constraints">7.10.1. Simple Constraints</h4>
 <div class="paragraph">
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#subsubsectiongenconstrsimple">Simple constraints</a> are a modeling convenience. They allow you to state fairly simple relationships between variables (min, max, absolute value, logical OR, etc.). Techniques for translating these constraints into lower-level modeling objects (typically using auxiliary binary variables and linear or SOS constraints) are well known and can be found in optimization modeling textbooks.</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#subsubsectiongenconstrsimple">Simple
+constraints</a> are a modeling convenience. They allow you to state fairly
+simple relationships between variables (min, max, absolute value,
+logical OR, etc.). Techniques for translating these constraints into
+lower-level modeling objects (typically using auxiliary binary variables
+and linear or SOS constraints) are well known and can be found in
+optimization modeling textbooks.</p>
 </div>
 <div class="paragraph">
-<p>They include max, min, abs, and, or, norm, indicator and piecewise-linear constraints. In Python, you can use the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_utility.html">General Constraints Helper Functions</a> to create such constraints.</p>
+<p>They include max, min, abs, and, or, norm, indicator and
+piecewise-linear constraints. In Python, you can use the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_utility.html">General Constraints Helper
+Functions</a> to create such constraints.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2085,7 +2155,13 @@ allow you to directly model complex relationships between variables.</p>
 <div class="sect3">
 <h4 id="_nonlinear_constraints">7.10.2. Nonlinear constraints</h4>
 <div class="paragraph">
-<p>Nonlinear constraints are relationships of the form \(y=f(x)\) where \(x\) is a vector of Gurobi variables, \(y\) is a single Gurobi variable and \(f\) is a function \(f:\mathbb{R}^n\rightarrow \mathbb{R}\). The function  may be composed of arithmetic operations (addition, subtraction, multiplication) and various <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#function-constraints">univariate nonlinear functions</a>.</p>
+<p>Nonlinear constraints are relationships of the form \(y=f(x)\) where
+\(x\) is a vector of Gurobi variables, \(y\) is a single Gurobi
+variable and \(f\) is a function \(f:\mathbb{R}^n\rightarrow
+\mathbb{R}\). The function  may be composed of arithmetic operations
+(addition, subtraction, multiplication) and various
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#function-constraints">univariate
+nonlinear functions</a>.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2196,7 +2272,7 @@ x1=-0.6282022274684884  x2=-1.0  obj=-1.9999999983490295</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-02 15:52:53 +0100
+Last updated 2025-01-02 16:50:30 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
