@@ -477,13 +477,14 @@ pre.rouge .nb, pre.rouge .bp {
 <h1>Solutions to the gurobipy exercises</h1>
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
-<span id="email" class="email"><a href="mailto:xavier.nodet@univ-angers.fr">xavier.nodet@univ-angers.fr</a></span><br>
-<span id="revdate">January 2025  - a4a7b5d</span>
+<span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
+<span id="revdate">January 2025  - 18816c1</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
 <li><a href="#_knapsack">1. Knapsack</a></li>
+<li><a href="#_portfolio_optimization">2. Portfolio Optimization</a></li>
 </ul>
 </div>
 </div>
@@ -576,10 +577,130 @@ Best objective 1.190152225370e+05, best bound 1.190206174693e+05, gap 0.0045%</p
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_portfolio_optimization">2. Portfolio Optimization</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">json</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">data/portfolio-example.json</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">num_assets</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">covariance</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">expected_return</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">mu_0</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">target_return</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">portfolio_max_size</span><span class="sh">"</span><span class="p">]</span>
+
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">portfolio</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">risk</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">quicksum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">risk</span><span class="p">)</span>
+
+    <span class="n">expected_return</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">quicksum</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">expected_return</span> <span class="o">&gt;=</span> <span class="n">mu_0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">return</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">budget</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">y</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">cardinality</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstrs</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">is_allocated</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+
+    <span class="c1"># Write the solution into a DataFrame
+</span>    <span class="n">portfolio</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="p">.</span><span class="n">X</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">getVars</span><span class="p">()</span> <span class="k">if</span> <span class="sh">"</span><span class="s">x</span><span class="sh">"</span> <span class="ow">in</span> <span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="p">]</span>
+    <span class="n">risk</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">ObjVal</span>
+    <span class="n">expected_return</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">getRow</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">getConstrByName</span><span class="p">(</span><span class="sh">"</span><span class="s">return</span><span class="sh">"</span><span class="p">)).</span><span class="nf">getValue</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">portfolio</span> <span class="o">+</span> <span class="p">[</span><span class="n">risk</span><span class="p">,</span> <span class="n">expected_return</span><span class="p">],</span>
+        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="sh">"</span><span class="s">asset_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="sh">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="sh">"</span><span class="s">risk</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">return</span><span class="sh">"</span><span class="p">],</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">Portfolio</span><span class="sh">"</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the log of the execution of this program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 23 rows, 40 columns and 100 nonzeros
+Model fingerprint: 0x755216b2
+Model has 210 quadratic objective terms
+Variable types: 20 continuous, 20 integer (20 binary)
+Coefficient statistics:
+  Matrix range     [1e-04, 1e+00]
+  Objective range  [0e+00, 0e+00]
+  QObjective range [7e-06, 4e-03]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e-04, 2e+01]
+Found heuristic solution: objective 0.0000960
+Presolve time: 0.01s
+Presolved: 23 rows, 40 columns, 100 nonzeros
+Presolved model has 210 quadratic objective terms
+Variable types: 20 continuous, 20 integer (20 binary)
+
+Root relaxation: objective 6.741224e-05, 38 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00007    0   11    0.00010    0.00007  29.8%     -    0s
+H    0     0                       0.0000674    0.00007  0.00%     -    0s
+     0     0    0.00007    0   11    0.00007    0.00007  0.00%     -    0s
+
+Explored 1 nodes (38 simplex iterations) in 0.01 seconds (0.00 work units)
+Thread count was 8 (of 8 available processors)
+
+Solution count 2: 6.74122e-05 9.60284e-05 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 6.741224163915e-05, best bound 6.741224163915e-05, gap 0.0000%
+          Portfolio
+asset_0    0.000000
+asset_1    0.000000
+asset_2    0.000000
+asset_3    0.000000
+asset_4    0.006812
+asset_5    0.034594
+asset_6    0.000000
+asset_7    0.000000
+asset_8    0.409840
+asset_9    0.026759
+asset_10   0.000000
+asset_11   0.027722
+asset_12   0.039911
+asset_13   0.030221
+asset_14   0.038511
+asset_15   0.000000
+asset_16   0.184718
+asset_17   0.000000
+asset_18   0.126673
+asset_19   0.074241
+risk       0.000067
+return     0.000104</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-30 11:14:26 +0100
+Last updated 2025-01-02 11:14:39 +0100
 </div>
 </div>
 </body>
