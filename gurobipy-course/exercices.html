@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 18816c1</span>
+<span id="revdate">January 2025  - 96c8d0a</span>
 </div>
 </div>
 <div id="content">
@@ -613,10 +613,53 @@ target return \(\mu_0\) and 2) the portfolio invests in at most
     <span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code></pre>
 </div>
 </div>
+<h2 id="_custom_termination_criteria" class="discrete">Custom Termination Criteria</h2>
+<div class="paragraph">
+<p>Use a callback function to terminate the optimization of the model <code>mkp.mps.bz2</code> if the MIPGap does not decrease more than epsilon (1e-4) for a given time period (50 seconds) after finding the first incumbent solution.</p>
+</div>
+<div class="paragraph">
+<p>Hint: Check possible <code>what</code> values for the callback code <code>GRB.Callback.MIP</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">from</span> <span class="n">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+
+<span class="k">class</span> <span class="nc">CallbackData</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">last_gap_change_time</span> <span class="o">=</span> <span class="o">-</span><span class="n">GRB</span><span class="p">.</span><span class="n">INFINITY</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">last_gap</span> <span class="o">=</span> <span class="n">GRB</span><span class="p">.</span><span class="n">INFINITY</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">where</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cbdata</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">where</span> <span class="o">!=</span> <span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">model</span><span class="p">.</span><span class="nf">cbGet</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP_SOLCNT</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Use model.terminate() to end the search when required...
+</span>    <span class="c1"># ...
+</span>
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="sh">"</span><span class="s">data/mkp.mps.bz2</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># Global variables used in the callback function
+</span>    <span class="n">time_from_best</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">epsilon_to_compare_gap</span> <span class="o">=</span> <span class="mf">1e-4</span>
+
+    <span class="c1"># Initialize data passed to the callback function
+</span>    <span class="n">callback_data</span> <span class="o">=</span> <span class="nc">CallbackData</span><span class="p">()</span>
+    <span class="n">callback_func</span> <span class="o">=</span> <span class="nf">partial</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">cbdata</span><span class="o">=</span><span class="n">callback_data</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">(</span><span class="n">callback_func</span><span class="p">)</span></code></pre>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-30 14:26:02 +0100
+Last updated 2025-01-02 15:46:48 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">

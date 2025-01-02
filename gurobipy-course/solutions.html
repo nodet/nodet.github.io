@@ -478,13 +478,14 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 18816c1</span>
+<span id="revdate">January 2025  - 96c8d0a</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
 <li><a href="#_knapsack">1. Knapsack</a></li>
 <li><a href="#_portfolio_optimization">2. Portfolio Optimization</a></li>
+<li><a href="#_termination_criteria">3. Termination Criteria</a></li>
 </ul>
 </div>
 </div>
@@ -566,7 +567,7 @@ Root relaxation: objective 1.190206e+05, 1 iterations, 0.00 seconds (0.00 work u
 H    0     0                    119005.88462 119020.617  0.01%     -    0s
 H    0     0                    119015.22254 119020.617  0.00%     -    0s
 
-Explored 1 nodes (1 simplex iterations) in 0.04 seconds (0.02 work units)
+Explored 1 nodes (1 simplex iterations) in 0.03 seconds (0.02 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 3: 119015 119006 90594.5 
@@ -649,7 +650,7 @@ Coefficient statistics:
   Bounds range     [1e+00, 1e+00]
   RHS range        [1e-04, 2e+01]
 Found heuristic solution: objective 0.0000960
-Presolve time: 0.01s
+Presolve time: 0.00s
 Presolved: 23 rows, 40 columns, 100 nonzeros
 Presolved model has 210 quadratic objective terms
 Variable types: 20 continuous, 20 integer (20 binary)
@@ -663,7 +664,7 @@ Root relaxation: objective 6.741224e-05, 38 iterations, 0.00 seconds (0.00 work 
 H    0     0                       0.0000674    0.00007  0.00%     -    0s
      0     0    0.00007    0   11    0.00007    0.00007  0.00%     -    0s
 
-Explored 1 nodes (38 simplex iterations) in 0.01 seconds (0.00 work units)
+Explored 1 nodes (38 simplex iterations) in 0.00 seconds (0.00 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 2: 6.74122e-05 9.60284e-05 
@@ -697,10 +698,141 @@ return     0.000104</pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_termination_criteria">3. Termination Criteria</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">from</span> <span class="n">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+
+<span class="k">class</span> <span class="nc">CallbackData</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">last_gap_change_time</span> <span class="o">=</span> <span class="o">-</span><span class="n">GRB</span><span class="p">.</span><span class="n">INFINITY</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">last_gap</span> <span class="o">=</span> <span class="n">GRB</span><span class="p">.</span><span class="n">INFINITY</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">where</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cbdata</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">where</span> <span class="o">!=</span> <span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">model</span><span class="p">.</span><span class="nf">cbGet</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP_SOLCNT</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">best</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">cbGet</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP_OBJBST</span><span class="p">)</span>
+    <span class="n">bound</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">cbGet</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP_OBJBND</span><span class="p">)</span>
+    <span class="n">gap</span> <span class="o">=</span> <span class="nf">abs</span><span class="p">((</span><span class="n">bound</span> <span class="o">-</span> <span class="n">best</span><span class="p">)</span> <span class="o">/</span> <span class="n">best</span><span class="p">)</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">cbGet</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">RUNTIME</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gap</span> <span class="o">&lt;</span> <span class="n">cbdata</span><span class="p">.</span><span class="n">last_gap</span> <span class="o">-</span> <span class="n">epsilon_to_compare_gap</span><span class="p">:</span>
+        <span class="c1"># The gap has decreased, store new gap and reset the time
+</span>        <span class="n">cbdata</span><span class="p">.</span><span class="n">last_gap</span> <span class="o">=</span> <span class="n">gap</span>
+        <span class="n">cbdata</span><span class="p">.</span><span class="n">last_gap_change_time</span> <span class="o">=</span> <span class="n">time</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Storing new gap: </span><span class="si">{</span><span class="n">gap</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">time</span> <span class="o">-</span> <span class="n">cbdata</span><span class="p">.</span><span class="n">last_gap_change_time</span> <span class="o">&gt;</span> <span class="n">time_from_best</span><span class="p">:</span>
+        <span class="c1"># No change since too long
+</span>        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">It</span><span class="sh">'</span><span class="s">s been too long...</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">terminate</span><span class="p">()</span>
+
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="sh">"</span><span class="s">data/mkp.mps.bz2</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># Global variables used in the callback function
+</span>    <span class="n">time_from_best</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">epsilon_to_compare_gap</span> <span class="o">=</span> <span class="mf">1e-4</span>
+
+    <span class="c1"># Initialize data passed to the callback function
+</span>    <span class="n">callback_data</span> <span class="o">=</span> <span class="nc">CallbackData</span><span class="p">()</span>
+    <span class="n">callback_func</span> <span class="o">=</span> <span class="nf">partial</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">cbdata</span><span class="o">=</span><span class="n">callback_data</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">(</span><span class="n">callback_func</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the log of the execution of this program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Read MPS format model from file data/mkp.mps.bz2
+Reading time = 0.03 seconds
+mkp_bip: 30 rows, 500 columns, 15000 nonzeros
+Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 30 rows, 500 columns and 15000 nonzeros
+Model fingerprint: 0xcbe37219
+Variable types: 0 continuous, 500 integer (500 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+03]
+  Objective range  [4e+02, 1e+03]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+05, 1e+05]
+Found heuristic solution: objective 177106.00000
+Presolve time: 0.02s
+Presolved: 30 rows, 500 columns, 15000 nonzeros
+Variable types: 0 continuous, 500 integer (500 binary)
+Storing new gap: 1.0921143270132012, 0.016791105270385742
+
+Root relaxation: objective 2.164011e+05, 112 iterations, 0.00 seconds (0.01 work units)
+Storing new gap: 0.22187277675516356, 0.019543170928955078
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 216401.065    0   25 177106.000 216401.065  22.2%     -    0s
+H    0     0                    209908.00000 216401.065  3.09%     -    0s
+H    0     0                    213709.00000 216401.065  1.26%     -    0s
+H    0     0                    215225.00000 216401.065  0.55%     -    0s
+H    0     0                    215436.00000 216401.065  0.45%     -    0s
+H    0     0                    215510.00000 216401.065  0.41%     -    0s
+H    0     0                    215624.00000 216401.065  0.36%     -    0s
+Storing new gap: 0.0035756687567246688, 0.10947108268737793
+     0     0 216395.201    0   25 215624.000 216395.201  0.36%     -    0s
+H    0     0                    215635.00000 216395.201  0.35%     -    0s
+H    0     2                    215645.00000 216395.201  0.35%     -    0s
+     0     2 216395.201    0   25 215645.000 216395.201  0.35%     -    0s
+H   85    88                    215666.00000 216395.201  0.34%   8.8    0s
+Storing new gap: 0.003380226832231321, 0.32851505279541016
+H  162   166                    215707.00000 216395.201  0.32%   9.4    0s
+Storing new gap: 0.0031895116987394937, 0.3732430934906006
+H 2099  1932                    215727.00000 216389.474  0.31%   7.0    1s
+Storing new gap: 0.0030686933021828516, 1.1676521301269531
+H20129 16350                    215731.00000 216372.312  0.30%   8.0    2s
+Storing new gap: 0.0029620221479527745, 2.857210159301758
+ 30628 25884 216138.989   86   22 215731.000 216367.041  0.29%   8.0    5s
+H50272 34121                    215821.00000 216367.041  0.25%   8.1    6s
+Storing new gap: 0.0025298742939750996, 6.40115213394165
+ 118365 77698 216056.070   77   23 215821.000 216352.073  0.25%   8.5   10s
+Storing new gap: 0.002427937967111634, 12.815638065338135
+ 212822 160092 216023.864   87   18 215821.000 216343.178  0.24%   8.8   15s
+ 311641 247476 216227.920   67   24 215821.000 216337.837  0.24%   8.9   20s
+ 413502 336224 216096.633   70   24 215821.000 216334.124  0.24%   9.1   25s
+It's been too long...
+
+Cutting planes:
+  Gomory: 7
+
+Explored 478347 nodes (4366379 simplex iterations) in 27.84 seconds (76.04 work units)
+Thread count was 8 (of 8 available processors)
+
+Solution count 10: 215821 215731 215727 ... 215436
+
+Solve interrupted
+Best objective 2.158210000000e+05, best bound 2.163320000000e+05, gap 0.2368%
+
+User-callback calls 959953, time in user-callback 1.08 sec</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-02 11:14:39 +0100
+Last updated 2025-01-02 15:47:41 +0100
 </div>
 </div>
 </body>

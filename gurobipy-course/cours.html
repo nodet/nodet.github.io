@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 18816c1</span>
+<span id="revdate">January 2025  - 96c8d0a</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -746,7 +746,7 @@ such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will seldom discuss t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
 
 CPU model: Apple M1 Pro
 Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
@@ -841,7 +841,7 @@ End</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.1.0 24B91)
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
 
 CPU model: Apple M1 Pro
 Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
@@ -1587,7 +1587,7 @@ Name: c_21
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.7969872821012581 x[0] + 0.8381749342108862 x[1] + 0.5088397689274015 x[2] + 0.07174898144427355 x[3] + 0.33592153457205 x[4]</pre>
+<pre>obj: 0.9399753501411019 x[0] + 0.12991374052261273 x[1] + 0.5562313275158236 x[2] + 0.3045060071195004 x[3] + 0.2804930831136967 x[4]</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1619,7 +1619,7 @@ Name: c_21
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.0 + [ 0.0017925286130057172 x[0] ^ 2 + 1.9754045797876238 x[0] * x[1] + 0.16341452344520668 x[0] * x[2] + 1.5436307577284119 x[0] * x[3] + 1.847889511843424 x[0] * x[4] + 0.887549392447781 x[1] ^ 2 + 0.14066903177270085 x[1] * x[2] + 0.9305402391903437 x[1] * x[3] + 1.6300246985463809 x[1] * x[4] + 0.3748541196271874 x[2] ^ 2 + 1.1065969294716096 x[2] * x[3] + 1.2347203433499683 x[2] * x[4] + 0.22119484130264622 x[3] ^ 2 + 1.096250877984486 x[3] * x[4] + 0.5066537832287884 x[4] ^ 2 ]</pre>
+<pre>obj: 0.0 + [ 0.768336624935521 x[0] ^ 2 + 1.5522691959125976 x[0] * x[1] + 1.167240530069313 x[0] * x[2] + 1.1435084473514374 x[0] * x[3] + 1.1313403290438293 x[0] * x[4] + 0.8844923911011056 x[1] ^ 2 + 0.5005996044617499 x[1] * x[2] + 0.9936872074047038 x[1] * x[3] + 1.4759484954820188 x[1] * x[4] + 0.6668584704750659 x[2] ^ 2 + 1.0574191476812844 x[2] * x[3] + 1.083956038763422 x[2] * x[4] + 0.612617912110733 x[3] ^ 2 + 1.4212321261785363 x[3] * x[4] + 0.8102406110691157 x[4] ^ 2 ]</pre>
 </div>
 </div>
 </div>
@@ -1706,7 +1706,7 @@ of constraints, and more.  Here are some of the most commonly used:</p>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
-Reading time = 0.02 seconds
+Reading time = 0.04 seconds
 glass4: 396 rows, 322 columns, 1815 nonzeros
 Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
 
@@ -1722,7 +1722,7 @@ Coefficient statistics:
   Bounds range     [1e+00, 8e+02]
   RHS range        [1e+00, 8e+06]
 Presolve removed 6 rows and 6 columns
-Presolve time: 0.01s
+Presolve time: 0.00s
 Presolved: 390 rows, 316 columns, 1803 nonzeros
 Variable types: 19 continuous, 297 integer (297 binary)
 Found heuristic solution: objective 3.133356e+09
@@ -1764,16 +1764,17 @@ H18938 10840                    1.600014e+09 8.0000e+08  50.0%   3.5    0s
 H19146  9570                    1.500013e+09 8.0000e+08  46.7%   3.5    0s
 H20592 10593                    1.500013e+09 8.0000e+08  46.7%   3.5    1s
 H30377 13890                    1.500012e+09 8.3576e+08  44.3%   3.7    2s
- 30583 14035 1.3000e+09   58   94 1.5000e+09 8.8794e+08  40.8%   4.0    5s
- 30909 14262 1.5000e+09   72  129 1.5000e+09 8.9996e+08  40.0%   4.4   10s
- 68751 18770 infeasible  206      1.5000e+09 1.0000e+09  33.3%   7.1   15s
-*135241 22495             219    1.400016e+09 1.1000e+09  21.4%   7.0   17s
-*136789 22885             210    1.400014e+09 1.1000e+09  21.4%   7.0   17s
-*142250 22031             209    1.400013e+09 1.1098e+09  20.7%   7.0   17s
-*186816 33080             211    1.400013e+09 1.2000e+09  14.3%   7.1   19s
- 201227 37127 1.4000e+09  211   10 1.4000e+09 1.2000e+09  14.3%   7.1   20s
-*228748 44827             206    1.400013e+09 1.2000e+09  14.3%   6.9   21s
-*284522  5732             204    1.200013e+09 1.2000e+09  0.00%   6.6   23s
+ 30569 14024 1.5000e+09   66   99 1.5000e+09 8.8699e+08  40.9%   3.9    5s
+ 30876 14239 9.0000e+08   41  101 1.5000e+09 8.9978e+08  40.0%   4.3   10s
+ 49561 17376 infeasible  198      1.5000e+09 1.0000e+09  33.3%   6.9   15s
+*135241 22495             219    1.400016e+09 1.1000e+09  21.4%   7.0   18s
+*136789 22885             210    1.400014e+09 1.1000e+09  21.4%   7.0   18s
+*142250 22031             209    1.400013e+09 1.1098e+09  20.7%   7.0   18s
+ 162464 26238 infeasible  211      1.4000e+09 1.2000e+09  14.3%   7.2   20s
+*186816 33080             211    1.400013e+09 1.2000e+09  14.3%   7.1   21s
+*228748 44827             206    1.400013e+09 1.2000e+09  14.3%   6.9   23s
+ 274973 53542 infeasible  219      1.4000e+09 1.2000e+09  14.3%   6.6   25s
+*284522  5732             204    1.200013e+09 1.2000e+09  0.00%   6.6   25s
 
 Cutting planes:
   Learned: 1
@@ -1785,7 +1786,7 @@ Cutting planes:
   RLT: 5
   Relax-and-lift: 16
 
-Explored 284537 nodes (1881113 simplex iterations) in 23.26 seconds (29.59 work units)
+Explored 284537 nodes (1881113 simplex iterations) in 25.46 seconds (29.59 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 10: 1.20001e+09 1.40001e+09 1.40001e+09 ... 1.60001e+09
@@ -1796,7 +1797,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 	Status       : 2
 	Obj          : 1200012600.0
 	SolutionCount: 10
-	Runtime      : 23.25736689567566
+	Runtime      : 25.456727027893066
 	MIPGap       : 2.968064893289939e-06
 
 
@@ -1842,7 +1843,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
-Reading time = 0.04 seconds
+Reading time = 0.03 seconds
 glass4: 396 rows, 322 columns, 1815 nonzeros
 Set parameter Threads to value 1
 Set parameter TimeLimit to value 10
@@ -1864,7 +1865,7 @@ Coefficient statistics:
   Bounds range     [1e+00, 8e+02]
   RHS range        [1e+00, 8e+06]
 Presolve removed 6 rows and 6 columns
-Presolve time: 0.01s
+Presolve time: 0.00s
 Presolved: 390 rows, 316 columns, 1803 nonzeros
 Variable types: 19 continuous, 297 integer (297 binary)
 Found heuristic solution: objective 3.133356e+09
@@ -1911,13 +1912,13 @@ H 4665  2932                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
 H 5665  3637                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
 H 5665  3621                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
 H 6130  3954                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
- 10329  6923 1.4000e+09   72   95 1.7000e+09 8.3652e+08  50.8%   4.1    5s
+ 10333  6925 1.1000e+09   45  111 1.7000e+09 8.4076e+08  50.5%   4.1    5s
 H10418  6636                    1.675016e+09 8.4985e+08  49.3%   4.4    5s
 H10435  6314                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
 H10435  5998                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
-H10760  5883                    1.600016e+09 8.8011e+08  45.0%   5.1    9s
-H10801  5616                    1.600016e+09 8.8011e+08  45.0%   5.2    9s
-H10801  5339                    1.600016e+09 8.8011e+08  45.0%   5.2    9s
+H10760  5883                    1.600016e+09 8.8011e+08  45.0%   5.1    8s
+H10801  5616                    1.600016e+09 8.8011e+08  45.0%   5.2    8s
+H10801  5339                    1.600016e+09 8.8011e+08  45.0%   5.2    8s
 H11173  5253                    1.600016e+09 9.0000e+08  43.8%   5.7    9s
 
 Cutting planes:
@@ -1932,13 +1933,13 @@ Cutting planes:
   RLT: 5
   Relax-and-lift: 13
 
-Explored 11786 nodes (71013 simplex iterations) in 10.00 seconds (10.64 work units)
+Explored 12353 nodes (75841 simplex iterations) in 10.00 seconds (10.90 work units)
 Thread count was 1 (of 8 available processors)
 
 Solution count 10: 1.60002e+09 1.60002e+09 1.60002e+09 ... 1.72502e+09
 
 Time limit reached
-Best objective 1.600015500000e+09, best bound 9.000053632839e+08, gap 43.7502%</pre>
+Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</pre>
 </div>
 </div>
 </div>
@@ -1980,7 +1981,7 @@ Best objective 1.600015500000e+09, best bound 9.000053632839e+08, gap 43.7502%</
 </ul>
 </div>
 <div class="paragraph">
-<p>A callback can query information from the solver using <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGet">Model.cbGet()</a>. The type of information that can be queried depends on from <code>where</code> the callback is invoked. For example, when <code>where == PRESOLVE</code>, you can query the number of rows removed using <code>what == PRE_ROWDEL</code>.</p>
+<p>A callback can query information from the solver using <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.cbGet">Model.cbGet()</a>. The type of information that can be queried depends on from <code>where</code> the callback is invoked. For example, when <code>where == PRESOLVE</code>, you can query the number of rows removed using <code>what == PRE_ROWDEL</code>.  All the callback code values that you can query are listed <a href="https://docs.gurobi.com/projects/optimizer/en/current/reference/numericcodes/callbacks.html">here</a>.</p>
 </div>
 <div class="paragraph">
 <p>Other methods of interest are:</p>
@@ -2178,7 +2179,7 @@ Solving non-convex MINLP
 Variable types: 6 continuous, 0 integer (0 binary)
 Found heuristic solution: objective -2.0000000
 
-Explored 1 nodes (0 simplex iterations) in 0.01 seconds (0.00 work units)
+Explored 1 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 1: -2 
@@ -2195,7 +2196,7 @@ x1=-0.6282022274684884  x2=-1.0  obj=-1.9999999983490295</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-02 11:14:39 +0100
+Last updated 2025-01-02 15:52:53 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
