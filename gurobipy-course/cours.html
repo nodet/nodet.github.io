@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
 <meta name="author" content="Xavier Nodet">
-<title>Gurobi Python API: gurobipy</title>
+<title>gurobipy: Course</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -474,11 +474,11 @@ pre.rouge .nb, pre.rouge .bp {
 </head>
 <body class="article">
 <div id="header">
-<h1>Gurobi Python API: <code>gurobipy</code></h1>
+<h1><code>gurobipy</code>: Course</h1>
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 722b2dc</span>
+<span id="revdate">January 2025  - 123f894</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -508,11 +508,17 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</a></li>
 <li><a href="#_model_addconstrs">7.4. Model.addConstrs()</a></li>
 <li><a href="#_objective_function">7.5. Objective Function</a></li>
-<li><a href="#_attributes">7.6. Attributes</a></li>
-<li><a href="#_parameters">7.7. Parameters</a></li>
-<li><a href="#_callbacks">7.8. Callbacks</a></li>
-<li><a href="#_sos_constraints">7.9. SOS Constraints</a></li>
-<li><a href="#_general_constraints">7.10. General Constraints</a></li>
+<li><a href="#_sos_constraints">7.6. SOS Constraints</a></li>
+<li><a href="#_general_constraints">7.7. General Constraints</a></li>
+</ul>
+</li>
+<li><a href="#_matrix_based_api">8. Matrix-based API</a></li>
+<li><a href="#_data_first_modelling">9. Data-First Modelling</a></li>
+<li><a href="#_interacting_with_the_model">10. Interacting with the Model</a>
+<ul class="sectlevel2">
+<li><a href="#_attributes">10.1. Attributes</a></li>
+<li><a href="#_parameters">10.2. Parameters</a></li>
+<li><a href="#_callbacks">10.3. Callbacks</a></li>
 </ul>
 </li>
 </ul>
@@ -813,7 +819,7 @@ End</pre>
 </div>
 <div class="sect2">
 <h3 id="_same_example_using_the_matrix_api">3.2. Same example, using the matrix API</h3>
-<div class="listingblock">
+<div id="matrix-api-example" class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
 <span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
@@ -1660,7 +1666,328 @@ coefficients/variables/variables)</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_attributes">7.6. Attributes</h3>
+<h3 id="_sos_constraints">7.6. SOS Constraints</h3>
+<div class="paragraph">
+<p>A Special-Ordered Set, or
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#sos-constraints">SOS
+constraint</a>, is a highly specialized constraint that places restrictions
+on the values that variables in a given list can take.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>SOS constraint of type 1 (SOS1): at most one variable is allowed to
+take a non-zero value.</p>
+</li>
+<li>
+<p>SOS constraint of type 2 (SOS2): at most two variables are allowed to
+take non-zero values, and those non-zero variables must be contiguous.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Use <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addSOS">Model.addSOS()</a>
+to add such constraints:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">addSOS</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="nb">vars</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>type</code>: the type of SOS constraint. Can be either <code>GRB.SOS_TYPE1</code>
+or <code>GRB.SOS_TYPE2</code>.</p>
+</li>
+<li>
+<p><code>vars</code>: list of variables that participate in the consstraint.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the MIP formulation of \(z = max(x,y,3)\), using SOS1 constraints, is:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+z = x + s_1 \\
+z = y + s_2 \\
+z = 3 + s_3 \\
+v_1 + v_2 + v_3 = 1 \\
+SOS1(s_1, v_1) \\
+SOS1(s_2, v_2) \\
+SOS1(s_3, v_3) \\
+s_1, s_2, s_3 \gt 0 \\
+v_1, v_2, v_3 \in \{0,1\}
+\end{align}\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_general_constraints">7.7. General Constraints</h3>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#general-constraints">General
+constraints</a> allow you to directly model complex relationships between
+variables.</p>
+</div>
+<div class="sect3">
+<h4 id="_simple_constraints">7.7.1. Simple Constraints</h4>
+<div class="paragraph">
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#subsubsectiongenconstrsimple">Simple
+constraints</a> are a modeling convenience. They allow you to state fairly
+simple relationships between variables (min, max, absolute value,
+logical OR, etc.). Techniques for translating these constraints into
+lower-level modeling objects (typically using auxiliary binary variables
+and linear or SOS constraints) are well known and can be found in
+optimization modeling textbooks.</p>
+</div>
+<div class="paragraph">
+<p>They include max, min, abs, and, or, norm, indicator and
+piecewise-linear constraints. In Python, you can use the
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_utility.html">General Constraints Helper
+Functions</a> to create such constraints.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="n">gp</span><span class="p">.</span><span class="nf">and_</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="n">gp</span><span class="p">.</span><span class="nf">max_</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nonlinear_constraints">7.7.2. Nonlinear constraints</h4>
+<div class="paragraph">
+<p>Nonlinear constraints are relationships of the form \(y=f(x)\) where
+\(x\) is a vector of Gurobi variables, \(y\) is a single Gurobi
+variable and \(f\) is a function \(f:\mathbb{R}^n\rightarrow
+\mathbb{R}\). The function  may be composed of arithmetic operations
+(addition, subtraction, multiplication) and various
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#function-constraints">univariate
+nonlinear functions</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Polynomial: \(y=p_0x^n + p_1x^{n-1} + \cdots + p_{n-1}x + p_n\)</p>
+</li>
+<li>
+<p>Natural exponential: \(y=e^x\)</p>
+</li>
+<li>
+<p>Exponential: \(y=a^x\), where \(a&gt;0\) is the base for the exponential function.</p>
+</li>
+<li>
+<p>Natural logarithm: \(y=ln(x)\)</p>
+</li>
+<li>
+<p>Logarithm: \(y=log_a(x)\) where \(a&gt;0\) is the base for the logarithmic function.</p>
+</li>
+<li>
+<p>Logistic: \(y=\frac{1}{1+e^{-x}}\)</p>
+</li>
+<li>
+<p>Power: \(y=x^a\), where \(x\geq 0\) for any fractional \(a\) and \(x&gt;0\) for \(a&lt;0\).</p>
+</li>
+<li>
+<p>Sine: \(y=sin(x)\)</p>
+</li>
+<li>
+<p>Cosine: \(y=cos(x)\)</p>
+</li>
+<li>
+<p>Tangent: \(y=tan(x)\)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">nlfunc</span>
+
+
+<span class="c1"># Formulate and solve the simple nonlinear model
+</span>
+<span class="c1"># Minimize y
+# s.t.     y = sin(2.5 x1) + x2
+#          -1 &lt;= x1, x2 &lt;= 1
+</span>
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># Optimization variables
+</span>    <span class="n">x1</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x1</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x2</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Auxiliary resultant variable for general constraint
+</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="nf">float</span><span class="p">(</span><span class="sh">"</span><span class="s">inf</span><span class="sh">"</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Nonlinear constraint for y
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrNL</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">nlfunc</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="n">x2</span><span class="p">)</span>
+
+    <span class="c1"># Use y for objective function
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">x1=</span><span class="si">{</span><span class="n">x1</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="s">  x2=</span><span class="si">{</span><span class="n">x2</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="s">  obj=</span><span class="si">{</span><span class="n">y</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 0 rows, 3 columns and 0 nonzeros
+Model fingerprint: 0x00339c10
+Model has 1 general nonlinear constraint (1 nonlinear terms)
+Variable types: 3 continuous, 0 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [0e+00, 0e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [0e+00, 0e+00]
+Presolve model has 1 nlconstr
+Added 2 variables to disaggregate expressions.
+Presolve time: 0.00s
+Presolved: 10 rows, 6 columns, 21 nonzeros
+Presolved model has 1 nonlinear constraint(s)
+
+Solving non-convex MINLP
+
+Variable types: 6 continuous, 0 integer (0 binary)
+Found heuristic solution: objective -2.0000000
+
+Explored 1 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 8 (of 8 available processors)
+
+Solution count 1: -2 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -1.999999998349e+00, best bound -2.000000000000e+00, gap 0.0000%
+x1=-0.6282022274684884  x2=-1.0  obj=-1.9999999983490295</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_matrix_based_api">8. Matrix-based API</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Term-based modeling where the variables and constraints are constructed
+one at a time can be time-consuming in Python.</p>
+</div>
+<div class="paragraph">
+<p>Gurobi&#8217;s matrix-friendly API enables matrix based operations which can
+be significantly faster than the term-based modeling. The Matrix API
+complements the capabilities of term-based modeling leaning on Numpy
+concepts and semantics such as vectorization and broadcasting.</p>
+</div>
+<div class="paragraph">
+<p>The relevant objects/methods are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addMVar">Model.addMVar()</a>: Add an <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/mvar.html#MVar">MVar</a> object to a model. An <code>MVar</code> acts like a NumPy ndarray of Gurobi decision variables. An <code>MVar</code> can have an arbitrary number of dimensions, defined by the <code>shape</code> argument.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addMVar(shape, lb=0.0, ub=float('inf'), obj=0.0, vtype=GRB.CONTINUOUS, name='')</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Overloaded operators such as Python matrix multiply (<code>@</code>) build
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/mlinexpr.html#">MLinExpr</a>
+objects. Typically, you would multiply a 2-D matrix by a 1-D <code>MVar</code> object (e.g. <code>expr = A @ x</code>).
+Most arithmetic operators are supported on <code>MLinExpr</code> objects, including
+addition and subtraction (e.g., <code>expr = A @ x - B @ y</code>), multiplication by
+a constant (e.g. <code>expr = 2 * A @ x</code>), and point-wise multiplication with
+an ndarray or a sparse matrix.</p>
+</li>
+<li>
+<p>Overloaded relational operators (<code>==</code>, <code>&lt;=</code> and <code>&gt;=</code>) are used to build
+TempConstr objects from MLinExpr objects. For example, <code>A @ x &lt;= 1</code> and
+<code>A @ x == B @ y</code> are both linear matrix constraints.</p>
+</li>
+<li>
+<p>Finally, <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstr">Model.addConstr()</a> is used to add that constraint to the model, possibly giving it
+a name.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>addConstr(constr, name="")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An example of using the matrix-based API was given in <a href="#matrix-api-example">Matrix-API example</a>,
+at the very beginning of this course.</p>
+</div>
+<div class="paragraph">
+<p>Here is another with timing of the difference.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">timeit</span> <span class="kn">import</span> <span class="n">default_timer</span>
+
+<span class="c1"># Build x^T Q x &lt;= 10
+</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">term_based</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">term-based</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+            <span class="n">gp</span><span class="p">.</span><span class="nf">quicksum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                                              <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">10</span>
+        <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">matrix_api</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">matrix-based</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Q</span> <span class="o">@</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="nf">matrix_api</span><span class="p">()</span>  <span class="c1"># To create the default env
+</span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">term_based</span><span class="p">,</span> <span class="n">matrix_api</span><span class="p">]:</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="nf">default_timer</span><span class="p">()</span>
+    <span class="nf">f</span><span class="p">()</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="nf">default_timer</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Running </span><span class="si">{</span><span class="n">f</span><span class="p">.</span><span class="n">__name__</span><span class="si">}</span><span class="s"> took </span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="si">}</span><span class="s"> seconds</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Running term_based took 4.952783124987036 seconds
+Running matrix_api took 0.10063695895951241 seconds</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_first_modelling">9. Data-First Modelling</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interacting_with_the_model">10. Interacting with the Model</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_attributes">10.1. Attributes</h3>
 <div class="paragraph">
 <p>The primary mechanism for querying and modifying properties of a Gurobi
 object is through the
@@ -1861,7 +2188,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 </div>
 </div>
 <div class="sect2">
-<h3 id="_parameters">7.7. Parameters</h3>
+<h3 id="_parameters">10.2. Parameters</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/parameters/groups.html#secparametergroups">Parameters</a>
 control the mechanics of the Gurobi Optimizer.</p>
@@ -1981,7 +2308,7 @@ Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</
 </div>
 </div>
 <div class="sect2">
-<h3 id="_callbacks">7.8. Callbacks</h3>
+<h3 id="_callbacks">10.3. Callbacks</h3>
 <div class="paragraph">
 <p>A callback is a user-defined function invoked by Gurobi while the
 optimization process is going on. They enable more control over the
@@ -2059,220 +2386,12 @@ import a user-constructed solution into Gurobi.</p>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_sos_constraints">7.9. SOS Constraints</h3>
-<div class="paragraph">
-<p>A Special-Ordered Set, or
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#sos-constraints">SOS
-constraint</a>, is a highly specialized constraint that places restrictions
-on the values that variables in a given list can take.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>SOS constraint of type 1 (SOS1): at most one variable is allowed to
-take a non-zero value.</p>
-</li>
-<li>
-<p>SOS constraint of type 2 (SOS2): at most two variables are allowed to
-take non-zero values, and those non-zero variables must be contiguous.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Use <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addSOS">Model.addSOS()</a>
-to add such constraints:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="n">Model</span><span class="p">.</span><span class="nf">addSOS</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="nb">vars</span><span class="p">)</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>With:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>type</code>: the type of SOS constraint. Can be either <code>GRB.SOS_TYPE1</code>
-or <code>GRB.SOS_TYPE2</code>.</p>
-</li>
-<li>
-<p><code>vars</code>: list of variables that participate in the consstraint.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For example, the MIP formulation of \(z = max(x,y,3)\), using SOS1 constraints, is:</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\begin{align}
-z = x + s_1 \\
-z = y + s_2 \\
-z = 3 + s_3 \\
-v_1 + v_2 + v_3 = 1 \\
-SOS1(s_1, v_1) \\
-SOS1(s_2, v_2) \\
-SOS1(s_3, v_3) \\
-s_1, s_2, s_3 \gt 0 \\
-v_1, v_2, v_3 \in \{0,1\}
-\end{align}\]
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_general_constraints">7.10. General Constraints</h3>
-<div class="paragraph">
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#general-constraints">General
-constraints</a> allow you to directly model complex relationships between
-variables.</p>
-</div>
-<div class="sect3">
-<h4 id="_simple_constraints">7.10.1. Simple Constraints</h4>
-<div class="paragraph">
-<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#subsubsectiongenconstrsimple">Simple
-constraints</a> are a modeling convenience. They allow you to state fairly
-simple relationships between variables (min, max, absolute value,
-logical OR, etc.). Techniques for translating these constraints into
-lower-level modeling objects (typically using auxiliary binary variables
-and linear or SOS constraints) are well known and can be found in
-optimization modeling textbooks.</p>
-</div>
-<div class="paragraph">
-<p>They include max, min, abs, and, or, norm, indicator and
-piecewise-linear constraints. In Python, you can use the
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_utility.html">General Constraints Helper
-Functions</a> to create such constraints.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="n">gp</span><span class="p">.</span><span class="nf">and_</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
-<span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">z</span> <span class="o">==</span> <span class="n">gp</span><span class="p">.</span><span class="nf">max_</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span></code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_nonlinear_constraints">7.10.2. Nonlinear constraints</h4>
-<div class="paragraph">
-<p>Nonlinear constraints are relationships of the form \(y=f(x)\) where
-\(x\) is a vector of Gurobi variables, \(y\) is a single Gurobi
-variable and \(f\) is a function \(f:\mathbb{R}^n\rightarrow
-\mathbb{R}\). The function  may be composed of arithmetic operations
-(addition, subtraction, multiplication) and various
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#function-constraints">univariate
-nonlinear functions</a>.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Polynomial: \(y=p_0x^n + p_1x^{n-1} + \cdots + p_{n-1}x + p_n\)</p>
-</li>
-<li>
-<p>Natural exponential: \(y=e^x\)</p>
-</li>
-<li>
-<p>Exponential: \(y=a^x\), where \(a&gt;0\) is the base for the exponential function.</p>
-</li>
-<li>
-<p>Natural logarithm: \(y=ln(x)\)</p>
-</li>
-<li>
-<p>Logarithm: \(y=log_a(x)\) where \(a&gt;0\) is the base for the logarithmic function.</p>
-</li>
-<li>
-<p>Logistic: \(y=\frac{1}{1+e^{-x}}\)</p>
-</li>
-<li>
-<p>Power: \(y=x^a\), where \(x\geq 0\) for any fractional \(a\) and \(x&gt;0\) for \(a&lt;0\).</p>
-</li>
-<li>
-<p>Sine: \(y=sin(x)\)</p>
-</li>
-<li>
-<p>Cosine: \(y=cos(x)\)</p>
-</li>
-<li>
-<p>Tangent: \(y=tan(x)\)</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
-<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">nlfunc</span>
-
-
-<span class="c1"># Formulate and solve the simple nonlinear model
-</span>
-<span class="c1"># Minimize y
-# s.t.     y = sin(2.5 x1) + x2
-#          -1 &lt;= x1, x2 &lt;= 1
-</span>
-<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
-    <span class="c1"># Optimization variables
-</span>    <span class="n">x1</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x1</span><span class="sh">"</span><span class="p">)</span>
-    <span class="n">x2</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x2</span><span class="sh">"</span><span class="p">)</span>
-
-    <span class="c1"># Auxiliary resultant variable for general constraint
-</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">lb</span><span class="o">=-</span><span class="nf">float</span><span class="p">(</span><span class="sh">"</span><span class="s">inf</span><span class="sh">"</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
-
-    <span class="c1"># Nonlinear constraint for y
-</span>    <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrNL</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">nlfunc</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">x1</span><span class="p">)</span> <span class="o">+</span> <span class="n">x2</span><span class="p">)</span>
-
-    <span class="c1"># Use y for objective function
-</span>    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-
-    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
-
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">x1=</span><span class="si">{</span><span class="n">x1</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="s">  x2=</span><span class="si">{</span><span class="n">x2</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="s">  obj=</span><span class="si">{</span><span class="n">y</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
-
-CPU model: Apple M1 Pro
-Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
-
-Optimize a model with 0 rows, 3 columns and 0 nonzeros
-Model fingerprint: 0x00339c10
-Model has 1 general nonlinear constraint (1 nonlinear terms)
-Variable types: 3 continuous, 0 integer (0 binary)
-Coefficient statistics:
-  Matrix range     [0e+00, 0e+00]
-  Objective range  [1e+00, 1e+00]
-  Bounds range     [1e+00, 1e+00]
-  RHS range        [0e+00, 0e+00]
-Presolve model has 1 nlconstr
-Added 2 variables to disaggregate expressions.
-Presolve time: 0.00s
-Presolved: 10 rows, 6 columns, 21 nonzeros
-Presolved model has 1 nonlinear constraint(s)
-
-Solving non-convex MINLP
-
-Variable types: 6 continuous, 0 integer (0 binary)
-Found heuristic solution: objective -2.0000000
-
-Explored 1 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
-Thread count was 8 (of 8 available processors)
-
-Solution count 1: -2 
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective -1.999999998349e+00, best bound -2.000000000000e+00, gap 0.0000%
-x1=-0.6282022274684884  x2=-1.0  obj=-1.9999999983490295</pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-02 16:50:30 +0100
+Last updated 2025-01-03 17:06:18 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
