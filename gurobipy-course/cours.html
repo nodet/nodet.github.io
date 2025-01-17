@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 123f894</span>
+<span id="revdate">January 2025  - 4ec64bc</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -508,17 +508,17 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</a></li>
 <li><a href="#_model_addconstrs">7.4. Model.addConstrs()</a></li>
 <li><a href="#_objective_function">7.5. Objective Function</a></li>
-<li><a href="#_sos_constraints">7.6. SOS Constraints</a></li>
-<li><a href="#_general_constraints">7.7. General Constraints</a></li>
+<li><a href="#_optimizing_for_multiple_objectives">7.6. Optimizing for Multiple Objectives</a></li>
+<li><a href="#_sos_constraints">7.7. SOS Constraints</a></li>
+<li><a href="#_general_constraints">7.8. General Constraints</a></li>
 </ul>
 </li>
 <li><a href="#_matrix_based_api">8. Matrix-based API</a></li>
-<li><a href="#_data_first_modelling">9. Data-First Modelling</a></li>
-<li><a href="#_interacting_with_the_model">10. Interacting with the Model</a>
+<li><a href="#_interacting_with_the_model">9. Interacting with the Model</a>
 <ul class="sectlevel2">
-<li><a href="#_attributes">10.1. Attributes</a></li>
-<li><a href="#_parameters">10.2. Parameters</a></li>
-<li><a href="#_callbacks">10.3. Callbacks</a></li>
+<li><a href="#_attributes">9.1. Attributes</a></li>
+<li><a href="#_parameters">9.2. Parameters</a></li>
+<li><a href="#_callbacks">9.3. Callbacks</a></li>
 </ul>
 </li>
 </ul>
@@ -670,11 +670,11 @@ constraints and objective.</p>
 <div class="stemblock">
 <div class="content">
 \[\begin{align}
-\mbox{minimize} \quad &amp; x^T Q x + c^T x + d &amp;  \notag \\
-\mbox{subject to} \quad &amp; Ax = b &amp; \notag &amp; \notag \\
+\text{minimize} \quad   &amp; x^T Q x + c^T x + d          &amp;                 \notag \\
+\text{subject to} \quad &amp; Ax = b                       &amp;                 \notag \\
                         &amp; x^T Q_i x + c_i^T x \leq d_i &amp; \forall i \in I \notag \\
-                        &amp; l \leq x \leq u &amp; \notag \\
-                        &amp; x_j \in \mathbb{Z} &amp; \forall j \in J
+                        &amp; l \leq x \leq u              &amp;                 \notag \\
+                        &amp; x_j \in \mathbb{Z}           &amp; \forall j \in J \notag
 \end{align}\]
 </div>
 </div>
@@ -687,6 +687,7 @@ such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will seldom discuss t
 <div class="sect1">
 <h2 id="_introductory_examples">3. Introductory examples</h2>
 <div class="sectionbody">
+<div style="page-break-after: always;"></div>
 <div class="sect2">
 <h3 id="simple-example">3.1. Simple example</h3>
 <div class="paragraph">
@@ -695,13 +696,14 @@ such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will seldom discuss t
 <div class="stemblock">
 <div class="content">
 \[\begin{align}
-\mbox{maximize} \quad &amp; x + y + 2z \notag \\
-\mbox{subject to} \quad &amp; x + 2y + 3z \leq 4 \notag \\
-                        &amp; x + y \geq 1 \notag \\
+\text{maximize}   \quad &amp; x + y + 2z           \notag \\
+\text{subject to} \quad &amp; x + 2y + 3z \leq 4   \notag \\
+                        &amp; x + y \geq 1         \notag \\
                         &amp; x, y, z \in \{0, 1\} \notag
 \end{align}\]
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>Here is the Python code to solve this problem:</p>
 </div>
@@ -760,6 +762,7 @@ such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will seldom discuss t
 </li>
 </ol>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>Here is the log of the execution of this program:</p>
 </div>
@@ -797,6 +800,7 @@ z: 1.0
 ************************</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>And here&#8217;s the generated LP file:</p>
 </div>
@@ -858,6 +862,10 @@ End</pre>
     <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Obj: </span><span class="si">{</span><span class="n">m</span><span class="p">.</span><span class="n">ObjVal</span><span class="si">:</span><span class="n">g</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Here&#8217;s the log of the execution:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
@@ -889,6 +897,7 @@ Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
 Obj: 3</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>And here&#8217;s the generated LP file:</p>
 </div>
@@ -908,6 +917,7 @@ Binaries
 End</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
@@ -954,6 +964,7 @@ indexed data such as cost, demand, capacity.</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
@@ -983,6 +994,7 @@ Python list, used to build sub-lists efficiently. See in particular
 &gt;</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="tupledict">5.2. tupledict</h3>
@@ -1026,6 +1038,7 @@ pattern)</a> &#8594; <code>gp.LinExpr</code></p>
 <pre>x[1,3] + x[2,3]</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_multidict">5.3. multidict()</h3>
@@ -1052,6 +1065,7 @@ is a convenience function to split a dict of lists.</p>
 {'key1': 2, 'key2': 3, 'key3': 4}</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_example_of_extended_structures">5.4. Example of extended structures</h3>
@@ -1116,6 +1130,7 @@ Multidict:
 	capacity: {('Detroit ', 'Boston '): 100, ('Detroit ', 'New York '): 80, ('Detroit ', 'Seattle '): 120, ('Denver ', 'Boston '): 120, ('Denver ', 'New York '): 120, ('Denver ', 'Seattle '): 120}</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
@@ -1128,7 +1143,8 @@ Multidict:
 <div class="ulist">
 <ul>
 <li>
-<p>They hold a Gurobi license.  The license is required as soon as the
+<p>They hold a Gurobi license.
+The license is required as soon as the
 environment is started, and until it is disposed of.  The license may be
 either completely
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/environments/configuration.html#">specified through
@@ -1139,7 +1155,8 @@ location), or found in a
 location</a> through the <code>GRB_LICENSE_FILE</code> environment variable.</p>
 </li>
 <li>
-<p>They capture sets of parameter settings. This is used to control the
+<p>They capture sets of parameter settings.
+This is used to control the
 behaviour of the solver. For example, the
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/parameters.html#parametertimelimit">TimeLimit</a>
 parameter indicates the maximum allowed runtime for any solve, while the
@@ -1148,16 +1165,17 @@ chooses the algorithm used to solve continuous optimization models.</p>
 </li>
 <li>
 <p>They delineate a (single-threaded)
-<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/environments/session.html">Gurobi session</a>.  When
-using remote machines for the computations, you may not want to let go
-of the session after each model if solving a sequence of them. Creating
-a Gurobi environment incurs overhead, ranging anywhere from a quick
-local license check all the way to spinning up a machine on the cloud.
-By reusing a single environment, you avoid paying this overhead multiple
-times.</p>
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/environments/session.html">Gurobi session</a>.
+When using remote machines for the computations, you
+may not want to let go of the session after each model if solving a
+sequence of them. Creating a Gurobi environment incurs overhead, ranging
+anywhere from a quick local license check all the way to spinning up a
+machine on the cloud.  By reusing a single environment, you avoid paying
+this overhead multiple times.</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>The basic usage pattern is the following:</p>
 </div>
@@ -1176,6 +1194,7 @@ times.</p>
 default location, and a model on top if this environment. Both are disposed
 when leaving the scope.</p>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>A more advanced usage pattern is:</p>
 </div>
@@ -1629,7 +1648,7 @@ coefficients/variables/variables)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.9399753501411019 x[0] + 0.12991374052261273 x[1] + 0.5562313275158236 x[2] + 0.3045060071195004 x[3] + 0.2804930831136967 x[4]</pre>
+<pre>obj: 0.010290274887780781 x[0] + 0.6272652761106894 x[1] + 0.10292130911287034 x[2] + 0.6247962960605083 x[3] + 0.7858519376970178 x[4]</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1661,12 +1680,68 @@ coefficients/variables/variables)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.0 + [ 0.768336624935521 x[0] ^ 2 + 1.5522691959125976 x[0] * x[1] + 1.167240530069313 x[0] * x[2] + 1.1435084473514374 x[0] * x[3] + 1.1313403290438293 x[0] * x[4] + 0.8844923911011056 x[1] ^ 2 + 0.5005996044617499 x[1] * x[2] + 0.9936872074047038 x[1] * x[3] + 1.4759484954820188 x[1] * x[4] + 0.6668584704750659 x[2] ^ 2 + 1.0574191476812844 x[2] * x[3] + 1.083956038763422 x[2] * x[4] + 0.612617912110733 x[3] ^ 2 + 1.4212321261785363 x[3] * x[4] + 0.8102406110691157 x[4] ^ 2 ]</pre>
+<pre>obj: 0.0 + [ 0.8698825927309295 x[0] ^ 2 + 0.9458957648341012 x[0] * x[1] + 0.7166223092382553 x[0] * x[2] + 1.520489520868984 x[0] * x[3] + 0.8674579249195624 x[0] * x[4] + 0.6099970447084597 x[1] ^ 2 + 0.8427929095284881 x[1] * x[2] + 1.3333468758846756 x[1] * x[3] + 0.5676182617835261 x[1] * x[4] + 0.3515305731557786 x[2] ^ 2 + 0.5340370239545422 x[2] * x[3] + 0.48784490906406186 x[2] * x[4] + 0.046807208146449675 x[3] ^ 2 + 0.8236951182404657 x[3] * x[4] + 0.4959184970663434 x[4] ^ 2 ]</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sos_constraints">7.6. SOS Constraints</h3>
+<h3 id="_optimizing_for_multiple_objectives">7.6. Optimizing for Multiple Objectives</h3>
+<div class="paragraph">
+<p>Most practical business problems require compromises between multiple
+contradictory objectives. Gurobi supports two ways to
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/features/multiobjective.html">combine
+multiple linear objectives</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Blended objectives: the values of each objective is multiplied by a
+coefficient, and the sum of these weighted values is the value of the solution.</p>
+</li>
+<li>
+<p>Hierarchical objectives: Gurobi performs multiple passes, optimizing
+each time for one objective while preventing any degradation of the
+value of the objectives from the previous passes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can build arbitrarily complex combinations of blended and
+hierarchical objectives: all the objectives that have the same priority
+are blended together, and the (groups of) objectives of different priority
+are handled in successive optimization passes.</p>
+</div>
+<div class="paragraph">
+<p>Each objective also has a <em>weight</em> with wich the value of the linear
+expression is multiplied. That weight defaults to 1, but can be changed
+to build combinations of blended objectives, or to change the sense of
+the optimization for a single objective.</p>
+</div>
+<div class="paragraph">
+<p>Finally, objectives have tolerances (both absolute and relative). These
+tolerances are used to relax the value of the objective in subsequent
+passes.  For example, if the value of the first objective is 50 in the
+solution found during the first pass, and the relative tolerance for
+this objective is 0.1, the value of that objective in subsequent passes
+will be allowed to degrade by at most 5 units.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="nf">setObjectiveN</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">abstol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">reltol</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">''</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="c1"># Primary objective: x + 2 y
+</span><span class="n">model</span><span class="p">.</span><span class="nf">setObjectiveN</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Alternative, lower priority objectives: 3 y + z and x + z
+</span><span class="n">model</span><span class="p">.</span><span class="nf">setObjectiveN</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">setObjectiveN</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sos_constraints">7.7. SOS Constraints</h3>
 <div class="paragraph">
 <p>A Special-Ordered Set, or
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#sos-constraints">SOS
@@ -1728,14 +1803,14 @@ v_1, v_2, v_3 \in \{0,1\}
 </div>
 </div>
 <div class="sect2">
-<h3 id="_general_constraints">7.7. General Constraints</h3>
+<h3 id="_general_constraints">7.8. General Constraints</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#general-constraints">General
 constraints</a> allow you to directly model complex relationships between
 variables.</p>
 </div>
 <div class="sect3">
-<h4 id="_simple_constraints">7.7.1. Simple Constraints</h4>
+<h4 id="_simple_constraints">7.8.1. Simple Constraints</h4>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#subsubsectiongenconstrsimple">Simple
 constraints</a> are a modeling convenience. They allow you to state fairly
@@ -1759,7 +1834,7 @@ Functions</a> to create such constraints.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_nonlinear_constraints">7.7.2. Nonlinear constraints</h4>
+<h4 id="_nonlinear_constraints">7.8.2. Nonlinear constraints</h4>
 <div class="paragraph">
 <p>Nonlinear constraints are relationships of the form \(y=f(x)\) where
 \(x\) is a vector of Gurobi variables, \(y\) is a single Gurobi
@@ -1971,23 +2046,17 @@ at the very beginning of this course.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Running term_based took 4.952783124987036 seconds
-Running matrix_api took 0.10063695895951241 seconds</pre>
+<pre>Running term_based took 5.105839417024981 seconds
+Running matrix_api took 0.10690700000850484 seconds</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_first_modelling">9. Data-First Modelling</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_interacting_with_the_model">10. Interacting with the Model</h2>
+<h2 id="_interacting_with_the_model">9. Interacting with the Model</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_attributes">10.1. Attributes</h3>
+<h3 id="_attributes">9.1. Attributes</h3>
 <div class="paragraph">
 <p>The primary mechanism for querying and modifying properties of a Gurobi
 object is through the
@@ -2069,7 +2138,7 @@ of constraints, and more.  Here are some of the most commonly used:</p>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
-Reading time = 0.04 seconds
+Reading time = 0.01 seconds
 glass4: 396 rows, 322 columns, 1815 nonzeros
 Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
 
@@ -2123,20 +2192,20 @@ H13781  7848                    1.650016e+09 8.0000e+08  51.5%   3.6    0s
 H13830  7848                    1.650016e+09 8.0000e+08  51.5%   3.6    0s
 H14108  8324                    1.600015e+09 8.0000e+08  50.0%   3.6    0s
 H16117  9426                    1.600015e+09 8.0000e+08  50.0%   3.5    0s
-H18938 10840                    1.600014e+09 8.0000e+08  50.0%   3.5    0s
-H19146  9570                    1.500013e+09 8.0000e+08  46.7%   3.5    0s
+H18938 10840                    1.600014e+09 8.0000e+08  50.0%   3.5    1s
+H19146  9570                    1.500013e+09 8.0000e+08  46.7%   3.5    1s
 H20592 10593                    1.500013e+09 8.0000e+08  46.7%   3.5    1s
 H30377 13890                    1.500012e+09 8.3576e+08  44.3%   3.7    2s
- 30569 14024 1.5000e+09   66   99 1.5000e+09 8.8699e+08  40.9%   3.9    5s
- 30876 14239 9.0000e+08   41  101 1.5000e+09 8.9978e+08  40.0%   4.3   10s
- 49561 17376 infeasible  198      1.5000e+09 1.0000e+09  33.3%   6.9   15s
-*135241 22495             219    1.400016e+09 1.1000e+09  21.4%   7.0   18s
-*136789 22885             210    1.400014e+09 1.1000e+09  21.4%   7.0   18s
-*142250 22031             209    1.400013e+09 1.1098e+09  20.7%   7.0   18s
- 162464 26238 infeasible  211      1.4000e+09 1.2000e+09  14.3%   7.2   20s
+ 30568 14024 1.1000e+09   66   89 1.5000e+09 8.8699e+08  40.9%   3.9    5s
+ 30880 14242 1.0000e+09   27  114 1.5000e+09 8.9978e+08  40.0%   4.3   10s
+ 39957 16368 1.0000e+09  177   54 1.5000e+09 9.2005e+08  38.7%   6.4   15s
+*135241 22495             219    1.400016e+09 1.1000e+09  21.4%   7.0   19s
+*136789 22885             210    1.400014e+09 1.1000e+09  21.4%   7.0   19s
+*142250 22031             209    1.400013e+09 1.1098e+09  20.7%   7.0   19s
+ 148470 22002 1.4000e+09  186   35 1.4000e+09 1.1750e+09  16.1%   7.0   20s
 *186816 33080             211    1.400013e+09 1.2000e+09  14.3%   7.1   21s
 *228748 44827             206    1.400013e+09 1.2000e+09  14.3%   6.9   23s
- 274973 53542 infeasible  219      1.4000e+09 1.2000e+09  14.3%   6.6   25s
+ 266386 52292 infeasible  203      1.4000e+09 1.2000e+09  14.3%   6.7   25s
 *284522  5732             204    1.200013e+09 1.2000e+09  0.00%   6.6   25s
 
 Cutting planes:
@@ -2149,7 +2218,7 @@ Cutting planes:
   RLT: 5
   Relax-and-lift: 16
 
-Explored 284537 nodes (1881113 simplex iterations) in 25.46 seconds (29.59 work units)
+Explored 284537 nodes (1881113 simplex iterations) in 25.78 seconds (29.59 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 10: 1.20001e+09 1.40001e+09 1.40001e+09 ... 1.60001e+09
@@ -2160,7 +2229,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 	Status       : 2
 	Obj          : 1200012600.0
 	SolutionCount: 10
-	Runtime      : 25.456727027893066
+	Runtime      : 25.77737784385681
 	MIPGap       : 2.968064893289939e-06
 
 
@@ -2188,7 +2257,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 </div>
 </div>
 <div class="sect2">
-<h3 id="_parameters">10.2. Parameters</h3>
+<h3 id="_parameters">9.2. Parameters</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/parameters/groups.html#secparametergroups">Parameters</a>
 control the mechanics of the Gurobi Optimizer.</p>
@@ -2207,7 +2276,7 @@ control the mechanics of the Gurobi Optimizer.</p>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
-Reading time = 0.03 seconds
+Reading time = 0.02 seconds
 glass4: 396 rows, 322 columns, 1815 nonzeros
 Set parameter Threads to value 1
 Set parameter TimeLimit to value 10
@@ -2276,7 +2345,7 @@ H 4665  2932                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
 H 5665  3637                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
 H 5665  3621                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
 H 6130  3954                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
- 10333  6925 1.1000e+09   45  111 1.7000e+09 8.4076e+08  50.5%   4.1    5s
+ 10353  6940 1.2200e+09   56  123 1.7000e+09 8.4590e+08  50.2%   4.3    5s
 H10418  6636                    1.675016e+09 8.4985e+08  49.3%   4.4    5s
 H10435  6314                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
 H10435  5998                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
@@ -2297,18 +2366,18 @@ Cutting planes:
   RLT: 5
   Relax-and-lift: 13
 
-Explored 12353 nodes (75841 simplex iterations) in 10.00 seconds (10.90 work units)
+Explored 12753 nodes (79852 simplex iterations) in 10.00 seconds (11.07 work units)
 Thread count was 1 (of 8 available processors)
 
 Solution count 10: 1.60002e+09 1.60002e+09 1.60002e+09 ... 1.72502e+09
 
 Time limit reached
-Best objective 1.600015500000e+09, best bound 9.000054358690e+08, gap 43.7502%</pre>
+Best objective 1.600015500000e+09, best bound 9.000054810120e+08, gap 43.7502%</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_callbacks">10.3. Callbacks</h3>
+<h3 id="_callbacks">9.3. Callbacks</h3>
 <div class="paragraph">
 <p>A callback is a user-defined function invoked by Gurobi while the
 optimization process is going on. They enable more control over the
@@ -2391,7 +2460,7 @@ import a user-constructed solution into Gurobi.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-03 17:06:18 +0100
+Last updated 2025-01-17 19:27:17 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
