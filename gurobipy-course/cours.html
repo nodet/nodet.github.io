@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 4ec64bc</span>
+<span id="revdate">January 2025  - bdc98cd</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -1226,63 +1226,54 @@ when leaving the scope.</p>
 and constraints that define the model to solve, as well as parameters
 that define the behaviour of the solver.</p>
 </div>
-<div class="paragraph">
-<p>It has methods to create and edit variables and constraints, to set
-parameters, to solve the model, to retrieve information, and more.  Here
-is again the example from section <a href="#simple-example">Simple example</a>.</p>
-</div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>                                                  <b class="conum">(1)</b>
-<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>                                               <b class="conum">(2)</b>
-
-<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">simple-example</span><span class="sh">"</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>    <b class="conum">(3)</b>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>                       <b class="conum">(4)</b>
+<pre class="rouge highlight"><code data-lang="python"><span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">simple-example</span><span class="sh">"</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">z</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c1</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>
 
-    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c0</span><span class="sh">"</span><span class="p">)</span>                 <b class="conum">(5)</b>
-    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c1</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">MipFocus</span><span class="o">=</span><span class="mi">1</span>                                         <b class="conum">(1)</b>
+    <span class="n">model</span><span class="p">.</span><span class="n">params</span><span class="p">.</span><span class="n">TimeLimit</span> <span class="o">=</span> <span class="mi">3600</span>                                   <b class="conum">(2)</b>
 
-    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>              <b class="conum">(6)</b>
-
-    <span class="n">model</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">example.lp</span><span class="sh">"</span><span class="p">)</span>                                          <b class="conum">(7)</b>
-    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>                                                   <b class="conum">(8)</b>
-
-    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">******* Solution *******</span><span class="sh">"</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">getVars</span><span class="p">():</span>
-        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">VarName</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">var</span><span class="p">.</span><span class="n">X</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>                               <b class="conum">(9)</b>
-    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">************************</span><span class="sh">"</span><span class="p">)</span></code></pre>
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <ol>
 <li>
-<p>Import gurobipy package as gp for convenience</p>
+<p>Focus on finding the best possible solutions</p>
 </li>
 <li>
-<p>GRB is the list of all Gurobi constants</p>
+<p>Stop after one hour</p>
+</li>
+</ol>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>It has methods to create and edit variables and constraints, to set
+parameters, to solve the model, to retrieve information, and more.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python">    <span class="c1"># ...
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="sh">"</span><span class="s">model.mps</span><span class="sh">"</span><span class="p">)</span>                             <b class="conum">(1)</b>
+    <span class="n">model</span><span class="p">.</span><span class="nf">chgCoeff</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>                             <b class="conum">(2)</b>
+    <span class="n">model</span><span class="p">.</span><span class="nf">computeIIS</span><span class="p">()</span>                                   <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Store the model in an MPS file</p>
 </li>
 <li>
-<p>Create a Gurobi environment and a model object</p>
+<p>Change the coefficient of variable <code>x</code> in constraint <code>c1</code> to 2</p>
 </li>
 <li>
-<p>Define decision variables</p>
-</li>
-<li>
-<p>Define constraints</p>
-</li>
-<li>
-<p>Define objective</p>
-</li>
-<li>
-<p>Save the model as an LP file</p>
-</li>
-<li>
-<p>Optimize model</p>
-</li>
-<li>
-<p>X attribute is the variable&#8217;s value in the solution</p>
+<p>Compute an <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.computeIIS">Irreducible Inconsistent Set</a></p>
 </li>
 </ol>
 </div>
@@ -2460,7 +2451,7 @@ import a user-constructed solution into Gurobi.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-17 19:27:17 +0100
+Last updated 2025-01-17 20:00:38 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
