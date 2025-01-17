@@ -1,6 +1,7 @@
 ### Gurobi Python API: `gurobipy`
 * [cours](./gurobipy-course/cours.html)
 * [exercices](./gurobipy-course/exercices.html)
+* [slides](./gurobipy-course/slides.pdf)
 * [data for the exercices](./gurobipy-course/data.zip)
 * [introduction to git](./gurobipy-course/git.pdf)
 
