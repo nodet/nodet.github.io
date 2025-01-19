@@ -478,49 +478,49 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 19ede5b</span>
+<span id="revdate">January 2025  - 910a032</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
 <ul class="sectlevel1">
-<li><a href="#_requirements_and_installation">1. Requirements and installation</a></li>
-<li><a href="#_optimization_models">2. Optimization Models</a></li>
-<li><a href="#_introductory_examples">3. Introductory examples</a>
+<li><a href="#_optimization_models">1. Optimization Models</a></li>
+<li><a href="#_introductory_examples">2. Introductory examples</a>
 <ul class="sectlevel2">
-<li><a href="#simple-example">3.1. Simple example</a></li>
-<li><a href="#_same_example_using_the_matrix_api">3.2. Same example, using the matrix API</a></li>
+<li><a href="#simple-example">2.1. Simple example</a></li>
+<li><a href="#_same_example_using_the_matrix_api">2.2. Same example, using the matrix API</a></li>
 </ul>
 </li>
-<li><a href="#_python_data_structures">4. Python Data Structures</a></li>
-<li><a href="#_extended_data_structures_in_gurobipy">5. Extended Data Structures in gurobipy</a>
+<li><a href="#_python_data_structures">3. Python Data Structures</a></li>
+<li><a href="#_extended_data_structures_in_gurobipy">4. Extended Data Structures in gurobipy</a>
 <ul class="sectlevel2">
-<li><a href="#tuplelist">5.1. tuplelist</a></li>
-<li><a href="#tupledict">5.2. tupledict</a></li>
-<li><a href="#_multidict">5.3. multidict()</a></li>
-<li><a href="#_example_of_extended_structures">5.4. Example of extended structures</a></li>
+<li><a href="#tuplelist">4.1. tuplelist</a></li>
+<li><a href="#tupledict">4.2. tupledict</a></li>
+<li><a href="#_multidict">4.3. multidict()</a></li>
+<li><a href="#_example_of_extended_structures">4.4. Example of extended structures</a></li>
 </ul>
 </li>
-<li><a href="#_environments">6. Environments</a></li>
-<li><a href="#_models">7. Models</a>
+<li><a href="#_environments">5. Environments</a></li>
+<li><a href="#_models">6. Models</a>
 <ul class="sectlevel2">
-<li><a href="#_decision_variables_model_addvar">7.1. Decision Variables, Model.addVar()</a></li>
-<li><a href="#_model_addvars">7.2. Model.addVars()</a></li>
-<li><a href="#_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</a></li>
-<li><a href="#_model_addconstrs">7.4. Model.addConstrs()</a></li>
-<li><a href="#_objective_function">7.5. Objective Function</a></li>
-<li><a href="#_optimizing_for_multiple_objectives">7.6. Optimizing for Multiple Objectives</a></li>
-<li><a href="#_sos_constraints">7.7. SOS Constraints</a></li>
-<li><a href="#_general_constraints">7.8. General Constraints</a></li>
+<li><a href="#_decision_variables_model_addvar">6.1. Decision Variables, Model.addVar()</a></li>
+<li><a href="#_model_addvars">6.2. Model.addVars()</a></li>
+<li><a href="#_constraints_model_addconstr">6.3. Constraints, Model.addConstr()</a></li>
+<li><a href="#_model_addconstrs">6.4. Model.addConstrs()</a></li>
+<li><a href="#_objective_function">6.5. Objective Function</a></li>
+<li><a href="#_optimizing_for_multiple_objectives">6.6. Optimizing for Multiple Objectives</a></li>
+<li><a href="#_sos_constraints">6.7. SOS Constraints</a></li>
+<li><a href="#_general_constraints">6.8. General Constraints</a></li>
 </ul>
 </li>
-<li><a href="#_matrix_based_api">8. Matrix-based API</a></li>
-<li><a href="#_interacting_with_the_model">9. Interacting with the Model</a>
+<li><a href="#_matrix_based_api">7. Matrix-based API</a></li>
+<li><a href="#_interacting_with_the_model">8. Interacting with the Model</a>
 <ul class="sectlevel2">
-<li><a href="#_attributes">9.1. Attributes</a></li>
-<li><a href="#_parameters">9.2. Parameters</a></li>
-<li><a href="#_callbacks">9.3. Callbacks</a></li>
+<li><a href="#_attributes">8.1. Attributes</a></li>
+<li><a href="#_parameters">8.2. Parameters</a></li>
+<li><a href="#_callbacks">8.3. Callbacks</a></li>
 </ul>
 </li>
+<li><a href="#_requirements_and_installation">9. Requirements and installation</a></li>
 </ul>
 </div>
 </div>
@@ -540,122 +540,7 @@ the slides shown during the lecture are available on
 </div>
 </div>
 <div class="sect1">
-<h2 id="_requirements_and_installation">1. Requirements and installation</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To use the Gurobi Python API, also known as <code>gurobipy</code>, you need a
-Python interpreter of any version between 3.9 and 3.12. The Gurobi
-Python API can be downloaded <a href="https://pypi.org/project/gurobipy/">from
-pypi.org</a>, and comes with a (limited) license file included.</p>
-</div>
-<div class="paragraph">
-<p>Here&#8217;s a suggested setup. The instructions below were tested on macOS.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Create a local directory for the course.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>$ mkdir gurobipy-course
-$ cd gurobipy-course
-$ git init
-$ git commit --allow-empty -m "Initial commit"</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Create a repository on github.com to hold your content, and add that
-as a remote in your working copy:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>$ git remote add origin git@github.com:nodet/test-course.git
-$ git push -u origin main</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The next two items are really not specific to this course, just best practices that facilitate people&#8217;s lives, in my experience.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If you don&#8217;t have it already, or an equivalent, install
-<a href="https://github.com/pyenv/pyenv">pyenv</a> to facilitate installing multiple
-Python versions concurrently and choosing the Python interpreter for
-each project. Details about pyenv
-<a href="https://realpython.com/intro-to-pyenv">here</a>.</p>
-</li>
-<li>
-<p>To avoid messing up your main Python environment, set the environment variable <code>PIP_REQUIRE_VIRTUALENV=true</code>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Back to <code>gurobipy</code>&#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Get the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/releasenotes/platforms.html">latest Python
-version supported</a> for <code>gurobipy</code> and set it as the default for this
-project.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>$ pyenv install 3.12
-$ pyenv local 3.12.7
-$ git add .python-version
-$ git commit -a -m "Set Python version"</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Setup a virtual environment using that python version</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>$ python -m venv venv --prompt "gurobipy-course"
-$ source venv/bin/activate
-$ pip install --upgrade pip</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Install the latest version of gurobipy</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>$ pip install gurobipy
-$ python -c "import gurobipy as gp; gp.Model()"
-Restricted license - for non-production use only - expires 2026-11-23</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>As a student, you are entitled to a
-<a href="https://www.gurobi.com/features/academic-wls-license/">free Academic Web
-License Service (WLS) License</a> that works on any platform, and offers
-all features of the solver.  You will need such a license to run Gurobi
-on datasets of realistic sizes, including the exercices for this course.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_optimization_models">2. Optimization Models</h2>
+<h2 id="_optimization_models">1. Optimization Models</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Gurobi can be used from multiple programming languages and tools (C,
@@ -685,11 +570,11 @@ such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will seldom discuss t
 </div>
 </div>
 <div class="sect1">
-<h2 id="_introductory_examples">3. Introductory examples</h2>
+<h2 id="_introductory_examples">2. Introductory examples</h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
 <div class="sect2">
-<h3 id="simple-example">3.1. Simple example</h3>
+<h3 id="simple-example">2.1. Simple example</h3>
 <div class="paragraph">
 <p>Let us start with a simple example</p>
 </div>
@@ -822,7 +707,7 @@ End</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_same_example_using_the_matrix_api">3.2. Same example, using the matrix API</h3>
+<h3 id="_same_example_using_the_matrix_api">2.2. Same example, using the matrix API</h3>
 <div id="matrix-api-example" class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -922,7 +807,7 @@ End</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_python_data_structures">4. Python Data Structures</h2>
+<h2 id="_python_data_structures">3. Python Data Structures</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -968,10 +853,10 @@ indexed data such as cost, demand, capacity.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_extended_data_structures_in_gurobipy">5. Extended Data Structures in gurobipy</h2>
+<h2 id="_extended_data_structures_in_gurobipy">4. Extended Data Structures in gurobipy</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="tuplelist">5.1. tuplelist</h3>
+<h3 id="tuplelist">4.1. tuplelist</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tuplelist.html"><code>tuplelist</code></a>: a sub-class of
 Python list, used to build sub-lists efficiently. See in particular
@@ -997,7 +882,7 @@ Python list, used to build sub-lists efficiently. See in particular
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="tupledict">5.2. tupledict</h3>
+<h3 id="tupledict">4.2. tupledict</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tupledict.html"><code>tupledict</code></a>: a sub-class of
 Python dict, where the values are usually
@@ -1041,7 +926,7 @@ pattern)</a> &#8594; <code>gp.LinExpr</code></p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_multidict">5.3. multidict()</h3>
+<h3 id="_multidict">4.3. multidict()</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_global.html#multidict">multidict()</a>
 is a convenience function to split a dict of lists.</p>
@@ -1068,7 +953,7 @@ is a convenience function to split a dict of lists.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_example_of_extended_structures">5.4. Example of extended structures</h3>
+<h3 id="_example_of_extended_structures">4.4. Example of extended structures</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -1135,7 +1020,7 @@ Multidict:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_environments">6. Environments</h2>
+<h2 id="_environments">5. Environments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Environments hold data that is global to one or more models.</p>
@@ -1219,7 +1104,7 @@ when leaving the scope.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_models">7. Models</h2>
+<h2 id="_models">6. Models</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html">Model</a> instance holds variables
@@ -1278,7 +1163,7 @@ parameters, to solve the model, to retrieve information, and more.</p>
 </ol>
 </div>
 <div class="sect2">
-<h3 id="_decision_variables_model_addvar">7.1. Decision Variables, Model.addVar()</h3>
+<h3 id="_decision_variables_model_addvar">6.1. Decision Variables, Model.addVar()</h3>
 <div class="paragraph">
 <p>A decision variable is necessarily associated to exactly one instance of
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html">Model</a>, and gets created using
@@ -1339,7 +1224,7 @@ an integral value.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_model_addvars">7.2. Model.addVars()</h3>
+<h3 id="_model_addvars">6.2. Model.addVars()</h3>
 <div class="paragraph">
 <p>To add multiple decision variables to the model, use the
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addVars">Model.addVars()</a>
@@ -1453,7 +1338,7 @@ name: z[7,c], lb: 0.0, ub: inf</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_constraints_model_addconstr">7.3. Constraints, Model.addConstr()</h3>
+<h3 id="_constraints_model_addconstr">6.3. Constraints, Model.addConstr()</h3>
 <div class="paragraph">
 <p>Like variables, constraints are also associated with a model. Use the
 method
@@ -1563,7 +1448,7 @@ Name: c_21, RHS: 3.0, sense: &gt;
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_model_addconstrs">7.4. Model.addConstrs()</h3>
+<h3 id="_model_addconstrs">6.4. Model.addConstrs()</h3>
 <div class="paragraph">
 <p>To add multiple constraints to the model, use the
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/model.html#Model.addConstrs">Model.addConstrs()</a>
@@ -1601,7 +1486,7 @@ created constraints:</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_objective_function">7.5. Objective Function</h3>
+<h3 id="_objective_function">6.5. Objective Function</h3>
 <div class="paragraph">
 <p>To set the model objective equal to a linear or a quadratic expression,
 use the
@@ -1692,7 +1577,7 @@ expression
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_optimizing_for_multiple_objectives">7.6. Optimizing for Multiple Objectives</h3>
+<h3 id="_optimizing_for_multiple_objectives">6.6. Optimizing for Multiple Objectives</h3>
 <div class="paragraph">
 <p>Most practical business problems require compromises between multiple
 contradictory objectives.
@@ -1753,7 +1638,7 @@ will be allowed to degrade by at most 5 units.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_sos_constraints">7.7. SOS Constraints</h3>
+<h3 id="_sos_constraints">6.7. SOS Constraints</h3>
 <div class="paragraph">
 <p>A Special-Ordered Set, or
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#sos-constraints">SOS
@@ -1826,14 +1711,14 @@ v_1, v_2, v_3 \in \{0,1\}
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_general_constraints">7.8. General Constraints</h3>
+<h3 id="_general_constraints">6.8. General Constraints</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#general-constraints">General
 constraints</a> allow you to directly model complex relationships between
 variables.</p>
 </div>
 <div class="sect3">
-<h4 id="_simple_constraints">7.8.1. Simple Constraints</h4>
+<h4 id="_simple_constraints">6.8.1. Simple Constraints</h4>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/modeling/constraints.html#subsubsectiongenconstrsimple">Simple
 constraints</a> are a modeling convenience. They allow you to state fairly
@@ -1858,7 +1743,7 @@ an expression.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_nonlinear_constraints">7.8.2. Nonlinear constraints</h4>
+<h4 id="_nonlinear_constraints">6.8.2. Nonlinear constraints</h4>
 <div class="paragraph">
 <p>Nonlinear constraints are relationships of the form \(y=f(x)\) where
 \(x\) is a vector of Gurobi variables, \(y\) is a single Gurobi
@@ -1974,7 +1859,7 @@ x1=-0.6282022274684884  x2=-1.0  obj=-1.9999999983490295</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_matrix_based_api">8. Matrix-based API</h2>
+<h2 id="_matrix_based_api">7. Matrix-based API</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Term-based modeling where the variables and constraints are constructed
@@ -2125,10 +2010,10 @@ Running matrix_api took 0.1097855000407435 seconds</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_interacting_with_the_model">9. Interacting with the Model</h2>
+<h2 id="_interacting_with_the_model">8. Interacting with the Model</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_attributes">9.1. Attributes</h3>
+<h3 id="_attributes">8.1. Attributes</h3>
 <div class="paragraph">
 <p>The primary mechanism for querying and modifying properties of a Gurobi
 object is through the
@@ -2338,7 +2223,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_parameters">9.2. Parameters</h3>
+<h3 id="_parameters">8.2. Parameters</h3>
 <div class="paragraph">
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/concepts/parameters/groups.html#secparametergroups">Parameters</a>
 control the mechanics of the Gurobi Optimizer.</p>
@@ -2460,7 +2345,7 @@ Best objective 1.600015500000e+09, best bound 9.000054810120e+08, gap 43.7502%</
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_callbacks">9.3. Callbacks</h3>
+<h3 id="_callbacks">8.3. Callbacks</h3>
 <div class="paragraph">
 <p>A callback is a user-defined function invoked by Gurobi while the
 optimization process is going on. They enable more control over the
@@ -2642,10 +2527,120 @@ import a user-constructed solution into Gurobi.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_requirements_and_installation">9. Requirements and installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use <code>gurobipy</code>, you need a
+Python interpreter of any version between 3.9 and 3.12 (as of January 2025). The Gurobi
+Python API can be downloaded <a href="https://pypi.org/project/gurobipy/">from
+pypi.org</a>, and comes with a (limited) license file included.</p>
+</div>
+<div class="paragraph">
+<p>As a student, you are entitled to a
+<a href="https://www.gurobi.com/features/academic-wls-license/">free Academic Web
+License Service (WLS) License</a> that works on any platform, and offers
+all features of the solver.  You will need such a license to run Gurobi
+on datasets of realistic sizes, including the exercices for this course.</p>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t have it already, or an equivalent, install
+<a href="https://github.com/pyenv/pyenv">pyenv</a> to facilitate installing multiple
+Python versions concurrently and choosing the Python interpreter for
+each project. Details about pyenv
+<a href="https://realpython.com/intro-to-pyenv">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>To avoid messing up your main Python environment, set the environment variable <code>PIP_REQUIRE_VIRTUALENV=true</code>.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Here&#8217;s a suggested setup. The instructions below were tested on macOS.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a local directory for the course.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ mkdir gurobipy-course
+$ cd gurobipy-course
+$ git init
+$ git commit --allow-empty -m "Initial commit"</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a repository on <a href="https://github.com">github.com</a> to hold your content, and add that
+as a remote in your working copy:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ git remote add origin git@github.com:nodet/test-course.git
+$ git push -u origin main</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="ulist">
+<ul>
+<li>
+<p>Get the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/releasenotes/platforms.html">latest Python
+version supported</a> for <code>gurobipy</code> and set it as the default for this
+project.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ pyenv install 3.12
+$ pyenv local 3.12.7
+$ git add .python-version
+$ git commit -a -m "Set Python version"</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="ulist">
+<ul>
+<li>
+<p>Setup a virtual environment using that python version</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ python -m venv venv --prompt "gurobipy-course"
+$ source venv/bin/activate
+$ pip install --upgrade pip</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install the latest version of gurobipy</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ pip install gurobipy
+$ python -c "import gurobipy as gp; gp.Model()"
+Restricted license - for non-production use only - expires 2026-11-23</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-19 13:48:14 +0100
+Last updated 2025-01-19 15:16:28 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
