@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 31e7d47</span>
+<span id="revdate">January 2025  - 19ede5b</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -1996,9 +1996,18 @@ concepts and semantics such as vectorization and broadcasting.</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
-<pre>addMVar(shape, lb=0.0, ub=float('inf'), obj=0.0, vtype=GRB.CONTINUOUS, name='')</pre>
+<pre class="rouge highlight"><code data-lang="python"><span class="nf">addMVar</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">),</span> <span class="n">obj</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">CONTINUOUS</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">''</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="c1"># A vector of 3 continuous variables
+</span><span class="n">v</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># A 5x10 matrix of binary variables
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">)</span></code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -2006,7 +2015,8 @@ concepts and semantics such as vectorization and broadcasting.</p>
 <li>
 <p>Overloaded operators such as Python matrix multiply (<code>@</code>) build
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/mlinexpr.html#">MLinExpr</a>
-objects. Typically, you would multiply a 2-D matrix by a 1-D <code>MVar</code> object (e.g. <code>expr = A @ x</code>).
+objects.
+Typically, you would multiply a 2-D matrix by a 1-D <code>MVar</code> object (e.g. <code>expr = A @ x</code>).
 Most arithmetic operators are supported on <code>MLinExpr</code> objects, including
 addition and subtraction (e.g., <code>expr = A @ x - B @ y</code>), multiplication by
 a constant (e.g. <code>expr = 2 * A @ x</code>), and point-wise multiplication with
@@ -2028,10 +2038,50 @@ a name.</p>
 <pre>addConstr(constr, name="")</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
-<p>An example of using the matrix-based API was given in <a href="#matrix-api-example">Matrix-API example</a>,
+<p>Here&#8217;s the example from the beginning of the course:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>   <b class="conum">(1)</b>
+
+<span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="nf">csr_matrix</span><span class="p">((</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>   <b class="conum">(2)</b>
+
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mf">4.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>                          <b class="conum">(3)</b>
+<span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">)</span>                  <b class="conum">(4)</b>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="n">m</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">obj</span> <span class="o">@</span> <span class="n">x</span><span class="p">,</span> <span class="n">GRB</span><span class="p">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>                <b class="conum">(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Create variables</p>
+</li>
+<li>
+<p>Build a (sparse) matrix</p>
+</li>
+<li>
+<p>Build an rhs vector</p>
+</li>
+<li>
+<p>Add constraints</p>
+</li>
+<li>
+<p>Set objective</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>An example of using the matrix-based API was given in <a href="#matrix-api-example">Matrix-API example</a>
 at the very beginning of this course.</p>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>Here is another with timing of the difference.</p>
 </div>
@@ -2041,8 +2091,6 @@ at the very beginning of this course.</p>
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">from</span> <span class="n">timeit</span> <span class="kn">import</span> <span class="n">default_timer</span>
 
-<span class="c1"># Build x^T Q x &lt;= 10
-</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 
@@ -2069,10 +2117,11 @@ at the very beginning of this course.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Running term_based took 5.105839417024981 seconds
-Running matrix_api took 0.10690700000850484 seconds</pre>
+<pre>Running term_based took 4.9921418750309385 seconds
+Running matrix_api took 0.1097855000407435 seconds</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
@@ -2083,61 +2132,69 @@ Running matrix_api took 0.10690700000850484 seconds</pre>
 <div class="paragraph">
 <p>The primary mechanism for querying and modifying properties of a Gurobi
 object is through the
-<a href="file:///Users/xavier.nodet/Documents/work/offline/12.0/optimizer/html/reference/attributes.html">attribute
+<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/optimizer/html/reference/attributes.html">attribute
 interface</a>.  Attributes exist on instances of Model, Variable, all types
-of constraints, and more.  Here are some of the most commonly used:</p>
+of constraints, and more.
+Here are some of the most commonly used:</p>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
-<p>Model:</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html">Model</a>:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>number of modelling elements of each type</p>
+<p>number of modeling elements of each type (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#attrnumconstrs">NumConstrs</a>, <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#numvars">NumVars</a>, etc.)</p>
 </li>
 <li>
-<p>information about the type of model, its statistics</p>
+<p>information about the type of model (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#ismip">IsMip</a>, <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#ismultiobj">IsMultiObj</a>, etc.), its statistics (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#solcount">SolCount</a>, <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#nodecount">NodeCount</a>, etc.)</p>
 </li>
 <li>
-<p>information about the solutions found, the best known bound, the gap, etc.</p>
+<p>information about the solutions found (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#solcount">SolCount</a>), the best known bound (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#objbound">ObjBound</a>), the gap (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/model.html#mipgap">MipGap</a>), etc.</p>
 </li>
 <li>
 <p>&#8230;&#8203;</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
-<p>Variables:</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/variable.html">Variables</a>:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>lower and upper bounds</p>
+<p>lower (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/variable.html#lb">LB</a>) and upper (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/variable.html#ub">UB</a>) bounds</p>
 </li>
 <li>
-<p>value in a MIP start vector</p>
+<p>value in a MIP start vector (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/variable.html#start">Start</a>)</p>
 </li>
 <li>
-<p>value in the best solution</p>
+<p>value in the best solution (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/variable.html#x">X</a>)</p>
 </li>
 <li>
 <p>&#8230;&#8203;</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
-<p>Constraints:</p>
+<p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/constraintlinear.html">Constraints</a>:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>right-hand side value</p>
+<p>right-hand side value (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/constraintlinear.html#rhs">RHS</a>)</p>
 </li>
 <li>
-<p>dual value in the best solution</p>
+<p>dual value in the best solution (<a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/attributes/constraintlinear.html#pi">Pi</a>)</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -2278,6 +2335,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 	x20 = 1.0</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_parameters">9.2. Parameters</h3>
@@ -2296,6 +2354,7 @@ control the mechanics of the Gurobi Optimizer.</p>
     <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span></code></pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
@@ -2398,6 +2457,7 @@ Time limit reached
 Best objective 1.600015500000e+09, best bound 9.000054810120e+08, gap 43.7502%</pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_callbacks">9.3. Callbacks</h3>
@@ -2426,7 +2486,8 @@ optimization. They can be used to:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>A callback must be a function that accepts two arguments:</p>
+<p>A callback must be a function (actually, any callable object)
+that accepts two arguments:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2449,6 +2510,107 @@ query the number of rows removed using <code>what == PRE_ROWDEL</code>.  All the
 callback code values that you can query are listed
 <a href="https://docs.gurobi.com/projects/optimizer/en/current/reference/numericcodes/callbacks.html">here</a>.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+<span class="kn">from</span> <span class="n">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="c1"># Used by the callback to store or retrieve information
+</span><span class="k">class</span> <span class="nc">CallbackData</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">invocations</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># The callback, the function that will be invoked
+</span><span class="k">def</span> <span class="nf">mycallback</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">where</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cbdata</span><span class="p">):</span>
+    <span class="c1"># We're only interested in this case
+</span>    <span class="k">if</span> <span class="n">where</span> <span class="o">==</span> <span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP</span><span class="p">:</span>
+        <span class="n">cbdata</span><span class="p">.</span><span class="n">invocations</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># Get information from the model
+</span>        <span class="n">nodecnt</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">cbGet</span><span class="p">(</span><span class="n">GRB</span><span class="p">.</span><span class="n">Callback</span><span class="p">.</span><span class="n">MIP_NODCNT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nodecnt</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="c1"># Terminate the search
+</span>            <span class="n">model</span><span class="p">.</span><span class="nf">terminate</span><span class="p">()</span>
+
+
+<span class="c1"># Create a model from an instance file
+</span><span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="sh">"</span><span class="s">data/glass4.mps.bz2</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># Create the object to store/retrieve information
+</span>    <span class="n">cbdata</span> <span class="o">=</span> <span class="nc">CallbackData</span><span class="p">()</span>
+    <span class="c1"># Create a callable with two args: model and where
+</span>    <span class="n">callback_func</span> <span class="o">=</span> <span class="nf">partial</span><span class="p">(</span><span class="n">mycallback</span><span class="p">,</span> <span class="n">cbdata</span><span class="o">=</span><span class="n">cbdata</span><span class="p">)</span>
+
+    <span class="c1"># Optimize, with the callback
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">(</span><span class="n">callback_func</span><span class="p">)</span>
+
+    <span class="c1"># Confirm the callback was invoked
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">MIP Callback was invoked </span><span class="si">{</span><span class="n">cbdata</span><span class="p">.</span><span class="n">invocations</span><span class="si">}</span><span class="s"> times.</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="listingblock">
+<div class="content">
+<pre>Read MPS format model from file data/glass4.mps.bz2
+Reading time = 0.03 seconds
+glass4: 396 rows, 322 columns, 1815 nonzeros
+Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 396 rows, 322 columns and 1815 nonzeros
+Model fingerprint: 0x18b19fdf
+Variable types: 20 continuous, 302 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 8e+06]
+  Objective range  [1e+00, 1e+06]
+  Bounds range     [1e+00, 8e+02]
+  RHS range        [1e+00, 8e+06]
+Presolve removed 6 rows and 6 columns
+Presolve time: 0.00s
+Presolved: 390 rows, 316 columns, 1803 nonzeros
+Variable types: 19 continuous, 297 integer (297 binary)
+Found heuristic solution: objective 3.133356e+09
+
+Root relaxation: objective 8.000024e+08, 72 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 8.0000e+08    0   72 3.1334e+09 8.0000e+08  74.5%     -    0s
+H    0     0                    2.600019e+09 8.0000e+08  69.2%     -    0s
+H    0     0                    2.366684e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   72 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   72 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   77 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     0 8.0000e+08    0   76 2.3667e+09 8.0000e+08  66.2%     -    0s
+     0     2 8.0000e+08    0   75 2.3667e+09 8.0000e+08  66.2%     -    0s
+H   26    80                    2.116683e+09 8.0000e+08  62.2%  38.4    0s
+H   36    80                    2.016683e+09 8.0000e+08  60.3%  30.6    0s
+H   65    80                    2.000015e+09 8.0000e+08  60.0%  20.1    0s
+
+Cutting planes:
+  Gomory: 86
+  Cover: 2
+  Implied bound: 31
+  MIR: 2
+  RLT: 70
+  Relax-and-lift: 40
+  PSD: 7
+
+Explored 161 nodes (2760 simplex iterations) in 0.09 seconds (0.08 work units)
+Thread count was 8 (of 8 available processors)
+
+Solution count 6: 2.00002e+09 2.01668e+09 2.11668e+09 ... 3.13336e+09
+
+Solve interrupted
+Best objective 2.000015200000e+09, best bound 8.000033092112e+08, gap 60.0001%
+
+User-callback calls 606, time in user-callback 0.00 sec
+MIP Callback was invoked 117 times.</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>Other methods of interest are:</p>
 </div>
@@ -2483,7 +2645,7 @@ import a user-constructed solution into Gurobi.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-19 10:32:03 +0100
+Last updated 2025-01-19 13:48:14 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
