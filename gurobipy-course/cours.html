@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 910a032</span>
+<span id="revdate">January 2025  - 3b6bca0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -520,7 +520,15 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_callbacks">8.3. Callbacks</a></li>
 </ul>
 </li>
-<li><a href="#_requirements_and_installation">9. Requirements and installation</a></li>
+<li><a href="#_requirements_and_installation">9. Requirements and installation</a>
+<ul class="sectlevel2">
+<li><a href="#_setup_for_windows">9.1. Setup for Windows</a></li>
+<li><a href="#_setup_for_macos">9.2. Setup for macOS</a></li>
+<li><a href="#install-gurobipy">9.3. Installation of Gurobipy</a></li>
+<li><a href="#verify-installation">9.4. Verification of the installation</a></li>
+<li><a href="#_get_a_free_gurobi_license">9.5. Get a free Gurobi license</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -2524,38 +2532,169 @@ import a user-constructed solution into Gurobi.</p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_requirements_and_installation">9. Requirements and installation</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_setup_for_windows">9.1. Setup for Windows</h3>
+<div class="sect3">
+<h4 id="_check_for_anaconda_3_9_to_3_12">9.1.1. Check for Anaconda 3.9 to 3.12</h4>
 <div class="paragraph">
-<p>To use <code>gurobipy</code>, you need a
-Python interpreter of any version between 3.9 and 3.12 (as of January 2025). The Gurobi
-Python API can be downloaded <a href="https://pypi.org/project/gurobipy/">from
-pypi.org</a>, and comes with a (limited) license file included.</p>
+<p>If you have Anaconda Python installed and this is version 3.9, 3.10,
+3.11 or 3.12, just go ahead and run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>conda install gurobipy</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>As a student, you are entitled to a
-<a href="https://www.gurobi.com/features/academic-wls-license/">free Academic Web
-License Service (WLS) License</a> that works on any platform, and offers
-all features of the solver.  You will need such a license to run Gurobi
-on datasets of realistic sizes, including the exercices for this course.</p>
-</div>
-<div class="paragraph">
-<p>If you don&#8217;t have it already, or an equivalent, install
-<a href="https://github.com/pyenv/pyenv">pyenv</a> to facilitate installing multiple
-Python versions concurrently and choosing the Python interpreter for
-each project. Details about pyenv
-<a href="https://realpython.com/intro-to-pyenv">here</a>.</p>
-</div>
-<div class="paragraph">
-<p>To avoid messing up your main Python environment, set the environment variable <code>PIP_REQUIRE_VIRTUALENV=true</code>.</p>
+<p>You can now go directly to section <a href="#verify-installation">Verification of the installation</a>.</p>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="_check_for_the_py_launcher">9.1.2. Check for the <code>py</code> launcher</h4>
 <div class="paragraph">
-<p>Here&#8217;s a suggested setup. The instructions below were tested on macOS.</p>
+<p>Check whether you already have a 'core' Python version installed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>open a Command Prompt and run</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>py --list</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If <code>py --list</code> tells you that you have version 3.9, 3.10, 3.11 or
+3.12, you can go ahead to the <a href="#install-gurobipy">Installation of Gurobipy</a> section below.</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you get</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>'py' is not recognized as an internal or external command,
+operable program or batch file.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then you need to install Python 3.12, as per the next section.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="_install_python_3_12">9.1.3. Install Python 3.12</h4>
+<div class="paragraph">
+<p>If you have none of 3.9, 3.10, 3.11 or 3.12, install the latest 3.12 Python version from <a href="https://www.python.org/downloads/windows/" class="bare">https://www.python.org/downloads/windows/</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download the 'Windows installer (64-bit)', unless you have an ARM machine</p>
+</li>
+<li>
+<p>Run the installer (you don&#8217;t need to do it as an Administrator)</p>
+</li>
+<li>
+<p>UNCHECK 'Install launcher for all users'</p>
+</li>
+<li>
+<p>Make sure that 'Add Python 3.12 to the path' is NOT checked (so that your access to your existing Python version is not changed)</p>
+</li>
+<li>
+<p>open a Command Prompt and run</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>py --list</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Verify that you have 3.12 listed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For more details on the installation process, refer to <a href="https://docs.python.org/3.12/using/windows.html" class="bare">https://docs.python.org/3.12/using/windows.html</a>.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="_create_a_venv_and_activate_it">9.1.4. Create a venv and activate it</h4>
+<div class="paragraph">
+<p>The reason to create a <code>venv</code> is to fix the Python version and isolate the work
+done in the venv to make sure it doesn&#8217;t impact the rest of your system.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In a Command Prompt, run</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>md gurobipy-course
+cd gurobipy-course
+py -3.12 -m venv venv --prompt "gurobipy-course"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now that the venv has been created, you can activate it with the command below.
+Note that you should always do this in any new Command Prompt window that you start.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>venv/Scripts/Activate</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can now continue in <a href="#install-gurobipy">Installation of Gurobipy</a></p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setup_for_macos">9.2. Setup for macOS</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>I will assume here that you have already installed
+<a href="https://brew.sh">Homebrew</a>. Otherwise, follow the instructions there.</p>
+</li>
+<li>
+<p>Install <code>pyenv</code> and Python 3.12</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>brew install pyenv
+pyenv install 3.12</pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -2566,73 +2705,125 @@ each project. Details about pyenv
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>$ mkdir gurobipy-course
-$ cd gurobipy-course
-$ git init
-$ git commit --allow-empty -m "Initial commit"</code></pre>
+<pre>mkdir gurobipy-course
+cd gurobipy-course</pre>
 </div>
 </div>
-<div style="page-break-after: always;"></div>
 <div class="ulist">
 <ul>
 <li>
-<p>Create a repository on <a href="https://github.com">github.com</a> to hold your content, and add that
-as a remote in your working copy:</p>
+<p>Configure pyenv to use Python 3.12 when in this directory.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>$ git remote add origin git@github.com:nodet/test-course.git
-$ git push -u origin main</code></pre>
+<pre>pyenv local 3.12</pre>
 </div>
 </div>
-<div style="page-break-after: always;"></div>
 <div class="ulist">
 <ul>
 <li>
-<p>Get the <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/releasenotes/platforms.html">latest Python
-version supported</a> for <code>gurobipy</code> and set it as the default for this
-project.</p>
+<p>Create a virtual environmnent for the course and activate it. From now on,
+remember to always activate your venv in whatever shell you use.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>$ pyenv install 3.12
-$ pyenv local 3.12.7
-$ git add .python-version
-$ git commit -a -m "Set Python version"</code></pre>
+<pre>python -m venv venv --prompt "gurobipy-course"
+source venv/bin/activate</pre>
 </div>
 </div>
-<div style="page-break-after: always;"></div>
 <div class="ulist">
 <ul>
 <li>
-<p>Setup a virtual environment using that python version</p>
+<p>I also highly recommend that you set the variable
+<code>PIP_REQUIRE_VIRTUALENV=true</code> in your environment. This forces <code>pip</code>
+to fail when not running in a virtual environment.</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="install-gurobipy">9.3. Installation of Gurobipy</h3>
+<div class="paragraph">
+<p>Confirm that your venv is active: you should see that your prompt is modified to mention 'gurobipy-course'.
+With your venv activated, confirm that</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>python --version</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>runs Python 3.12</p>
+</div>
+<div class="paragraph">
+<p>You can now run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pip install gurobipy</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="verify-installation">9.4. Verification of the installation</h3>
+<div class="paragraph">
+<p>You can check that gurobipy is correctly installed by running</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>python -c "import gurobipy as gp; m = gp.Model(); print(gp.GRB.VERSION_MAJOR)"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should output one or a few lines about your license, then the Gurobi version number, which should be 12 at this time. An example could be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Restricted license - for non-production use only - expires 2026-11-23
+12</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_get_a_free_gurobi_license">9.5. Get a free Gurobi license</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Using your academic email address, create an account on https::/portal.gurobi.com.</p>
+</li>
+<li>
+<p><strong>From a computer that belongs to your University</strong>, log onto <a href="https://portal.gurobi.com/iam/licenses/request?type=academic" class="bare">https://portal.gurobi.com/iam/licenses/request?type=academic</a> and request a 'WLS Academic' license</p>
+</li>
+<li>
+<p>Once you see your license at <a href="https://portal.gurobi.com/iam/licenses/list" class="bare">https://portal.gurobi.com/iam/licenses/list</a>, open <a href="https://license.gurobi.com/manager/licenses/" class="bare">https://license.gurobi.com/manager/licenses/</a>, click 'Download' at the bottom of the license card, give a name and a description to the API key that you&#8217;re about to create.</p>
+</li>
+<li>
+<p>When the 'API key created' dialog appears, click the 'Download' button and save the 'gurobi.lic' file.</p>
+</li>
+<li>
+<p>Copy that file to your laptop, in your user profile folder (typically <code>C:\Users\[name]</code>)</p>
+</li>
+<li>
+<p>Verify that running</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>$ python -m venv venv --prompt "gurobipy-course"
-$ source venv/bin/activate
-$ pip install --upgrade pip</code></pre>
+<pre>python -c "import gurobipy as gp; m = gp.Model()"</pre>
 </div>
 </div>
-<div style="page-break-after: always;"></div>
-<div class="ulist">
-<ul>
-<li>
-<p>Install the latest version of gurobipy</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>does <strong>not</strong> give you any more the 'Restricted license' message.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>$ pip install gurobipy
-$ python -c "import gurobipy as gp; gp.Model()"
-Restricted license - for non-production use only - expires 2026-11-23</code></pre>
+<div class="paragraph">
+<p>For more details, refer to <a href="https://support.gurobi.com/hc/en-us/articles/13232844297489-How-do-I-set-up-a-Web-License-Service-WLS-license">this page</a>.</p>
 </div>
 </div>
 </div>
@@ -2640,7 +2831,7 @@ Restricted license - for non-production use only - expires 2026-11-23</code></pr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-19 15:16:28 +0100
+Last updated 2025-01-21 10:48:05 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
