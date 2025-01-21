@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 02bec3c</span>
+<span id="revdate">January 2025  - 9be5890</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -487,6 +487,7 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_portfolio_optimization">2. Portfolio Optimization</a></li>
 <li><a href="#_termination_criteria">3. Termination Criteria</a></li>
 <li><a href="#_unit_commitment_problem">4. Unit Commitment Problem</a></li>
+<li><a href="#_unit_commitment_problem_matrix_api">5. Unit Commitment Problem (matrix API)</a></li>
 </ul>
 </div>
 </div>
@@ -1018,20 +1019,17 @@ User-callback calls 924653, time in user-callback 1.03 sec</pre>
     <span class="c1"># Thermal units physical constraints, using indicator constraints
 </span>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">thermal_units</span><span class="p">:</span>
-            <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrIndicator</span><span class="p">(</span>
-                <span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span>
-                <span class="bp">True</span><span class="p">,</span>
-                <span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pmin</span><span class="p">[</span><span class="n">g</span><span class="p">],</span>
+            <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span>
+                <span class="p">(</span><span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pmin</span><span class="p">[</span><span class="n">g</span><span class="p">])</span>
             <span class="p">)</span>
-            <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrIndicator</span><span class="p">(</span>
-                <span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span>
-                <span class="bp">True</span><span class="p">,</span>
-                <span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pmax</span><span class="p">[</span><span class="n">g</span><span class="p">],</span>
+            <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span>
+                <span class="p">(</span><span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pmax</span><span class="p">[</span><span class="n">g</span><span class="p">])</span>
             <span class="p">)</span>
-            <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrIndicator</span><span class="p">(</span>
-                <span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span>
-                <span class="bp">False</span><span class="p">,</span>
-                <span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;&gt;</span>
+                <span class="p">(</span><span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span>
             <span class="p">)</span>
 
     <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
@@ -1101,7 +1099,7 @@ Cutting planes:
   MIR: 1
   Flow cover: 7
 
-Explored 52 nodes (1017 simplex iterations) in 0.06 seconds (0.03 work units)
+Explored 52 nodes (1017 simplex iterations) in 0.07 seconds (0.03 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 5: 887.905 888.738 894.071 ... 1007.7
@@ -1126,10 +1124,300 @@ Solar  0.0  0.0  0.0  0.0  0.0  0.0  0.5  1.0  1.5  2.0  2.5  3.5  3.5  2.5  2.0
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_unit_commitment_problem_matrix_api">5. Unit Commitment Problem (matrix API)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+
+<span class="c1"># 24 Hour Load Forecast (MW)
+</span><span class="n">load_forecast</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">16</span><span class="p">,</span>
+    <span class="mi">16</span><span class="p">,</span>
+    <span class="mi">16</span><span class="p">,</span>
+    <span class="mi">16</span><span class="p">,</span>
+    <span class="mf">6.5</span><span class="p">,</span>
+    <span class="mf">6.5</span><span class="p">,</span>
+    <span class="mf">6.5</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># solar energy forecast (MW)
+</span><span class="n">solar_forecast</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mf">1.0</span><span class="p">,</span>
+    <span class="mf">1.5</span><span class="p">,</span>
+    <span class="mf">2.0</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mf">3.5</span><span class="p">,</span>
+    <span class="mf">3.5</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mf">2.0</span><span class="p">,</span>
+    <span class="mf">1.5</span><span class="p">,</span>
+    <span class="mf">1.0</span><span class="p">,</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1"># global number of time intervals
+</span><span class="n">nTimeIntervals</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">load_forecast</span><span class="p">)</span>
+
+<span class="c1"># thermal units
+</span><span class="n">thermal_units</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">units_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">u</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">u</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">)}</span>
+<span class="n">nb_units</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">)</span>
+
+<span class="c1"># thermal units' costs  (a + b*p + c*p^2), (startup and shutdown costs)
+</span><span class="n">thermal_units_cost</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sup_cost</span><span class="p">,</span> <span class="n">sdn_cost</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">])</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="n">sup_cost</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">sup_cost</span><span class="p">)</span>
+<span class="n">sdn_cost</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">sdn_cost</span><span class="p">)</span>
+
+<span class="c1"># thernal units operating limits
+</span><span class="n">thermal_units_limits</span><span class="p">,</span> <span class="n">pmin</span><span class="p">,</span> <span class="n">pmax</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
+    <span class="p">{</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]}</span>
+<span class="p">)</span>
+<span class="n">pmin</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">pmin</span><span class="p">)</span>
+<span class="n">pmax</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">pmax</span><span class="p">)</span>
+
+<span class="c1"># thermal units dynamic data (initial commitment status)
+</span><span class="n">thermal_units_dyn_data</span><span class="p">,</span> <span class="n">init_status</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
+    <span class="p">{</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+<span class="p">)</span>
+<span class="n">init_status</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">init_status</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">show_results</span><span class="p">():</span>
+    <span class="n">obj_val_s</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">ObjVal</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s"> OverAll Cost = </span><span class="si">{</span><span class="nf">round</span><span class="p">(</span><span class="n">obj_val_s</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s">	</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%5s</span><span class="sh">"</span> <span class="o">%</span> <span class="sh">"</span><span class="s">time</span><span class="sh">"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%4s</span><span class="sh">"</span> <span class="o">%</span> <span class="n">t</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">thermal_units</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%5s</span><span class="sh">"</span> <span class="o">%</span> <span class="n">g</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">):</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%4.1f</span><span class="sh">"</span> <span class="o">%</span> <span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">units_to_index</span><span class="p">[</span><span class="n">g</span><span class="p">],</span> <span class="n">t</span><span class="p">].</span><span class="n">X</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%5s</span><span class="sh">"</span> <span class="o">%</span> <span class="sh">"</span><span class="s">Solar</span><span class="sh">"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%4.1f</span><span class="sh">"</span> <span class="o">%</span> <span class="n">solar_forecast</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%5s</span><span class="sh">"</span> <span class="o">%</span> <span class="sh">"</span><span class="s">Load</span><span class="sh">"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">%4.1f</span><span class="sh">"</span> <span class="o">%</span> <span class="n">load_forecast</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+
+
+<span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+
+    <span class="c1"># add variables for thermal units (power and statuses for commitment, startup and shutdown)
+</span>    <span class="n">thermal_units_out_power</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">nb_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_units_out_power</span><span class="sh">"</span>
+    <span class="p">)</span>
+    <span class="n">thermal_units_startup_status</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">nb_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">),</span>
+        <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_startup_status</span><span class="sh">"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">thermal_units_shutdown_status</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">nb_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">),</span>
+        <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_shutdown_status</span><span class="sh">"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">thermal_units_comm_status</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">nb_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">),</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_comm_status</span><span class="sh">"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># define objective function as an empty quadratic construct and add terms
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">((</span><span class="n">a</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">thermal_units_comm_status</span><span class="p">).</span><span class="nf">sum</span><span class="p">()</span> <span class="o">+</span>
+                       <span class="p">(</span><span class="n">b</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">thermal_units_out_power</span><span class="p">).</span><span class="nf">sum</span><span class="p">()</span> <span class="o">+</span>
+                       <span class="p">(</span><span class="n">c</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">thermal_units_out_power</span> <span class="o">*</span> <span class="n">thermal_units_out_power</span><span class="p">)).</span><span class="nf">sum</span><span class="p">()</span> <span class="o">+</span>
+                       <span class="p">(</span><span class="n">sup_cost</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">thermal_units_startup_status</span><span class="p">).</span><span class="nf">sum</span><span class="p">()</span> <span class="o">+</span>
+                       <span class="p">(</span><span class="n">sdn_cost</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">thermal_units_shutdown_status</span><span class="p">).</span><span class="nf">sum</span><span class="p">())</span>
+
+    <span class="c1"># Power balance equations
+</span>    <span class="n">required_power</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">l</span> <span class="o">-</span> <span class="n">s</span> <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">load_forecast</span><span class="p">,</span> <span class="n">solar_forecast</span><span class="p">)</span> <span class="p">])</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+        <span class="n">thermal_units_out_power</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="n">required_power</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">power_balance</span><span class="sh">"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Thermal units logical constraints
+</span>
+    <span class="c1"># Initial condition (t = 0)
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+        <span class="n">thermal_units_comm_status</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">init_status</span> <span class="o">==</span>
+        <span class="n">thermal_units_startup_status</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">thermal_units_shutdown_status</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">logical1_initial</span><span class="sh">"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Remaining time intervals (t &gt; 0)
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+        <span class="n">thermal_units_comm_status</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">thermal_units_comm_status</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="o">==</span> <span class="n">thermal_units_startup_status</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">thermal_units_shutdown_status</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
+        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">logical1_remaining</span><span class="sh">"</span>
+    <span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span>
+        <span class="n">thermal_units_startup_status</span> <span class="o">+</span> <span class="n">thermal_units_shutdown_status</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">logical2</span><span class="sh">"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Thermal units physical constraints, using indicator constraints
+</span>    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">)):</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrIndicator</span><span class="p">(</span><span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&gt;=</span> <span class="n">pmin</span><span class="p">[</span><span class="n">g</span><span class="p">],</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">physical_min</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrIndicator</span><span class="p">(</span><span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">True</span><span class="p">,</span>
+                                    <span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&lt;=</span> <span class="n">pmax</span><span class="p">[</span><span class="n">g</span><span class="p">],</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">physical_max</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrIndicator</span><span class="p">(</span><span class="n">thermal_units_comm_status</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">False</span><span class="p">,</span>
+                                    <span class="n">thermal_units_out_power</span><span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span>
+                                    <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">physical_off</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+    <span class="nf">show_results</span><span class="p">()</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the log of the execution of this program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+
+CPU model: Apple M1 Pro
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 168 rows, 288 columns and 501 nonzeros
+Model fingerprint: 0x3b9885a9
+Model has 72 quadratic objective terms
+Model has 216 simple general constraints
+  216 INDICATOR
+Variable types: 72 continuous, 216 integer (216 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [5e-01, 5e+00]
+  QObjective range [1e+00, 4e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+01]
+  GenCon rhs range [1e+00, 1e+01]
+  GenCon coe range [1e+00, 1e+00]
+Presolve added 1 rows and 0 columns
+Presolve removed 0 rows and 125 columns
+Presolve time: 0.01s
+Presolved: 183 rows, 170 columns, 468 nonzeros
+Presolved model has 43 quadratic objective terms
+Variable types: 50 continuous, 120 integer (120 binary)
+Found heuristic solution: objective 972.4464286
+Found heuristic solution: objective 949.4464286
+
+Root relaxation: objective 8.562274e+02, 297 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  856.22741    0   47  949.44643  856.22741  9.82%     -    0s
+H    0     0                     888.6964286  856.22741  3.65%     -    0s
+H    0     0                     887.9047619  856.22741  3.57%     -    0s
+     0     0  859.55567    0   49  887.90476  859.55567  3.19%     -    0s
+     0     0  859.55567    0   40  887.90476  859.55567  3.19%     -    0s
+     0     0  860.62679    0   43  887.90476  860.62679  3.07%     -    0s
+     0     0  861.04305    0   43  887.90476  861.04305  3.03%     -    0s
+     0     0  863.11702    0   40  887.90476  863.11702  2.79%     -    0s
+     0     0  863.60301    0   40  887.90476  863.60301  2.74%     -    0s
+     0     0  864.38939    0   42  887.90476  864.38939  2.65%     -    0s
+     0     0  865.38905    0   42  887.90476  865.38905  2.54%     -    0s
+     0     0  865.80613    0   42  887.90476  865.80613  2.49%     -    0s
+     0     0  865.80613    0   42  887.90476  865.80613  2.49%     -    0s
+     0     0  865.81082    0   42  887.90476  865.81082  2.49%     -    0s
+     0     2  865.81082    0   42  887.90476  865.81082  2.49%     -    0s
+
+Cutting planes:
+  Learned: 1
+  Cover: 2
+  MIR: 1
+  Flow cover: 2
+
+Explored 147 nodes (1455 simplex iterations) in 0.07 seconds (0.03 work units)
+Thread count was 8 (of 8 available processors)
+
+Solution count 4: 887.905 888.696 949.446 972.446 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 8.879047619048e+02, best bound 8.879047606600e+02, gap 0.0000%
+ OverAll Cost = 887.9	
+
+
+ time    0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23 
+
+ gen1  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  3.5  3.3  3.2  2.8  2.8  1.5  2.0  0.0  0.0  4.6  4.8  4.8  4.8  2.2  2.2  2.2 
+
+ gen2  4.0  4.0  4.0  4.0  4.0  4.0  5.5  5.0  7.0  6.7  6.3  5.7  5.7  0.0  0.0  2.5  3.0  9.2  9.5  9.5  9.5  4.3  4.3  4.3 
+
+ gen3  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.7  1.8  1.8  1.8  0.0  0.0  0.0 
+
+Solar  0.0  0.0  0.0  0.0  0.0  0.0  0.5  1.0  1.5  2.0  2.5  3.5  3.5  2.5  2.0  1.5  1.0  0.5  0.0  0.0  0.0  0.0  0.0  0.0 
+
+ Load  4.0  4.0  4.0  4.0  4.0  4.0  6.0  6.0 12.0 12.0 12.0 12.0 12.0  4.0  4.0  4.0  4.0 16.0 16.0 16.0 16.0  6.5  6.5  6.5 </pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-14 15:22:53 +0100
+Last updated 2025-01-21 21:08:41 +0100
 </div>
 </div>
 </body>
