@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 05dfc97</span>
+<span id="revdate">January 2025  - e0178e0</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -569,7 +569,7 @@ Root relaxation: objective 1.190206e+05, 1 iterations, 0.00 seconds (0.00 work u
 H    0     0                    119005.88462 119020.617  0.01%     -    0s
 H    0     0                    119015.22254 119020.617  0.00%     -    0s
 
-Explored 1 nodes (1 simplex iterations) in 0.04 seconds (0.02 work units)
+Explored 1 nodes (1 simplex iterations) in 0.03 seconds (0.02 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 3: 119015 119006 90594.5 
@@ -734,7 +734,7 @@ return     0.000104</pre>
         <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Storing new gap: </span><span class="si">{</span><span class="n">gap</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="k">if</span> <span class="n">time</span> <span class="o">-</span> <span class="n">cbdata</span><span class="p">.</span><span class="n">last_gap_change_time</span> <span class="o">&gt;</span> <span class="n">time_from_best</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span> <span class="o">-</span> <span class="n">cbdata</span><span class="p">.</span><span class="n">last_gap_change_time</span> <span class="o">&gt;</span> <span class="n">max_time_between_gap_updates</span><span class="p">:</span>
         <span class="c1"># No change since too long
 </span>        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">It</span><span class="sh">'</span><span class="s">s been too long...</span><span class="sh">"</span><span class="p">)</span>
         <span class="n">model</span><span class="p">.</span><span class="nf">terminate</span><span class="p">()</span>
@@ -742,7 +742,7 @@ return     0.000104</pre>
 
 <span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="sh">"</span><span class="s">data/mkp.mps.bz2</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
     <span class="c1"># Global variables used in the callback function
-</span>    <span class="n">time_from_best</span> <span class="o">=</span> <span class="mi">15</span>
+</span>    <span class="n">max_time_between_gap_updates</span> <span class="o">=</span> <span class="mi">15</span>
     <span class="n">epsilon_to_compare_gap</span> <span class="o">=</span> <span class="mf">1e-4</span>
 
     <span class="c1"># Initialize data passed to the callback function
@@ -758,7 +758,7 @@ return     0.000104</pre>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/mkp.mps.bz2
-Reading time = 0.08 seconds
+Reading time = 0.04 seconds
 mkp_bip: 30 rows, 500 columns, 15000 nonzeros
 Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
 
@@ -777,10 +777,10 @@ Found heuristic solution: objective 177106.00000
 Presolve time: 0.02s
 Presolved: 30 rows, 500 columns, 15000 nonzeros
 Variable types: 0 continuous, 500 integer (500 binary)
-Storing new gap: 1.0921143270132012, 0.017262935638427734
+Storing new gap: 1.0921143270132012, 0.016685009002685547
 
 Root relaxation: objective 2.164011e+05, 112 iterations, 0.00 seconds (0.01 work units)
-Storing new gap: 0.22187277675516356, 0.019961833953857422
+Storing new gap: 0.22187277675516356, 0.019383907318115234
 
     Nodes    |    Current Node    |     Objective Bounds      |     Work
  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -792,33 +792,33 @@ H    0     0                    215225.00000 216401.065  0.55%     -    0s
 H    0     0                    215436.00000 216401.065  0.45%     -    0s
 H    0     0                    215510.00000 216401.065  0.41%     -    0s
 H    0     0                    215624.00000 216401.065  0.36%     -    0s
-Storing new gap: 0.0035756687567246688, 0.10744595527648926
+Storing new gap: 0.0035756687567246688, 0.10831308364868164
      0     0 216395.201    0   25 215624.000 216395.201  0.36%     -    0s
 H    0     0                    215635.00000 216395.201  0.35%     -    0s
 H    0     2                    215645.00000 216395.201  0.35%     -    0s
      0     2 216395.201    0   25 215645.000 216395.201  0.35%     -    0s
 H   85    88                    215666.00000 216395.201  0.34%   8.8    0s
-Storing new gap: 0.003380226832231321, 0.2916560173034668
+Storing new gap: 0.003380226832231321, 0.29430699348449707
 H  162   166                    215707.00000 216395.201  0.32%   9.4    0s
-Storing new gap: 0.0031895116987394937, 0.3267650604248047
+Storing new gap: 0.0031895116987394937, 0.33049607276916504
 H 2099  1932                    215727.00000 216389.474  0.31%   7.0    0s
-Storing new gap: 0.0030686933021828516, 0.931596040725708
+Storing new gap: 0.0030686933021828516, 0.9242510795593262
 H20129 16350                    215731.00000 216372.312  0.30%   8.0    2s
-Storing new gap: 0.0029620221479527745, 2.281609058380127
- 42889 33474 215902.531  167   16 215731.000 216367.041  0.29%   8.2    5s
+Storing new gap: 0.0029620221479527745, 2.383863925933838
+ 41136 31672 216209.291   61   22 215731.000 216367.041  0.29%   8.1    5s
 H50272 34121                    215821.00000 216367.041  0.25%   8.1    5s
-Storing new gap: 0.0025298742939750996, 5.435669898986816
- 141488 98074 216081.837   81   26 215821.000 216348.623  0.24%   8.5   10s
-Storing new gap: 0.002427937967111634, 11.63235592842102
- 235607 181014 215990.956  111   20 215821.000 216341.638  0.24%   8.8   15s
- 331517 265039 216255.272   53   26 215821.000 216337.162  0.24%   9.0   20s
- 433311 353397 216225.832   48   25 215821.000 216333.538  0.24%   9.1   25s
+Storing new gap: 0.0025298742939750996, 5.620049953460693
+ 137609 94670 216027.180   88   21 215821.000 216348.997  0.24%   8.5   10s
+Storing new gap: 0.002427937967111634, 11.783638954162598
+ 232901 178512 216148.976   76   22 215821.000 216341.790  0.24%   8.8   15s
+ 329701 262798 216036.548   99   18 215821.000 216337.190  0.24%   9.0   20s
+ 429310 349889 216128.018   73   23 215821.000 216333.650  0.24%   9.1   25s
 It's been too long...
 
 Cutting planes:
   Gomory: 7
 
-Explored 460508 nodes (4197920 simplex iterations) in 26.65 seconds (73.49 work units)
+Explored 469770 nodes (4286693 simplex iterations) in 26.80 seconds (74.85 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 10: 215821 215731 215727 ... 215436
@@ -826,7 +826,7 @@ Solution count 10: 215821 215731 215727 ... 215436
 Solve interrupted
 Best objective 2.158210000000e+05, best bound 2.163320000000e+05, gap 0.2368%
 
-User-callback calls 924653, time in user-callback 1.03 sec</pre>
+User-callback calls 942664, time in user-callback 1.06 sec</pre>
 </div>
 </div>
 </div>
@@ -842,58 +842,16 @@ User-callback calls 924653, time in user-callback 1.03 sec</pre>
 
 <span class="c1"># 24 Hour Load Forecast (MW)
 </span><span class="n">load_forecast</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">6</span><span class="p">,</span>
-    <span class="mi">6</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
+     <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>
+     <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># solar energy forecast (MW)
 </span><span class="n">solar_forecast</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mf">0.5</span><span class="p">,</span>
-    <span class="mf">1.0</span><span class="p">,</span>
-    <span class="mf">1.5</span><span class="p">,</span>
-    <span class="mf">2.0</span><span class="p">,</span>
-    <span class="mf">2.5</span><span class="p">,</span>
-    <span class="mf">3.5</span><span class="p">,</span>
-    <span class="mf">3.5</span><span class="p">,</span>
-    <span class="mf">2.5</span><span class="p">,</span>
-    <span class="mf">2.0</span><span class="p">,</span>
-    <span class="mf">1.5</span><span class="p">,</span>
-    <span class="mf">1.0</span><span class="p">,</span>
-    <span class="mf">0.5</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span>
+    <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># global number of time intervals
@@ -1062,7 +1020,7 @@ Coefficient statistics:
   GenCon coe range [1e+00, 1e+00]
 Presolve added 1 rows and 0 columns
 Presolve removed 0 rows and 125 columns
-Presolve time: 0.02s
+Presolve time: 0.01s
 Presolved: 185 rows, 171 columns, 473 nonzeros
 Presolved model has 43 quadratic objective terms
 Variable types: 51 continuous, 120 integer (120 binary)
@@ -1099,7 +1057,7 @@ Cutting planes:
   MIR: 1
   Flow cover: 7
 
-Explored 52 nodes (1017 simplex iterations) in 0.08 seconds (0.03 work units)
+Explored 52 nodes (1017 simplex iterations) in 0.05 seconds (0.03 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 5: 887.905 888.738 894.071 ... 1007.7
@@ -1137,68 +1095,23 @@ Solar  0.0  0.0  0.0  0.0  0.0  0.0  0.5  1.0  1.5  2.0  2.5  3.5  3.5  2.5  2.0
 
 <span class="c1"># 24 Hour Load Forecast (MW)
 </span><span class="n">load_forecast</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">6</span><span class="p">,</span>
-    <span class="mi">6</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
+     <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>
+     <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># solar energy forecast (MW)
 </span><span class="n">solar_forecast</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mf">0.5</span><span class="p">,</span>
-    <span class="mf">1.0</span><span class="p">,</span>
-    <span class="mf">1.5</span><span class="p">,</span>
-    <span class="mf">2.0</span><span class="p">,</span>
-    <span class="mf">2.5</span><span class="p">,</span>
-    <span class="mf">3.5</span><span class="p">,</span>
-    <span class="mf">3.5</span><span class="p">,</span>
-    <span class="mf">2.5</span><span class="p">,</span>
-    <span class="mf">2.0</span><span class="p">,</span>
-    <span class="mf">1.5</span><span class="p">,</span>
-    <span class="mf">1.0</span><span class="p">,</span>
-    <span class="mf">0.5</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span>
+    <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>
 <span class="p">]</span>
-
 
 <span class="c1"># global number of time intervals
 </span><span class="n">nTimeIntervals</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">load_forecast</span><span class="p">)</span>
 
 <span class="c1"># thermal units
 </span><span class="n">thermal_units</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">]</span>
-<span class="n">units_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">u</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">u</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">)}</span>
-<span class="n">nb_units</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">)</span>
 
 <span class="c1"># thermal units' costs  (a + b*p + c*p^2), (startup and shutdown costs)
 </span><span class="n">thermal_units_cost</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sup_cost</span><span class="p">,</span> <span class="n">sdn_cost</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
@@ -1209,7 +1122,20 @@ Solar  0.0  0.0  0.0  0.0  0.0  0.0  0.5  1.0  1.5  2.0  2.5  3.5  3.5  2.5  2.0
     <span class="p">}</span>
 <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="c1"># thernal units operating limits
+</span><span class="n">thermal_units_limits</span><span class="p">,</span> <span class="n">pmin</span><span class="p">,</span> <span class="n">pmax</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
+    <span class="p">{</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]}</span>
+<span class="p">)</span>
+
+<span class="c1"># thermal units dynamic data (initial commitment status)
+</span><span class="n">thermal_units_dyn_data</span><span class="p">,</span> <span class="n">init_status</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
+    <span class="p">{</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+<span class="p">)</span>
+
+
+<span class="c1"># We need np.array instances instead of dict instances to use
+# the matrix API
+</span><span class="k">def</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">])</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
@@ -1217,19 +1143,13 @@ Solar  0.0  0.0  0.0  0.0  0.0  0.0  0.5  1.0  1.5  2.0  2.5  3.5  3.5  2.5  2.0
 <span class="n">c</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 <span class="n">sup_cost</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">sup_cost</span><span class="p">)</span>
 <span class="n">sdn_cost</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">sdn_cost</span><span class="p">)</span>
-
-<span class="c1"># thernal units operating limits
-</span><span class="n">thermal_units_limits</span><span class="p">,</span> <span class="n">pmin</span><span class="p">,</span> <span class="n">pmax</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
-    <span class="p">{</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]}</span>
-<span class="p">)</span>
 <span class="n">pmin</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">pmin</span><span class="p">)</span>
 <span class="n">pmax</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">pmax</span><span class="p">)</span>
-
-<span class="c1"># thermal units dynamic data (initial commitment status)
-</span><span class="n">thermal_units_dyn_data</span><span class="p">,</span> <span class="n">init_status</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">(</span>
-    <span class="p">{</span><span class="sh">"</span><span class="s">gen1</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen2</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sh">"</span><span class="s">gen3</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
-<span class="p">)</span>
 <span class="n">init_status</span> <span class="o">=</span> <span class="nf">dict_to_array</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">,</span> <span class="n">init_status</span><span class="p">)</span>
+
+<span class="c1"># We also need to turn to integer indices instead of strings
+</span><span class="n">units_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">u</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">u</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">)}</span>
+<span class="n">nb_units</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">thermal_units</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">show_results</span><span class="p">():</span>
@@ -1389,7 +1309,7 @@ Cutting planes:
   MIR: 1
   Flow cover: 2
 
-Explored 147 nodes (1455 simplex iterations) in 0.07 seconds (0.03 work units)
+Explored 147 nodes (1455 simplex iterations) in 0.05 seconds (0.03 work units)
 Thread count was 8 (of 8 available processors)
 
 Solution count 4: 887.905 888.696 949.446 972.446 

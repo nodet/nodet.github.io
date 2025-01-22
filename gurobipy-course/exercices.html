@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 05dfc97</span>
+<span id="revdate">January 2025  - e0178e0</span>
 </div>
 </div>
 <div id="content">
@@ -648,6 +648,20 @@ target return \(\mu_0\) and 2) the portfolio invests in at most
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>The mathematical formulation of the model is therefore:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+minimize &amp; \sum_{i, j}x_i \sigma_{ij}x_j \\
+s.t.     &amp; \sum_{i, j}\mu_i x_i \geq \mu_0 \\
+         &amp; \sum_{i, j}x_i = 1 \\
+         &amp; \sum_{i, j}y_i \leq k \\
+         &amp; x_i \leq y_i, \forall i \\
+\end{align}\]
+</div>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">json</span>
@@ -689,10 +703,10 @@ target return \(\mu_0\) and 2) the portfolio invests in at most
 <p>Use a callback function to terminate the optimization of the model
 <code>mkp.mps.bz2</code> (in the <code>data.zip</code> file alongside the list of exercises)
 if the MIPGap does not decrease more than epsilon (1e-4) for a given
-time period (50 seconds) after finding the first incumbent solution.</p>
+time period (15 seconds) after finding the first incumbent solution.</p>
 </div>
 <div class="paragraph">
-<p>Hint: Check possible <code>what</code> values for the callback code <code>GRB.Callback.MIP</code>.</p>
+<p>Hint: Check the possible <code>what</code> values for the callback code <code>GRB.Callback.MIP</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -720,7 +734,7 @@ time period (50 seconds) after finding the first incumbent solution.</p>
 
 <span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="sh">"</span><span class="s">data/mkp.mps.bz2</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
     <span class="c1"># Global variables used in the callback function
-</span>    <span class="n">time_from_best</span> <span class="o">=</span> <span class="mi">15</span>
+</span>    <span class="n">max_time_between_gap_updates</span> <span class="o">=</span> <span class="mi">15</span>
     <span class="n">epsilon_to_compare_gap</span> <span class="o">=</span> <span class="mf">1e-4</span>
 
     <span class="c1"># Initialize data passed to the callback function
@@ -861,58 +875,16 @@ v_{i,t} + w_{i,t} \leq 1, \forall i \in I, \forall t \in T
 
 <span class="c1"># 24 Hour Load Forecast (MW)
 </span><span class="n">load_forecast</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">6</span><span class="p">,</span>
-    <span class="mi">6</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mi">16</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
-    <span class="mf">6.5</span><span class="p">,</span>
+     <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>
+     <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># solar energy forecast (MW)
 </span><span class="n">solar_forecast</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mf">0.5</span><span class="p">,</span>
-    <span class="mf">1.0</span><span class="p">,</span>
-    <span class="mf">1.5</span><span class="p">,</span>
-    <span class="mf">2.0</span><span class="p">,</span>
-    <span class="mf">2.5</span><span class="p">,</span>
-    <span class="mf">3.5</span><span class="p">,</span>
-    <span class="mf">3.5</span><span class="p">,</span>
-    <span class="mf">2.5</span><span class="p">,</span>
-    <span class="mf">2.0</span><span class="p">,</span>
-    <span class="mf">1.5</span><span class="p">,</span>
-    <span class="mf">1.0</span><span class="p">,</span>
-    <span class="mf">0.5</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
-    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span>
+    <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1"># global number of time intervals
@@ -1062,10 +1034,17 @@ constraints still requires a code that looks like the following:</p>
     <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrIndicator</span><span class="p">(...)</span></code></pre>
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>The matrix API works with integer indices only, so the data needs some massaging&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-21 23:20:16 +0100
+Last updated 2025-01-22 19:35:31 +0100
 </div>
 </div>
 <script type="text/x-mathjax-config">
