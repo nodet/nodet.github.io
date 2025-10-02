@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - fe0ec12</span>
+<span id="revdate">January 2025  - a6b679c</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -661,10 +661,10 @@ such as <em>sin</em>, <em>log</em> or <em>pow</em>, but we will seldom discuss t
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+<pre>Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G231)
 
-CPU model: Apple M1 Pro
-Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 12 threads
 
 Optimize a model with 2 rows, 3 columns and 5 nonzeros
 Model fingerprint: 0x98886187
@@ -680,7 +680,7 @@ Presolve time: 0.00s
 Presolve: All rows and columns removed
 
 Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
-Thread count was 1 (of 8 available processors)
+Thread count was 1 (of 12 available processors)
 
 Solution count 2: 3 2 
 
@@ -701,7 +701,6 @@ z: 1.0
 <div class="content">
 <pre>\ Model simple-example
 \ LP format - for model browsing. Use MPS format to capture full model detail.
-\ Signature: 0xd6af213f17f735ae
 Maximize
   x + y + 2 z
 Subject To
@@ -761,10 +760,10 @@ End</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+<pre>Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G231)
 
-CPU model: Apple M1 Pro
-Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 12 threads
 
 Optimize a model with 2 rows, 3 columns and 5 nonzeros
 Model fingerprint: 0x8d4960d3
@@ -780,7 +779,7 @@ Presolve time: 0.00s
 Presolve: All rows and columns removed
 
 Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
-Thread count was 1 (of 8 available processors)
+Thread count was 1 (of 12 available processors)
 
 Solution count 2: 3 2 
 
@@ -798,7 +797,6 @@ Obj: 3</pre>
 <div class="content">
 <pre>\ Model matrix1
 \ LP format - for model browsing. Use MPS format to capture full model detail.
-\ Signature: 0xd6af213f17f735ae
 Maximize
   x[0] + x[1] + 2 x[2]
 Subject To
@@ -1548,7 +1546,7 @@ expression
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.7718485205029192 x[0] + 0.14662643832254052 x[1] + 0.22459297798832945 x[2] + 0.503496718082293 x[3] + 0.743870372088844 x[4]</pre>
+<pre>obj: 0.5262650100480577 x[0] + 0.31598755841732995 x[1] + 0.22589976835387182 x[2] + 0.26282494535866574 x[3] + 0.15402398277670748 x[4]</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1579,7 +1577,7 @@ expression
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.0 + [ 0.577773246188264 x[0] ^ 2 + 0.22815028400798743 x[0] * x[1] + 0.7057926009856951 x[0] * x[2] + 0.5668766160796567 x[0] * x[3] + 1.4647081669806783 x[0] * x[4] + 0.8558057179316467 x[1] ^ 2 + 0.8517145625303452 x[1] * x[2] + 1.0168639584110595 x[1] * x[3] + 0.7445533188159639 x[1] * x[4] + 0.8917813894437818 x[2] ^ 2 + 0.9074512745571801 x[2] * x[3] + 0.37284204762772444 x[2] * x[4] + 0.5109223586747896 x[3] ^ 2 + 1.1242190867842021 x[3] * x[4] + 0.47962043877973015 x[4] ^ 2 ]</pre>
+<pre>obj: 0.0 + [ 0.35009519629328456 x[0] ^ 2 + 1.404423257261094 x[0] * x[1] + 0.5633033648985756 x[0] * x[2] + 0.4734482637245059 x[0] * x[3] + 0.9247814319759544 x[0] * x[4] + 0.3405485028613824 x[1] ^ 2 + 0.44137792273617116 x[1] * x[2] + 0.6874279686129943 x[1] * x[3] + 1.3001079227508634 x[1] * x[4] + 0.9103404225480711 x[2] ^ 2 + 0.17321865502582912 x[2] * x[3] + 0.8862661425951331 x[2] * x[4] + 0.3089399813193924 x[3] ^ 2 + 0.9932643804280612 x[3] * x[4] + 0.7498300379876675 x[4] ^ 2 ]</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1826,10 +1824,10 @@ in an equality constraint with a single variable.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+<pre>Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G231)
 
-CPU model: Apple M1 Pro
-Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 12 threads
 
 Optimize a model with 0 rows, 3 columns and 0 nonzeros
 Model fingerprint: 0x00339c10
@@ -1852,7 +1850,7 @@ Variable types: 6 continuous, 0 integer (0 binary)
 Found heuristic solution: objective -2.0000000
 
 Explored 1 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
-Thread count was 8 (of 8 available processors)
+Thread count was 12 (of 12 available processors)
 
 Solution count 1: -2 
 
@@ -2010,8 +2008,8 @@ at the very beginning of this course.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Running term_based took 4.9921418750309385 seconds
-Running matrix_api took 0.1097855000407435 seconds</pre>
+<pre>Running term_based took 3.1411980830016546 seconds
+Running matrix_api took 0.073522040998796 seconds</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -2111,12 +2109,12 @@ Here are some of the most commonly used:</p>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
-Reading time = 0.01 seconds
+Reading time = 0.03 seconds
 glass4: 396 rows, 322 columns, 1815 nonzeros
-Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G231)
 
-CPU model: Apple M1 Pro
-Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 12 threads
 
 Optimize a model with 396 rows, 322 columns and 1815 nonzeros
 Model fingerprint: 0x18b19fdf
@@ -2145,69 +2143,60 @@ H    0     0                    2.366684e+09 8.0000e+08  66.2%     -    0s
      0     0 8.0000e+08    0   77 2.3667e+09 8.0000e+08  66.2%     -    0s
      0     0 8.0000e+08    0   76 2.3667e+09 8.0000e+08  66.2%     -    0s
      0     2 8.0000e+08    0   75 2.3667e+09 8.0000e+08  66.2%     -    0s
-H   26    80                    2.116683e+09 8.0000e+08  62.2%  38.4    0s
-H   36    80                    2.016683e+09 8.0000e+08  60.3%  30.6    0s
-H   65    80                    2.000015e+09 8.0000e+08  60.0%  20.1    0s
-H  251   274                    1.991127e+09 8.0000e+08  59.8%  10.8    0s
-* 1128  1027             112    1.920014e+09 8.0000e+08  58.3%   6.3    0s
-H 1695  1546                    1.812517e+09 8.0000e+08  55.9%   6.2    0s
-H 1788  1729                    1.800017e+09 8.0000e+08  55.6%   6.1    0s
-H 2010  1645                    1.766684e+09 8.0000e+08  54.7%   6.0    0s
-H 2353  1796                    1.700017e+09 8.0000e+08  52.9%   5.6    0s
-H 2399  1782                    1.700017e+09 8.0000e+08  52.9%   5.6    0s
-H 3109  1938                    1.700016e+09 8.0000e+08  52.9%   5.4    0s
-* 9626  5603              77    1.700016e+09 8.0000e+08  52.9%   3.9    0s
-* 9627  5603              77    1.700016e+09 8.0000e+08  52.9%   3.9    0s
-H10514  6175                    1.700016e+09 8.0000e+08  52.9%   3.9    0s
-H11625  7019                    1.666683e+09 8.0000e+08  52.0%   3.8    0s
-H11975  6974                    1.650016e+09 8.0000e+08  51.5%   3.7    0s
-H13781  7848                    1.650016e+09 8.0000e+08  51.5%   3.6    0s
-H13830  7848                    1.650016e+09 8.0000e+08  51.5%   3.6    0s
-H14108  8324                    1.600015e+09 8.0000e+08  50.0%   3.6    0s
-H16117  9426                    1.600015e+09 8.0000e+08  50.0%   3.5    0s
-H18938 10840                    1.600014e+09 8.0000e+08  50.0%   3.5    1s
-H19146  9570                    1.500013e+09 8.0000e+08  46.7%   3.5    1s
-H20592 10593                    1.500013e+09 8.0000e+08  46.7%   3.5    1s
-H30377 13890                    1.500012e+09 8.3576e+08  44.3%   3.7    2s
- 30568 14024 1.1000e+09   66   89 1.5000e+09 8.8699e+08  40.9%   3.9    5s
- 30880 14242 1.0000e+09   27  114 1.5000e+09 8.9978e+08  40.0%   4.3   10s
- 39957 16368 1.0000e+09  177   54 1.5000e+09 9.2005e+08  38.7%   6.4   15s
-*135241 22495             219    1.400016e+09 1.1000e+09  21.4%   7.0   19s
-*136789 22885             210    1.400014e+09 1.1000e+09  21.4%   7.0   19s
-*142250 22031             209    1.400013e+09 1.1098e+09  20.7%   7.0   19s
- 148470 22002 1.4000e+09  186   35 1.4000e+09 1.1750e+09  16.1%   7.0   20s
-*186816 33080             211    1.400013e+09 1.2000e+09  14.3%   7.1   21s
-*228748 44827             206    1.400013e+09 1.2000e+09  14.3%   6.9   23s
- 266386 52292 infeasible  203      1.4000e+09 1.2000e+09  14.3%   6.7   25s
-*284522  5732             204    1.200013e+09 1.2000e+09  0.00%   6.6   25s
+H   27    53                    2.000015e+09 8.0000e+08  60.0%  44.0    0s
+H   28    53                    2.000015e+09 8.0000e+08  60.0%  43.9    0s
+H  132   173                    1.991127e+09 8.0000e+08  59.8%  18.2    0s
+H  275   285                    1.977794e+09 8.0000e+08  59.6%  12.5    0s
+H 1292  1340                    1.966683e+09 8.0000e+08  59.3%   6.3    0s
+H 1359  1338                    1.900015e+09 8.0000e+08  57.9%   6.3    0s
+H 2238  1917                    1.900015e+09 8.0000e+08  57.9%   6.1    0s
+H 2769  2163                    1.800016e+09 8.0000e+08  55.6%   5.5    0s
+H 3430  2418                    1.800016e+09 8.0000e+08  55.6%   5.1    0s
+H 3573  2282                    1.750015e+09 8.0000e+08  54.3%   4.9    0s
+* 5705  3167              75    1.740016e+09 8.0000e+08  54.0%   4.3    0s
+* 5708  3075              76    1.722239e+09 8.0000e+08  53.5%   4.3    0s
+H 5922  3078                    1.700016e+09 8.0000e+08  52.9%   4.3    0s
+* 6065  2959              67    1.700016e+09 8.0000e+08  52.9%   4.2    0s
+* 7952  5105              93    1.700015e+09 8.0000e+08  52.9%   3.9    0s
+H 9574  4973                    1.666681e+09 8.0000e+08  52.0%   3.7    0s
+H13664  7470                    1.666680e+09 8.0000e+08  52.0%   3.6    0s
+*16301  9211              79    1.600013e+09 8.0000e+08  50.0%   3.6    0s
+H17437  9377                    1.583346e+09 8.0000e+08  49.5%   3.6    0s
+*19449 11033              54    1.575014e+09 8.0000e+08  49.2%   3.7    0s
+*20221 10692              71    1.533348e+09 8.0000e+08  47.8%   3.8    0s
+H22213  8731                    1.475014e+09 8.0000e+08  45.8%   4.0    0s
+H32855 12074                    1.425014e+09 8.0001e+08  43.9%   3.7    0s
+H35919 13342                    1.400014e+09 9.0000e+08  35.7%   3.7    0s
+*42393 13855              57    1.400013e+09 9.0401e+08  35.4%   5.3    2s
+*73222  7138              71    1.375015e+09 1.1000e+09  20.0%   7.7    3s
+*73524  3671              62    1.200013e+09 1.1000e+09  8.33%   7.8    3s
 
 Cutting planes:
   Learned: 1
   Gomory: 7
-  Implied bound: 12
-  Projected implied bound: 1
-  MIR: 42
-  Flow cover: 17
-  RLT: 5
-  Relax-and-lift: 16
+  Implied bound: 8
+  MIR: 26
+  Flow cover: 35
+  RLT: 4
+  Relax-and-lift: 17
 
-Explored 284537 nodes (1881113 simplex iterations) in 25.78 seconds (29.59 work units)
-Thread count was 8 (of 8 available processors)
+Explored 76434 nodes (584415 simplex iterations) in 3.68 seconds (6.76 work units)
+Thread count was 12 (of 12 available processors)
 
-Solution count 10: 1.20001e+09 1.40001e+09 1.40001e+09 ... 1.60001e+09
+Solution count 10: 1.20001e+09 1.37501e+09 1.40001e+09 ... 1.60001e+09
 
 Optimal solution found (tolerance 1.00e-04)
-Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
+Best objective 1.200012600000e+09, best bound 1.200003400000e+09, gap 0.0008%
 ****************** SOLUTION ******************
 	Status       : 2
 	Obj          : 1200012600.0
 	SolutionCount: 10
-	Runtime      : 25.77737784385681
-	MIPGap       : 2.968064893289939e-06
+	Runtime      : 3.6842780113220215
+	MIPGap       : 7.666586172876269e-06
 
 
 	x1 = 0.0
-	x2 = 700.0000000000001
+	x2 = 700.0
 	x3 = 1000.0
 	x4 = 1000.0
 	x5 = 400.0
@@ -2224,7 +2213,7 @@ Best objective 1.200012600000e+09, best bound 1.200009038285e+09, gap 0.0003%
 	x16 = 600.0
 	x17 = 300.0
 	x18 = 300.0
-	x19 = 199.99999999999991
+	x19 = 200.0
 	x20 = 1.0</pre>
 </div>
 </div>
@@ -2251,14 +2240,14 @@ control the mechanics of the Gurobi Optimizer.</p>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
-Reading time = 0.02 seconds
+Reading time = 0.03 seconds
 glass4: 396 rows, 322 columns, 1815 nonzeros
 Set parameter Threads to value 1
 Set parameter TimeLimit to value 10
-Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G231)
 
-CPU model: Apple M1 Pro
-Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 1 threads
 
 Non-default parameters:
 TimeLimit  10
@@ -2307,47 +2296,42 @@ H  688   536                    1.900017e+09 8.0000e+08  57.9%   4.4    0s
 H  708   526                    1.900016e+09 8.0000e+08  57.9%   4.4    0s
 H  708   501                    1.866683e+09 8.0000e+08  57.1%   4.4    0s
 *  735   483             126    1.833351e+09 8.0000e+08  56.4%   4.5    0s
-H  931   559                    1.833351e+09 8.0000e+08  56.4%   4.4    0s
-H  931   538                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
-H  931   520                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
-H  958   518                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
-H  958   502                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
-* 1108   537              83    1.800015e+09 8.0000e+08  55.6%   4.6    0s
-H 2106  1138                    1.775015e+09 8.0000e+08  54.9%   4.1    0s
-H 2555  1485                    1.775015e+09 8.0000e+08  54.9%   4.0    0s
-* 4189  2637              57    1.758351e+09 8.0000e+08  54.5%   3.9    1s
-H 4665  2932                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
-H 5665  3637                    1.725017e+09 8.0000e+08  53.6%   3.9    1s
-H 5665  3621                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
-H 6130  3954                    1.700016e+09 8.0000e+08  52.9%   3.9    1s
- 10353  6940 1.2200e+09   56  123 1.7000e+09 8.4590e+08  50.2%   4.3    5s
-H10418  6636                    1.675016e+09 8.4985e+08  49.3%   4.4    5s
-H10435  6314                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
-H10435  5998                    1.650016e+09 8.5187e+08  48.4%   4.4    6s
-H10760  5883                    1.600016e+09 8.8011e+08  45.0%   5.1    8s
-H10801  5616                    1.600016e+09 8.8011e+08  45.0%   5.2    8s
-H10801  5339                    1.600016e+09 8.8011e+08  45.0%   5.2    8s
-H11173  5253                    1.600016e+09 9.0000e+08  43.8%   5.7    9s
+H  795   495                    1.833350e+09 8.0000e+08  56.4%   4.5    0s
+H  795   475                    1.800017e+09 8.0000e+08  55.6%   4.5    0s
+H  795   457                    1.800017e+09 8.0000e+08  55.6%   4.5    0s
+H  958   509                    1.800017e+09 8.0000e+08  55.6%   4.4    0s
+* 1465   722              79    1.800015e+09 8.0000e+08  55.6%   4.3    0s
+H 3508  2215                    1.800015e+09 8.0000e+08  55.6%   3.9    0s
+H 3508  2050                    1.783348e+09 8.0000e+08  55.1%   3.9    0s
+H 4508  2716                    1.700014e+09 8.0000e+08  52.9%   3.9    0s
+H 7156  4482                    1.700014e+09 8.0000e+08  52.9%   4.0    1s
+H 8150  5180                    1.700014e+09 8.0000e+08  52.9%   3.9    1s
+H10308  6336                    1.700014e+09 8.4158e+08  50.5%   4.0    2s
+H10308  6018                    1.700014e+09 8.4158e+08  50.5%   4.0    2s
+H10411  5783                    1.700013e+09 8.5400e+08  49.8%   4.2    3s
+H10411  5494                    1.700013e+09 8.5400e+08  49.8%   4.2    3s
+ 10530  5577 1.2000e+09   60  111 1.7000e+09 8.8337e+08  48.0%   4.8    5s
+H10625  5358                    1.650013e+09 8.9436e+08  45.8%   4.9    6s
+H10631  5093                    1.633347e+09 8.9439e+08  45.2%   4.9    6s
+H10708  4888                    1.600013e+09 8.9673e+08  44.0%   5.1    6s
 
 Cutting planes:
   Learned: 1
-  Gomory: 11
-  Cover: 1
-  Implied bound: 5
+  Gomory: 6
+  Implied bound: 7
   Projected implied bound: 2
-  Clique: 1
-  MIR: 34
-  Flow cover: 20
-  RLT: 5
-  Relax-and-lift: 13
+  MIR: 35
+  Flow cover: 19
+  RLT: 3
+  Relax-and-lift: 12
 
-Explored 12753 nodes (79852 simplex iterations) in 10.00 seconds (11.07 work units)
-Thread count was 1 (of 8 available processors)
+Explored 17016 nodes (121739 simplex iterations) in 10.00 seconds (15.51 work units)
+Thread count was 1 (of 12 available processors)
 
-Solution count 10: 1.60002e+09 1.60002e+09 1.60002e+09 ... 1.72502e+09
+Solution count 10: 1.60001e+09 1.63335e+09 1.65001e+09 ... 1.70001e+09
 
 Time limit reached
-Best objective 1.600015500000e+09, best bound 9.000054810120e+08, gap 43.7502%</pre>
+Best objective 1.600013400000e+09, best bound 9.000058582310e+08, gap 43.7501%</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -2444,12 +2428,12 @@ callback code values that you can query are listed
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/glass4.mps.bz2
-Reading time = 0.03 seconds
+Reading time = 0.02 seconds
 glass4: 396 rows, 322 columns, 1815 nonzeros
-Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (mac64[arm] - Darwin 24.2.0 24C101)
+Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G231)
 
-CPU model: Apple M1 Pro
-Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 12 threads
 
 Optimize a model with 396 rows, 322 columns and 1815 nonzeros
 Model fingerprint: 0x18b19fdf
@@ -2478,28 +2462,27 @@ H    0     0                    2.366684e+09 8.0000e+08  66.2%     -    0s
      0     0 8.0000e+08    0   77 2.3667e+09 8.0000e+08  66.2%     -    0s
      0     0 8.0000e+08    0   76 2.3667e+09 8.0000e+08  66.2%     -    0s
      0     2 8.0000e+08    0   75 2.3667e+09 8.0000e+08  66.2%     -    0s
-H   26    80                    2.116683e+09 8.0000e+08  62.2%  38.4    0s
-H   36    80                    2.016683e+09 8.0000e+08  60.3%  30.6    0s
-H   65    80                    2.000015e+09 8.0000e+08  60.0%  20.1    0s
+H   27    53                    2.000015e+09 8.0000e+08  60.0%  44.0    0s
+H   28    53                    2.000015e+09 8.0000e+08  60.0%  43.9    0s
 
 Cutting planes:
-  Gomory: 86
+  Gomory: 91
   Cover: 2
-  Implied bound: 31
+  Implied bound: 40
   MIR: 2
-  RLT: 70
-  Relax-and-lift: 40
+  RLT: 72
+  Relax-and-lift: 44
   PSD: 7
 
-Explored 161 nodes (2760 simplex iterations) in 0.09 seconds (0.08 work units)
-Thread count was 8 (of 8 available processors)
+Explored 112 nodes (2811 simplex iterations) in 0.07 seconds (0.09 work units)
+Thread count was 12 (of 12 available processors)
 
-Solution count 6: 2.00002e+09 2.01668e+09 2.11668e+09 ... 3.13336e+09
+Solution count 5: 2.00002e+09 2.00002e+09 2.36668e+09 ... 3.13336e+09
 
 Solve interrupted
-Best objective 2.000015200000e+09, best bound 8.000033092112e+08, gap 60.0001%
+Best objective 2.000015200000e+09, best bound 8.000035418612e+08, gap 60.0001%
 
-User-callback calls 606, time in user-callback 0.00 sec
+User-callback calls 600, time in user-callback 0.00 sec
 MIP Callback was invoked 117 times.</pre>
 </div>
 </div>
@@ -2549,7 +2532,7 @@ import a user-constructed solution into Gurobi.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>conda install gurobipy</pre>
+<pre>conda install -c gurobi gurobipy</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2615,9 +2598,6 @@ operable program or batch file.</pre>
 <p>Run the installer (you don&#8217;t need to do it as an Administrator)</p>
 </li>
 <li>
-<p>UNCHECK 'Install launcher for all users'</p>
-</li>
-<li>
 <p>Make sure that 'Add Python 3.12 to the path' is NOT checked (so that your access to your existing Python version is not changed)</p>
 </li>
 <li>
@@ -2663,16 +2643,29 @@ py -3.12 -m venv venv --prompt "gurobipy-course"</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now that the venv has been created, you can activate it with the command below.
+<p>Now that the venv has been created, you can activate it with one of the commands below.
 Note that you should always do this in any new Command Prompt window that you start.</p>
+</div>
+<div class="paragraph">
+<p>If you use PowerShell (e.g. your prompt starts with <code>PS C:...&gt;</code>), use</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>venv/Scripts/Activate</pre>
+<pre>.\venv\Scripts\Activate.ps1</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can now continue in <a href="#install-gurobipy">Installation of Gurobipy</a></p>
+<p>If you use <code>cmd</code> (no <code>PS</code> at the start of your prompt), use</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>venv\Scripts\activate</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After activation of a virtual environment, <code>python</code> and <code>pip</code> <em>in
+that window</em> refer to that environment, not the default system-wide
+installation.  You can now continue in <a href="#install-gurobipy">Installation of Gurobipy</a>.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -2831,7 +2824,7 @@ With your venv activated, confirm that</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-21 18:36:12 +0100
+Last updated 2025-10-02 11:16:31 +0200
 </div>
 </div>
 <script type="text/x-mathjax-config">
