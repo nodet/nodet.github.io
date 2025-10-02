@@ -478,16 +478,17 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 8c269c1</span>
+<span id="revdate">January 2025  - 14e4f59</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
 <li><a href="#_knapsack">1. Knapsack</a></li>
 <li><a href="#_portfolio_optimization">2. Portfolio Optimization</a></li>
-<li><a href="#_termination_criteria">3. Termination Criteria</a></li>
-<li><a href="#_unit_commitment_problem">4. Unit Commitment Problem</a></li>
-<li><a href="#_unit_commitment_problem_matrix_api">5. Unit Commitment Problem (matrix API)</a></li>
+<li><a href="#_lot_sizing">3. Lot-Sizing</a></li>
+<li><a href="#_termination_criteria">4. Termination Criteria</a></li>
+<li><a href="#_unit_commitment_problem">5. Unit Commitment Problem</a></li>
+<li><a href="#_unit_commitment_problem_matrix_api">6. Unit Commitment Problem (matrix API)</a></li>
 </ul>
 </div>
 </div>
@@ -701,7 +702,196 @@ return     0.000104</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_termination_criteria">3. Termination Criteria</h2>
+<h2 id="_lot_sizing">3. Lot-Sizing</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">json</span>
+<span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+<span class="kn">from</span> <span class="n">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># ----- Load data from JSON -----
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">data/lot_sizing_data.json</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">H</span>    <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">H</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">d</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">demand</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">c</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">var_cost</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">f</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">setup_cost</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">h</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">hold_cost</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">Qmin</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">Qmin</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">Qmax</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">Qmax</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">I0</span>   <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">I0</span><span class="sh">"</span><span class="p">])</span>
+
+<span class="c1"># Basic validation
+</span><span class="k">assert</span> <span class="nf">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span> <span class="ow">and</span> <span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span> <span class="ow">and</span> <span class="nf">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span> <span class="ow">and</span> <span class="nf">len</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span>
+<span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">Qmin</span> <span class="o">&lt;=</span> <span class="n">Qmax</span>
+
+<span class="c1"># ----- Build model -----
+</span><span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># Decision variables
+</span>    <span class="n">x</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>                       <span class="c1"># production qty
+</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y</span><span class="sh">"</span><span class="p">)</span>     <span class="c1"># setup
+</span>    <span class="n">I</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">I</span><span class="sh">"</span><span class="p">)</span>                       <span class="c1"># inventory
+</span>
+    <span class="c1"># Objective: production + setup + holding
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span>
+        <span class="n">gp</span><span class="p">.</span><span class="nf">quicksum</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">f</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">*</span><span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">H</span><span class="p">)),</span>
+        <span class="n">GRB</span><span class="p">.</span><span class="n">MINIMIZE</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Inventory balance
+</span>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+        <span class="n">prev_I</span> <span class="o">=</span> <span class="n">I0</span> <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">prev_I</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="sh">"</span><span class="s">balance[</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Batch min/max linking
+</span>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Qmax</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="sh">"</span><span class="s">cap[</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+        <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Qmin</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="sh">"</span><span class="s">minbatch[</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="c1"># Optimize
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">model</span><span class="p">.</span><span class="n">SolCount</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">model</span><span class="p">.</span><span class="n">ObjVal</span> <span class="o">==</span> <span class="mf">1198.5</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Total cost = </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="n">ObjVal</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">t=</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s">: y=</span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s"> x=</span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">X</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> I=</span><span class="si">{</span><span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">X</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the log of the execution of this program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G231)
+
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 12 threads
+
+Optimize a model with 156 rows, 156 columns and 363 nonzeros
+Model fingerprint: 0x9275eb5f
+Variable types: 104 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+01]
+  Objective range  [5e-01, 1e+01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [6e+00, 2e+01]
+Found heuristic solution: objective 1356.0000000
+Presolve removed 105 rows and 54 columns
+Presolve time: 0.00s
+Presolved: 51 rows, 102 columns, 153 nonzeros
+Variable types: 51 continuous, 51 integer (51 binary)
+
+Root relaxation: objective 1.077833e+03, 63 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 1077.83333    0   49 1356.00000 1077.83333  20.5%     -    0s
+H    0     0                    1336.0000000 1077.83333  19.3%     -    0s
+H    0     0                    1231.0000000 1077.83333  12.4%     -    0s
+H    0     0                    1213.5000000 1077.83333  11.2%     -    0s
+     0     0 1162.92020    0   45 1213.50000 1162.92020  4.17%     -    0s
+     0     0 1164.39291    0   42 1213.50000 1164.39291  4.05%     -    0s
+H    0     0                    1211.0000000 1164.39291  3.85%     -    0s
+H    0     0                    1205.5000000 1188.34931  1.42%     -    0s
+     0     0 1188.34931    0   41 1205.50000 1188.34931  1.42%     -    0s
+     0     0 1189.10059    0   43 1205.50000 1189.10059  1.36%     -    0s
+     0     0 1189.78862    0   44 1205.50000 1189.78862  1.30%     -    0s
+     0     0 1193.83938    0   25 1205.50000 1193.83938  0.97%     -    0s
+     0     0 1194.24540    0   25 1205.50000 1194.24540  0.93%     -    0s
+     0     0 1194.25902    0   26 1205.50000 1194.25902  0.93%     -    0s
+     0     0 1196.10819    0   28 1205.50000 1196.10819  0.78%     -    0s
+     0     0 1196.59203    0   22 1205.50000 1196.59203  0.74%     -    0s
+     0     0 1196.62939    0   23 1205.50000 1196.62939  0.74%     -    0s
+     0     0 1197.77500    0   12 1205.50000 1197.77500  0.64%     -    0s
+H    0     0                    1203.5000000 1197.80117  0.47%     -    0s
+     0     0 1197.84207    0   13 1203.50000 1197.84207  0.47%     -    0s
+     0     0 1198.00000    0    9 1203.50000 1198.00000  0.46%     -    0s
+     0     0 1198.06250    0    7 1203.50000 1198.06250  0.45%     -    0s
+H    0     0                    1203.0000000 1198.06250  0.41%     -    0s
+     0     0 1198.19375    0   22 1203.00000 1198.19375  0.40%     -    0s
+     0     0 1198.24414    0   22 1203.00000 1198.24414  0.40%     -    0s
+*    0     0               0    1198.5000000 1198.50000  0.00%     -    0s
+
+Cutting planes:
+  Gomory: 2
+  Implied bound: 11
+  Clique: 1
+  MIR: 77
+  RLT: 1
+  Relax-and-lift: 1
+
+Explored 1 nodes (284 simplex iterations) in 0.02 seconds (0.01 work units)
+Thread count was 12 (of 12 available processors)
+
+Solution count 8: 1198.5 1203 1203.5 ... 1356
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.198500000000e+03, best bound 1.198500000000e+03, gap 0.0000%
+Total cost = 1198.50
+t= 0: y=1 x=12.0 I=6.0
+t= 1: y=0 x=0.0 I=0.0
+t= 2: y=1 x=12.0 I=6.0
+t= 3: y=0 x=0.0 I=0.0
+t= 4: y=1 x=12.0 I=6.0
+t= 5: y=0 x=0.0 I=0.0
+t= 6: y=1 x=12.0 I=6.0
+t= 7: y=0 x=0.0 I=0.0
+t= 8: y=1 x=12.0 I=6.0
+t= 9: y=0 x=0.0 I=0.0
+t=10: y=1 x=12.0 I=6.0
+t=11: y=0 x=0.0 I=0.0
+t=12: y=1 x=12.0 I=6.0
+t=13: y=0 x=0.0 I=0.0
+t=14: y=1 x=12.0 I=6.0
+t=15: y=0 x=0.0 I=0.0
+t=16: y=1 x=12.0 I=6.0
+t=17: y=0 x=0.0 I=0.0
+t=18: y=1 x=12.0 I=6.0
+t=19: y=0 x=0.0 I=0.0
+t=20: y=1 x=12.0 I=6.0
+t=21: y=0 x=0.0 I=0.0
+t=22: y=1 x=11.0 I=0.0
+t=23: y=1 x=11.0 I=0.0
+t=24: y=1 x=11.0 I=0.0
+t=25: y=1 x=11.0 I=0.0
+t=26: y=1 x=11.0 I=0.0
+t=27: y=1 x=11.0 I=0.0
+t=28: y=1 x=11.0 I=0.0
+t=29: y=1 x=11.0 I=0.0
+t=30: y=1 x=11.0 I=0.0
+t=31: y=1 x=11.0 I=0.0
+t=32: y=1 x=11.0 I=0.0
+t=33: y=1 x=13.0 I=2.0
+t=34: y=1 x=15.0 I=6.0
+t=35: y=0 x=0.0 I=0.0
+t=36: y=1 x=12.0 I=6.0
+t=37: y=0 x=0.0 I=0.0
+t=38: y=1 x=12.0 I=6.0
+t=39: y=0 x=0.0 I=0.0
+t=40: y=1 x=12.0 I=6.0
+t=41: y=0 x=0.0 I=0.0
+t=42: y=1 x=12.0 I=6.0
+t=43: y=0 x=0.0 I=0.0
+t=44: y=1 x=12.0 I=6.0
+t=45: y=0 x=0.0 I=0.0
+t=46: y=1 x=15.0 I=9.0
+t=47: y=1 x=15.0 I=2.0
+t=48: y=1 x=15.0 I=9.0
+t=49: y=0 x=0.0 I=1.0
+t=50: y=1 x=15.0 I=8.0
+t=51: y=0 x=0.0 I=0.0</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_termination_criteria">4. Termination Criteria</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -831,7 +1021,7 @@ User-callback calls 2201101, time in user-callback 1.58 sec</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_unit_commitment_problem">4. Unit Commitment Problem</h2>
+<h2 id="_unit_commitment_problem">5. Unit Commitment Problem</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -1082,7 +1272,7 @@ Solar  0.0  0.0  0.0  0.0  0.0  0.0  0.5  1.0  1.5  2.0  2.5  3.5  3.5  2.5  2.0
 </div>
 </div>
 <div class="sect1">
-<h2 id="_unit_commitment_problem_matrix_api">5. Unit Commitment Problem (matrix API)</h2>
+<h2 id="_unit_commitment_problem_matrix_api">6. Unit Commitment Problem (matrix API)</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -1336,7 +1526,7 @@ Solar  0.0  0.0  0.0  0.0  0.0  0.0  0.5  1.0  1.5  2.0  2.5  3.5  3.5  2.5  2.0
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-21 21:08:41 +0100
+Last updated 2025-10-02 14:13:22 +0200
 </div>
 </div>
 </body>

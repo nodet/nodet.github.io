@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - 8c269c1</span>
+<span id="revdate">January 2025  - 14e4f59</span>
 </div>
 </div>
 <div id="content">
@@ -700,6 +700,112 @@ s.t.     &amp; \sum_{i, j}\mu_i x_i \geq \mu_0 \\
         <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">Portfolio</span><span class="sh">"</span><span class="p">],</span>
     <span class="p">)</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<h2 id="_multi_period_lot_sizing_with_setups_and_minimum_batch" class="discrete">Multi-Period Lot-Sizing with Setups and Minimum Batch</h2>
+<div class="paragraph">
+<p>In this production-planning problem, a single product faces known demands
+over \(T\) periods. Each period has a linear production cost and a fixed
+setup cost if production occurs. When you produce in period \(t\), you
+must make at least \(Q_{\min}\) units and at most \(Q_{\max}\) units.
+Inventory can be carried between periods with a holding cost. The goal is to
+meet demand on time at minimum total cost.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(x_t\): Production quantity in period \(t\)</p>
+</li>
+<li>
+<p>\(y_t\): Binary variable indicating whether production occurs in period \(t\)</p>
+</li>
+<li>
+<p>\(I_t\): End-of-period inventory after meeting demand \(d_t\)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Parameters:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(d_t\): Demand in period \(t\)</p>
+</li>
+<li>
+<p>\(c_t\): Variable production cost (€/unit)</p>
+</li>
+<li>
+<p>\(f_t\): Fixed setup cost (€/setup)</p>
+</li>
+<li>
+<p>\(h_t\): Holding cost (€/unit carried to \(t+1\))</p>
+</li>
+<li>
+<p>\(Q_{\min}\): Minimum batch size if producing</p>
+</li>
+<li>
+<p>\(Q_{\max}\): Maximum production capacity</p>
+</li>
+<li>
+<p>\(I_0\): Initial inventory</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The mathematical formulation of the model is therefore:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\begin{align}
+\min \quad &amp; \sum_{t=0}^{T-1} \left(c_t x_t + f_t y_t + h_t I_t\right) \\[6pt]
+\text{s.t.} \quad
+&amp; I_{t-1} + x_t - d_t = I_t &amp;&amp; \forall t = 0,\dots,T-1 \quad (\text{with } I_{-1} = I_0) \\[6pt]
+&amp; x_t \le Q_{\max} y_t &amp;&amp; \forall t = 0,\dots,T-1 \\[4pt]
+&amp; x_t \ge Q_{\min} y_t &amp;&amp; \forall t = 0,\dots,T-1 \\[6pt]
+&amp; x_t \ge 0,\; I_t \ge 0 &amp;&amp; \forall t = 0,\dots,T-1 \\[4pt]
+&amp; y_t \in \{0,1\} &amp;&amp; \forall t = 0,\dots,T-1
+\end{align}\]
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">json</span>
+<span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
+<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
+<span class="kn">from</span> <span class="n">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># ----- Load data from JSON -----
+</span><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">data/lot_sizing_data.json</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">name</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">H</span>    <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">H</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">d</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">demand</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">c</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">var_cost</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">f</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">setup_cost</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">h</span>    <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">hold_cost</span><span class="sh">"</span><span class="p">]]</span>
+<span class="n">Qmin</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">Qmin</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">Qmax</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">Qmax</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">I0</span>   <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">"</span><span class="s">I0</span><span class="sh">"</span><span class="p">])</span>
+
+<span class="c1"># Basic validation
+</span><span class="k">assert</span> <span class="nf">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span> <span class="ow">and</span> <span class="nf">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span> <span class="ow">and</span> <span class="nf">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span> <span class="ow">and</span> <span class="nf">len</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">==</span> <span class="n">H</span>
+<span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">Qmin</span> <span class="o">&lt;=</span> <span class="n">Qmax</span>
+
+<span class="c1"># ----- Build model -----
+</span><span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Env</span><span class="p">()</span> <span class="k">as</span> <span class="n">env</span><span class="p">,</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+
+    <span class="c1"># ...
+</span>
+    <span class="c1"># Optimize
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">optimize</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">model</span><span class="p">.</span><span class="n">SolCount</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">model</span><span class="p">.</span><span class="n">ObjVal</span> <span class="o">==</span> <span class="mf">1198.5</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Total cost = </span><span class="si">{</span><span class="n">model</span><span class="p">.</span><span class="n">ObjVal</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">t=</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s">: y=</span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s"> x=</span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">X</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> I=</span><span class="si">{</span><span class="n">I</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">X</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
 </div>
 </div>
 <h2 id="_custom_termination_criteria" class="discrete">Custom Termination Criteria</h2>
@@ -1048,7 +1154,7 @@ constraints still requires a code that looks like the following:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-02 13:17:22 +0200
+Last updated 2025-10-02 15:00:22 +0200
 </div>
 </div>
 <script type="text/x-mathjax-config">
