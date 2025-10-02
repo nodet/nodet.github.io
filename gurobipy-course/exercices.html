@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">January 2025  - a6b679c</span>
+<span id="revdate">January 2025  - 8c269c1</span>
 </div>
 </div>
 <div id="content">
@@ -495,7 +495,7 @@ as your examiner, will be able to run automatically.</p>
 </div>
 <div class="paragraph">
 <p>The result of this exercise is the URL to a (public!) GitHub repo that should have
-the following characteristics:</p>
+the following files in the root of the repository:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -508,7 +508,11 @@ used to create this project. If you use <code>pyenv</code> and ran <code>pyenv l
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>3.12</pre>
+<pre>python -c "
+import sys;
+print(f'{sys.version_info.major}.'
+      f'{sys.version_info.minor}')
+" &gt; .python-version</pre>
 </div>
 </div>
 <div class="ulist">
@@ -1044,7 +1048,7 @@ constraints still requires a code that looks like the following:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-22 19:35:31 +0100
+Last updated 2025-10-02 13:17:22 +0200
 </div>
 </div>
 <script type="text/x-mathjax-config">
