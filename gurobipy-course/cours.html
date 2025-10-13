@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">October 2025  - 0d492a7</span>
+<span id="revdate">October 2025  - b7c4001</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -715,6 +715,10 @@ End</pre>
 </div>
 <div class="sect2">
 <h3 id="_same_example_using_the_matrix_api">2.2. Same example, using the matrix API</h3>
+<div class="paragraph">
+<p>Note how the constraint \(x + y \geq 1\) is rewritten \(-x - y \leq 1\)
+so that the whole constraint set is of the form \(Ax \leq b\).</p>
+</div>
 <div id="matrix-api-example" class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -868,6 +872,7 @@ indexed data such as cost, demand, capacity.</p>
 Python list, used to build sub-lists efficiently. See in particular
 <a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/tuplelist.html#tuplelist.select"><code>tuplelist.select(pattern)</code></a>.</p>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -914,6 +919,7 @@ pattern)</a> &#8594; <code>gp.LinExpr</code></p>
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -937,6 +943,7 @@ pattern)</a> &#8594; <code>gp.LinExpr</code></p>
 <p><a href="https://docs.gurobi.com/projects/optimizer/en/12.0/reference/python/func_global.html#multidict">multidict()</a>
 is a convenience function to split a dict of lists.</p>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
@@ -962,10 +969,7 @@ is a convenience function to split a dict of lists.</p>
 <h3 id="_example_of_extended_structures">4.4. Example of extended structures</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
-<span class="kn">from</span> <span class="n">gurobipy</span> <span class="kn">import</span> <span class="n">GRB</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">tupledict</span><span class="p">([</span>
+<pre class="rouge highlight"><code data-lang="python"><span class="n">data</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">tupledict</span><span class="p">([</span>
         <span class="p">((</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
         <span class="p">((</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
         <span class="p">((</span><span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span>
@@ -973,19 +977,53 @@ is a convenience function to split a dict of lists.</p>
         <span class="p">((</span><span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">),</span> <span class="mi">7</span><span class="p">),</span>
         <span class="p">((</span><span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
     <span class="p">])</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Tuplelist:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>data: {('a', 'b', 'c'): 3, ('a', 'c', 'b'): 4, ('b', 'a', 'c'): 5, ('b', 'c', 'a'): 6, ('c', 'a', 'b'): 7, ('c', 'b', 'a'): 3}</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Tuplelist:</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">keys</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">tuplelist</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">keys</span><span class="p">())</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">select: </span><span class="si">{</span><span class="n">keys</span><span class="p">.</span><span class="nf">select</span><span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Tupledict:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">select: </span><span class="si">{</span><span class="n">keys</span><span class="p">.</span><span class="nf">select</span><span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Tuplelist:
+	select: &lt;gurobi.tuplelist (2 tuples, 3 values each):
+ ( a , b , c )
+ ( a , c , b )
+&gt;</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Tupledict:</span><span class="sh">"</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">select  : </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nf">select</span><span class="p">(</span><span class="sh">'</span><span class="s">a</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">sum     : </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">coeff</span> <span class="o">=</span> <span class="p">{(</span><span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">):</span> <span class="mi">6</span><span class="p">,</span> <span class="p">(</span><span class="sh">"</span><span class="s">b</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">c</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">a</span><span class="sh">"</span><span class="p">):</span> <span class="o">-</span><span class="mi">4</span><span class="p">}</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">prod    : </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nf">prod</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">c</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="n">arcs</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">({</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">prod    : </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="nf">prod</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">c</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Tupledict:
+	select  : [3, 4]
+	sum     : 28.0
+	prod    : 0.0</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">arcs</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nf">multidict</span><span class="p">({</span>
         <span class="p">(</span><span class="sh">"</span><span class="s">Detroit </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Boston </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
         <span class="p">(</span><span class="sh">"</span><span class="s">Detroit </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">New York </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
         <span class="p">(</span><span class="sh">"</span><span class="s">Detroit </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Seattle </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
@@ -994,31 +1032,19 @@ is a convenience function to split a dict of lists.</p>
         <span class="p">(</span><span class="sh">"</span><span class="s">Denver </span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">Seattle </span><span class="sh">"</span><span class="p">):</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
     <span class="p">})</span>
 <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Multidict:</span><span class="sh">"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">cost: </span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">capacity: </span><span class="si">{</span><span class="n">capacity</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">capacity: </span><span class="si">{</span><span class="n">capacity</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\t</span><span class="s">cost: </span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span></code></pre>
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 <div class="listingblock">
 <div class="content">
-<pre>data: {('a', 'b', 'c'): 3, ('a', 'c', 'b'): 4, ('b', 'a', 'c'): 5, ('b', 'c', 'a'): 6, ('c', 'a', 'b'): 7, ('c', 'b', 'a'): 3}
-
-Tuplelist:
-	select: &lt;gurobi.tuplelist (2 tuples, 3 values each):
- ( a , b , c )
- ( a , c , b )
-&gt;
-
-Tupledict:
-	select  : [3, 4]
-	sum     : 28.0
-	prod    : 0.0
-
-Multidict:
-	cost: {('Detroit ', 'Boston '): 7, ('Detroit ', 'New York '): 5, ('Detroit ', 'Seattle '): 4, ('Denver ', 'Boston '): 8, ('Denver ', 'New York '): 11, ('Denver ', 'Seattle '): 4}
+<pre>Multidict:
+	capacity: {('Detroit ', 'Boston '): 100, ('Detroit ', 'New York '): 80, ('Detroit ', 'Seattle '): 120, ('Denver ', 'Boston '): 120, ('Denver ', 'New York '): 120, ('Denver ', 'Seattle '): 120}
 
 
-	capacity: {('Detroit ', 'Boston '): 100, ('Detroit ', 'New York '): 80, ('Detroit ', 'Seattle '): 120, ('Denver ', 'Boston '): 120, ('Denver ', 'New York '): 120, ('Denver ', 'Seattle '): 120}</pre>
+	cost: {('Detroit ', 'Boston '): 7, ('Detroit ', 'New York '): 5, ('Detroit ', 'Seattle '): 4, ('Denver ', 'Boston '): 8, ('Denver ', 'New York '): 11, ('Denver ', 'Seattle '): 4}</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1196,19 +1222,19 @@ create a matrix of variables.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Continuous: GRB.CONTINUOUS</p>
+<p>Continuous: <code>GRB.CONTINUOUS</code></p>
 </li>
 <li>
-<p>General integer: GRB.INTEGER</p>
+<p>General integer: <code>GRB.INTEGER</code>`</p>
 </li>
 <li>
-<p>Binary: GRB.BINARY</p>
+<p>Binary: <code>GRB.BINARY</code></p>
 </li>
 <li>
-<p>Semi-continuous: GRB.SEMICONT</p>
+<p>Semi-continuous: <code>GRB.SEMICONT</code></p>
 </li>
 <li>
-<p>Semi-integer: GRB.SEMIINT</p>
+<p>Semi-integer: <code>GRB.SEMIINT</code></p>
 </li>
 </ul>
 </div>
@@ -2804,7 +2830,7 @@ With your venv activated, confirm that</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-02 16:14:48 +0200
+Last updated 2025-10-13 08:30:26 +0200
 </div>
 </div>
 <script type="text/x-mathjax-config">
