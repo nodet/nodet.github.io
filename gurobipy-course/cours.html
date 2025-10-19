@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">October 2025  - 492c2ad</span>
+<span id="revdate">October 2025  - 3883360</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -925,14 +925,18 @@ pattern)</a> &#8594; <code>gp.LinExpr</code></p>
 <pre class="rouge highlight"><code data-lang="python"><span class="kn">import</span> <span class="n">gurobipy</span> <span class="k">as</span> <span class="n">gp</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">()</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">addVars</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)],</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span>     <span class="c1"># x is a tupledict
-</span><span class="n">m</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>                                         <span class="c1"># Process all model updates
-</span><span class="n">expr</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span></code></pre>
+</span><span class="n">coeff</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">([((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mf">2.1</span><span class="p">),</span> <span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mf">3.3</span><span class="p">)])</span>
+<span class="n">m</span><span class="p">.</span><span class="nf">update</span><span class="p">()</span>                                         <span class="c1"># Process all model updates
+</span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">prod</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">prod</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="sh">'</span><span class="s">*</span><span class="sh">'</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>x[1,3] + x[2,3]</pre>
+<pre>x[1,3] + x[2,3]
+2.0 x[1,2] + 2.1 x[1,3] + 3.3 x[2,3]
+2.1 x[1,3] + 3.3 x[2,3]</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1558,7 +1562,7 @@ expression
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 
 <span class="c1"># Add linear objectives c^Tx
-</span><span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
@@ -1572,7 +1576,7 @@ expression
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.5262650100480577 x[0] + 0.31598755841732995 x[1] + 0.22589976835387182 x[2] + 0.26282494535866574 x[3] + 0.15402398277670748 x[4]</pre>
+<pre>obj: 0.11997409032263406 x[0] + 0.8017517174254414 x[1] + 0.2375341249729569 x[2] + 0.782034008692409 x[3]</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1583,7 +1587,7 @@ expression
 
 <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="n">gp</span><span class="p">.</span><span class="nc">Model</span><span class="p">(</span><span class="sh">"</span><span class="s">model</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
@@ -1603,7 +1607,7 @@ expression
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.0 + [ 0.35009519629328456 x[0] ^ 2 + 1.404423257261094 x[0] * x[1] + 0.5633033648985756 x[0] * x[2] + 0.4734482637245059 x[0] * x[3] + 0.9247814319759544 x[0] * x[4] + 0.3405485028613824 x[1] ^ 2 + 0.44137792273617116 x[1] * x[2] + 0.6874279686129943 x[1] * x[3] + 1.3001079227508634 x[1] * x[4] + 0.9103404225480711 x[2] ^ 2 + 0.17321865502582912 x[2] * x[3] + 0.8862661425951331 x[2] * x[4] + 0.3089399813193924 x[3] ^ 2 + 0.9932643804280612 x[3] * x[4] + 0.7498300379876675 x[4] ^ 2 ]</pre>
+<pre>obj: 0.0 + [ 0.4266149959241946 x[0] ^ 2 + 0.8111915623222672 x[0] * x[1] + 1.329147558943664 x[0] * x[2] + 1.047794617821438 x[0] * x[3] + 0.34113782394316683 x[1] ^ 2 + 0.6697317498705988 x[1] * x[2] + 0.7924592496844742 x[1] * x[3] + 0.3729595364579176 x[2] ^ 2 + 0.8271703191178871 x[2] * x[3] + 0.8714290199488662 x[3] ^ 2 ]</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
