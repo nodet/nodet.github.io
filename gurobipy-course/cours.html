@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">October 2025  - 3970acd</span>
+<span id="revdate">October 2025  - b3b48d7</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -512,7 +512,11 @@ pre.rouge .nb, pre.rouge .bp {
 <li><a href="#_general_constraints">6.8. General Constraints</a></li>
 </ul>
 </li>
-<li><a href="#_matrix_based_api">7. Matrix-based API</a></li>
+<li><a href="#_matrix_based_api">7. Matrix-based API</a>
+<ul class="sectlevel2">
+<li><a href="#_broadcasting">7.1. Broadcasting</a></li>
+</ul>
+</li>
 <li><a href="#_interacting_with_the_model">8. Interacting with the Model</a>
 <ul class="sectlevel2">
 <li><a href="#_attributes">8.1. Attributes</a></li>
@@ -2042,6 +2046,75 @@ Running matrix_api took 0.073522040998796 seconds</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
+<div class="sect2">
+<h3 id="_broadcasting">7.1. Broadcasting</h3>
+<div class="paragraph">
+<p><code>MVar</code> objects follow the NumPy
+<a href="https://numpy.org/doc/stable/user/basics.broadcasting.html">broadcasting</a>
+rules. These rules govern how matrices of various dimensions interact with other
+matrices, and what the shape of the result is.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">X</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">X</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">Y</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">X</span> <span class="o">/</span> <span class="n">Y</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;MNLExpr (2, 3)&gt;
+array([[ X[0,0] / Y[0],  X[0,1] / Y[1],  X[0,2] / Y[2]],
+       [ X[1,0] / Y[0],  X[1,1] / Y[1],  X[1,2] / Y[2]]])</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is another example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">X</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">X</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">Y</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">((</span><span class="n">X</span> <span class="o">*</span> <span class="n">Y</span><span class="p">).</span><span class="n">shape</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(2, 3, 4)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Nonlinear functions are applied element-wise.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">nlfunc</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;MNLExpr (2, 3)&gt;
+array([[ exp(X[0,0]),  exp(X[0,1]),  exp(X[0,2])],
+       [ exp(X[1,0]),  exp(X[1,1]),  exp(X[1,2])]])</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note: If <code>nda</code> is a NumPy 1D array of shape <code>(n,)</code>, <code>nda[:, None]</code> reshapes it to <code>(n, 1)</code> to enable
+broadcasting.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="n">nda</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(...)</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">addMVar</span><span class="p">(...)</span>
+<span class="n">m</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">((</span><span class="n">nda</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">vars</span><span class="p">).</span><span class="nf">sum</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="p">...)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>vars</code> is a <code>(n,m)</code> matrix and <code>nda</code> is of shape <code>(n,)</code>, then the product of <code>nda[:,None]</code> and that matrix will
+be of shape <code>(n,m)</code>.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2835,7 +2908,7 @@ With your venv activated, confirm that</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-10-22 14:39:12 +0200
+Last updated 2025-10-22 22:23:19 +0200
 </div>
 </div>
 <script type="text/x-mathjax-config">

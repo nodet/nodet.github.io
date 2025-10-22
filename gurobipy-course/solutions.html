@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">October 2025  - 3970acd</span>
+<span id="revdate">October 2025  - b3b48d7</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -828,7 +828,7 @@ Cutting planes:
   RLT: 1
   Relax-and-lift: 1
 
-Explored 1 nodes (284 simplex iterations) in 0.02 seconds (0.01 work units)
+Explored 1 nodes (284 simplex iterations) in 0.01 seconds (0.01 work units)
 Thread count was 12 (of 12 available processors)
 
 Solution count 8: 1198.5 1203 1203.5 ... 1356
@@ -911,11 +911,11 @@ t=51: y=0 x=0.0 I=0.0</pre>
     <span class="n">V</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVar</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">V</span><span class="sh">"</span><span class="p">)</span>
 
     <span class="n">model</span><span class="p">.</span><span class="nf">setObjective</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">GRB</span><span class="p">.</span><span class="n">MAXIMIZE</span><span class="p">)</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">S</span> <span class="o">==</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrNL</span><span class="p">(</span><span class="n">S</span><span class="p">,</span>
         <span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
         <span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">nlfunc</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">((</span><span class="n">R</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">addConstr</span><span class="p">(</span><span class="n">V</span> <span class="o">==</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">addGenConstrNL</span><span class="p">(</span><span class="n">V</span><span class="p">,</span>
         <span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">R</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="p">)</span>
 
