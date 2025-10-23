@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">October 2025  - b3b48d7</span>
+<span id="revdate">October 2025  - 6fe312c</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -828,7 +828,7 @@ Cutting planes:
   RLT: 1
   Relax-and-lift: 1
 
-Explored 1 nodes (284 simplex iterations) in 0.01 seconds (0.01 work units)
+Explored 1 nodes (284 simplex iterations) in 0.02 seconds (0.01 work units)
 Thread count was 12 (of 12 available processors)
 
 Solution count 8: 1198.5 1203 1203.5 ... 1356
@@ -1196,22 +1196,16 @@ User-callback calls 2201101, time in user-callback 1.58 sec</pre>
 
     <span class="c1"># add variables for thermal units (power and statuses for commitment, startup and shutdown)
 </span>    <span class="n">thermal_units_out_power</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span>
-        <span class="n">thermal_units</span><span class="p">,</span> <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_units_out_power</span><span class="sh">"</span>
+        <span class="n">thermal_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_units_out_power</span><span class="sh">"</span>
     <span class="p">)</span>
     <span class="n">thermal_units_startup_status</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span>
-        <span class="n">thermal_units</span><span class="p">,</span>
-        <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">),</span>
-        <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span>
-        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_startup_status</span><span class="sh">"</span><span class="p">,</span>
+        <span class="n">thermal_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_startup_status</span><span class="sh">"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">thermal_units_shutdown_status</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span>
-        <span class="n">thermal_units</span><span class="p">,</span>
-        <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">),</span>
-        <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span>
-        <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_shutdown_status</span><span class="sh">"</span><span class="p">,</span>
+        <span class="n">thermal_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_shutdown_status</span><span class="sh">"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">thermal_units_comm_status</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">addVars</span><span class="p">(</span>
-        <span class="n">thermal_units</span><span class="p">,</span> <span class="nf">range</span><span class="p">(</span><span class="n">nTimeIntervals</span><span class="p">),</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_comm_status</span><span class="sh">"</span>
+        <span class="n">thermal_units</span><span class="p">,</span> <span class="n">nTimeIntervals</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">GRB</span><span class="p">.</span><span class="n">BINARY</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">thermal_unit_comm_status</span><span class="sh">"</span>
     <span class="p">)</span>
 
     <span class="c1"># define objective function as an empty quadratic construct and add terms
