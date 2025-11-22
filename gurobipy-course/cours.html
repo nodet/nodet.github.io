@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">October 2025  - 8b55c4a</span>
+<span id="revdate">October 2025  - 50b5efb</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Content</div>
@@ -1580,7 +1580,7 @@ expression
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.7456672248099059 x[0] + 0.5424844591578329 x[1] + 0.8332585392101601 x[2] + 0.0644496507276684 x[3]</pre>
+<pre>obj: 0.9700864726132062 x[0] + 0.2695825665318382 x[1] + 0.8393592929062669 x[2] + 0.09483911762771724 x[3]</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1611,7 +1611,7 @@ expression
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>obj: 0.0 + [ 0.18616477134165332 x[0] ^ 2 + 1.145877918027506 x[0] * x[1] + 1.2828757731430636 x[0] * x[2] + 1.4358445485807625 x[0] * x[3] + 0.6284584200357325 x[1] ^ 2 + 1.4019942734988464 x[1] * x[2] + 1.2037695573060454 x[1] * x[3] + 0.8836246391411715 x[2] ^ 2 + 0.6307553697301119 x[2] * x[3] + 0.855331400015011 x[3] ^ 2 ]</pre>
+<pre>obj: 0.0 + [ 0.948551509525536 x[0] ^ 2 + 0.9104820149711702 x[0] * x[1] + 0.7420599679350909 x[0] * x[2] + 0.1347804964505429 x[0] * x[3] + 0.7757683560523797 x[1] ^ 2 + 1.4720080124255421 x[1] * x[2] + 1.3839209333773845 x[1] * x[3] + 0.3679308491129978 x[2] ^ 2 + 0.7758975853460924 x[2] * x[3] + 0.4047177276555797 x[3] ^ 2 ]</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -2041,8 +2041,8 @@ at the very beginning of this course.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Running term_based took 3.249707875016611 seconds
-Running matrix_api took 0.07618454098701477 seconds</pre>
+<pre>Running term_based took 3.2772169160016347 seconds
+Running matrix_api took 0.07893150000018068 seconds</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -2268,7 +2268,7 @@ H17437  9377                    1.583346e+09 8.0000e+08  49.5%   3.6    0s
 *20221 10692              71    1.533348e+09 8.0000e+08  47.8%   3.8    0s
 H22213  8731                    1.475014e+09 8.0000e+08  45.8%   4.0    0s
 H32855 12074                    1.425014e+09 8.0001e+08  43.9%   3.7    0s
-H35919 13342                    1.400014e+09 9.0000e+08  35.7%   3.7    0s
+H35919 13342                    1.400014e+09 9.0000e+08  35.7%   3.7    1s
 *42393 13855              57    1.400013e+09 9.0401e+08  35.4%   5.3    2s
 *73222  7138              71    1.375015e+09 1.1000e+09  20.0%   7.7    3s
 *73524  3671              62    1.200013e+09 1.1000e+09  8.33%   7.8    3s
@@ -2282,7 +2282,7 @@ Cutting planes:
   RLT: 4
   Relax-and-lift: 17
 
-Explored 76434 nodes (584415 simplex iterations) in 3.67 seconds (6.76 work units)
+Explored 76434 nodes (584415 simplex iterations) in 3.95 seconds (6.76 work units)
 Thread count was 12 (of 12 available processors)
 
 Solution count 10: 1.20001e+09 1.37501e+09 1.40001e+09 ... 1.60001e+09
@@ -2293,7 +2293,7 @@ Best objective 1.200012600000e+09, best bound 1.200003400000e+09, gap 0.0008%
 	Status       : 2
 	Obj          : 1200012600.0
 	SolutionCount: 10
-	Runtime      : 3.670654058456421
+	Runtime      : 3.9533181190490723
 	MIPGap       : 7.666586172876269e-06
 
 
@@ -2427,13 +2427,13 @@ Cutting planes:
   RLT: 3
   Relax-and-lift: 12
 
-Explored 14845 nodes (104112 simplex iterations) in 10.00 seconds (14.93 work units)
+Explored 14708 nodes (103080 simplex iterations) in 10.00 seconds (14.89 work units)
 Thread count was 1 (of 12 available processors)
 
 Solution count 10: 1.60001e+09 1.63335e+09 1.65001e+09 ... 1.70001e+09
 
 Time limit reached
-Best objective 1.600013400000e+09, best bound 9.000057358581e+08, gap 43.7501%</pre>
+Best objective 1.600013400000e+09, best bound 9.000057099197e+08, gap 43.7501%</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -2576,7 +2576,7 @@ Cutting planes:
   Relax-and-lift: 44
   PSD: 7
 
-Explored 112 nodes (2811 simplex iterations) in 0.07 seconds (0.09 work units)
+Explored 112 nodes (2811 simplex iterations) in 0.06 seconds (0.09 work units)
 Thread count was 12 (of 12 available processors)
 
 Solution count 5: 2.00002e+09 2.00002e+09 2.36668e+09 ... 3.13336e+09
@@ -2584,7 +2584,7 @@ Solution count 5: 2.00002e+09 2.00002e+09 2.36668e+09 ... 3.13336e+09
 Solve interrupted
 Best objective 2.000015200000e+09, best bound 8.000035418612e+08, gap 60.0001%
 
-User-callback calls 600, time in user-callback 0.00 sec
+User-callback calls 597, time in user-callback 0.00 sec
 MIP Callback was invoked 117 times.</pre>
 </div>
 </div>

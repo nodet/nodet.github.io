@@ -478,7 +478,7 @@ pre.rouge .nb, pre.rouge .bp {
 <div class="details">
 <span id="author" class="author">Xavier Nodet</span><br>
 <span id="email" class="email"><a href="mailto:xavier.nodet@gurobi.com">xavier.nodet@gurobi.com</a></span><br>
-<span id="revdate">October 2025  - 8b55c4a</span>
+<span id="revdate">October 2025  - 50b5efb</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table des matières</div>
@@ -545,7 +545,40 @@ pre.rouge .nb, pre.rouge .bp {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre></pre>
+<pre>Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G325)
+
+CPU model: Apple M4 Pro
+Thread count: 12 physical cores, 12 logical processors, using up to 12 threads
+
+Optimize a model with 1 rows, 10000 columns and 10000 nonzeros
+Model fingerprint: 0xa2a6b3bf
+Variable types: 0 continuous, 10000 integer (10000 binary)
+Coefficient statistics:
+  Matrix range     [5e+00, 1e+02]
+  Objective range  [1e+00, 2e+01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [4e+05, 4e+05]
+Found heuristic solution: objective 90594.480679
+Presolve time: 0.01s
+Presolved: 1 rows, 10000 columns, 10000 nonzeros
+Variable types: 0 continuous, 10000 integer (10000 binary)
+
+Root relaxation: objective 1.190206e+05, 1 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 119020.617    0    1 90594.4807 119020.617  31.4%     -    0s
+H    0     0                    119005.88462 119020.617  0.01%     -    0s
+H    0     0                    119015.22254 119020.617  0.00%     -    0s
+
+Explored 1 nodes (1 simplex iterations) in 0.03 seconds (0.02 work units)
+Thread count was 12 (of 12 available processors)
+
+Solution count 3: 119015 119006 90594.5 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.190152225370e+05, best bound 1.190206174693e+05, gap 0.0045%</pre>
 </div>
 </div>
 </div>
@@ -1012,7 +1045,7 @@ r = 0.22765600953496343, h = 0.3695108064934501, R=0.41533979436474494</pre>
 <div class="listingblock">
 <div class="content">
 <pre>Read MPS format model from file data/mkp.mps.bz2
-Reading time = 0.03 seconds
+Reading time = 0.04 seconds
 mkp_bip: 30 rows, 500 columns, 15000 nonzeros
 Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (mac64[arm] - Darwin 24.6.0 24G325)
 
@@ -1031,10 +1064,10 @@ Found heuristic solution: objective 177106.00000
 Presolve time: 0.01s
 Presolved: 30 rows, 500 columns, 15000 nonzeros
 Variable types: 0 continuous, 500 integer (500 binary)
-Storing new gap: 1.0921143270132012, 0.013408899307250977
+Storing new gap: 1.0921143270132012, 0.013405084609985352
 
 Root relaxation: objective 2.164011e+05, 112 iterations, 0.00 seconds (0.01 work units)
-Storing new gap: 0.22187277675516356, 0.015611886978149414
+Storing new gap: 0.22187277675516356, 0.01557016372680664
 
     Nodes    |    Current Node    |     Objective Bounds      |     Work
  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -1046,32 +1079,32 @@ H    0     0                    215225.00000 216401.065  0.55%     -    0s
 H    0     0                    215436.00000 216401.065  0.45%     -    0s
 H    0     0                    215510.00000 216401.065  0.41%     -    0s
 H    0     0                    215624.00000 216401.065  0.36%     -    0s
-Storing new gap: 0.0035756687567246688, 0.07926392555236816
+Storing new gap: 0.0035756687567246688, 0.07961511611938477
      0     0 216395.201    0   25 215624.000 216395.201  0.36%     -    0s
      0     2 216395.201    0   25 215624.000 216395.201  0.36%     -    0s
 H  295   300                    215695.00000 216392.242  0.32%   9.9    0s
-Storing new gap: 0.0032314147291314125, 0.19938087463378906
+Storing new gap: 0.0032314147291314125, 0.19669508934020996
 H  813   824                    215739.00000 216392.242  0.30%   8.9    0s
-Storing new gap: 0.003026805538173441, 0.30092406272888184
+Storing new gap: 0.003026805538173441, 0.30057501792907715
 H 3088  3002                    215787.00000 216387.943  0.28%   7.1    0s
-Storing new gap: 0.0027848894130101665, 0.36946988105773926
+Storing new gap: 0.0027848894130101665, 0.37593507766723633
 H23611 17974                    215834.00000 216367.932  0.25%   8.6    1s
-Storing new gap: 0.002473808801915293, 1.6451618671417236
- 109730 70196 216124.510   76   22 215834.000 216352.398  0.24%   8.4    5s
+Storing new gap: 0.002473808801915293, 1.7500801086425781
+ 106197 67966 216280.334   44   26 215834.000 216353.261  0.24%   8.3    5s
 H126308 78287                    215871.00000 216350.563  0.22%   8.5    5s
-Storing new gap: 0.002218917779599854, 5.485412836074829
- 300283 230665 216258.752   59   26 215871.000 216336.945  0.22%   8.9   10s
- 502073 404915 216259.144   59   25 215871.000 216329.866  0.21%   9.0   15s
-Storing new gap: 0.002117005063209046, 16.0465989112854
- 682197 559310 216213.529   49   24 215871.000 216325.845  0.21%   9.2   20s
- 865223 716306 216091.252   80   24 215871.000 216322.636  0.21%   9.4   25s
- 1043441 867132 216108.819   83   19 215871.000 216319.990  0.21%   9.4   30s
+Storing new gap: 0.002218917779599854, 5.630963087081909
+ 281530 214388 215919.128   99   20 215871.000 216337.930  0.22%   8.9   10s
+ 472913 379737 216310.298   48   25 215871.000 216330.596  0.21%   9.0   15s
+Storing new gap: 0.002117005063209046, 16.879101037979126
+ 652433 533975 216276.725   39   25 215871.000 216326.371  0.21%   9.2   20s
+ 825859 682897 216029.017   82   23 215871.000 216323.307  0.21%   9.3   25s
+ 999680 830314 215944.125   75   26 215871.000 216320.615  0.21%   9.4   30s
 It's been too long...
 
 Cutting planes:
   Gomory: 7
 
-Explored 1079615 nodes (10187554 simplex iterations) in 31.07 seconds (111.23 work units)
+Explored 1065183 nodes (10043606 simplex iterations) in 32.01 seconds (109.65 work units)
 Thread count was 12 (of 12 available processors)
 
 Solution count 10: 215871 215834 215787 ... 213709
@@ -1079,7 +1112,7 @@ Solution count 10: 215871 215834 215787 ... 213709
 Solve interrupted
 Best objective 2.158710000000e+05, best bound 2.163190000000e+05, gap 0.2075%
 
-User-callback calls 2161283, time in user-callback 1.54 sec</pre>
+User-callback calls 2116557, time in user-callback 1.50 sec</pre>
 </div>
 </div>
 </div>
